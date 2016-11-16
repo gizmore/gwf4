@@ -1,0 +1,2 @@
+{$cookie_info}
+{$form}

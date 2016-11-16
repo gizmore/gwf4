@@ -1,0 +1,109 @@
+###################################################################
+### This is the public todo list for GWF3 and featured modules. ###
+###################################################################
+
+--------------------------------------------------------------------------------
+
+#1 It is currently not possible to have two database instances because many GDO:: functions do a call to gdo_db().
+We might want to add an optional parameter to these functions, or re-think GDO / switch to PDO.
+
+--------------------------------------------------------------------------------
+
+#2 Increase performance by not requireing a database for simple pages.
+
+--------------------------------------------------------------------------------
+
+#3 Increase performance of slow pages by using smarty templates.
+Currently these pages are known to be very slow: "Forum".
+
+--------------------------------------------------------------------------------
+
+#4 All lang files now use %1$s %2$s %3$s %4$s and so on.
+This could be changed to %s %s %s %s which might be faster and is more readable.
+
+--------------------------------------------------------------------------------
+
+#5 Currently we are using Common::getGet() a lot, but Common::getGetString/Int/Array is more safe and appropiate.
+Keep in mind that getGetString returns empty string by default, compared to false for getGet.
+
+--------------------------------------------------------------------------------
+
+#6 Own chat is broken (remove?)
+
+--------------------------------------------------------------------------------
+
+#7 Make the session handler optional.
+Introduce a new session handler GWF_Session.php.php
+Rename GWF_Session.php to GWF_Session.db.php
+Copy the desired version during install wizard?
+Select the Session handler by config variable
+
+--------------------------------------------------------------------------------
+
+#8 Convert templates to Smarty.
+
+--------------------------------------------------------------------------------
+
+#9 The GWF Installer could use GWF_Result
+Some installer functions could be private!
+
+--------------------------------------------------------------------------------
+
+#10 Enhancements in module PageBuilder:
+make a page downloadable as PDF
+make it possible to add a Shoutbox to each page
+show unified diff on changing content
+
+--------------------------------------------------------------------------------
+
+#11 Rename default template to simple/etc.
+Create a new default template which represent GWF. We need someone with graphic skills.
+
+--------------------------------------------------------------------------------
+
+#12 better way for including the config.php dynamically
+
+--------------------------------------------------------------------------------
+
+#13 GWF should have some JavaScript but there should be an nonJS mode
+implement ajax into the core with JSON (e.g. a page {title: '', content : ''}
+accessable by /ajax/.*
+
+--------------------------------------------------------------------------------
+
+#14 list of unused files:
+core/module/Guestbook/tpl/default/_entry.php
+
+--------------------------------------------------------------------------------
+
+#15 reimplement: show failures on login; show cookie warning on login
+show warning if connection is not secured
+(show warning if using IE)
+
+--------------------------------------------------------------------------------
+
+#16: use more private in methods
+
+--------------------------------------------------------------------------------
+
+#17: PM: add attachments
+Bugfix: readet (outgoing) PMs are displayed as unreaded after upgrade to WC5, could be a bug in gwf2=>3 update
+
+--------------------------------------------------------------------------------
+
+#18: Optional AES Encryption for forums and pms
+     For PMs this requires a redesign of database.
+
+--------------------------------------------------------------------------------
+
+#19: cleanup TODO file
+
+--------------------------------------------------------------------------------
+
+#20: Fix Chrome's cookie token error while loging in or registering.  
+
+--------------------------------------------------------------------------------
+
+#21: Make geshi highlighted [code] tags downloadable. (thx spaceone)
+
+--------------------------------------------------------------------------------

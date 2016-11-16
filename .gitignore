@@ -1,0 +1,8 @@
+/index.php
+/gwf_cronjob.php
+
+/protected/installog
+/protected/db_backups
+/protected/db_backups_old
+/protected/zipped
+/protected/db_backup.sh
