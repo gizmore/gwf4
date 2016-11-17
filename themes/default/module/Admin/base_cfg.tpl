@@ -1,2 +1,0 @@
-{$nav}
-{$form_gpg}

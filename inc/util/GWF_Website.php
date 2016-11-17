@@ -264,7 +264,7 @@ final class GWF_Website
 			'language' => GWF_Language::getCurrentISO(),
 			'meta' => self::displayMeta(),
 			'js' => self::displayJavascripts(),
-			'head_links' => self::displayLink()
+			'head_links' => self::displayLink(),
 		);
 		
 		if (is_array($tVars)) {

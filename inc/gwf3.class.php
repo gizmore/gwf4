@@ -1,6 +1,6 @@
 <?php
 define('GWF_DEBUG_TIME_START', microtime(true));
-define('GWF_CORE_VERSION', '3.04-2012.Jul.01');
+define('GWF_CORE_VERSION', '4.00-2016.Nov.16');
 
 /**
  * Welcome to GWF3
@@ -163,10 +163,10 @@ class GWF3
 			$this->onAutoloadModules(); 
 		}
 		
-		if (true === $config['get_user'])
-		{		
-			GWF_Template::addMainTvars(array('user' => (self::$user = GWF_User::getStaticOrGuest())));
-		}
+// 		if (true === $config['get_user'])
+// 		{		
+// 			GWF_Template::addMainTvars(array('user' => (self::$user = GWF_User::getStaticOrGuest())));
+// 		}
 		
 		if (true === $config['load_module']) 
 		{ 

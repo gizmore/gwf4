@@ -142,22 +142,30 @@ class GWF_Module extends GDO
 	################
 	public function template($file, $tVars=array())
 	{
-		$name = $this->getName();
-		$tVars['lang'] = $this->lang;
-		$tVars['module'] = $this;
-		return GWF_Template::templateMain("module/{$name}/{$file}", $tVars);
+		return $this->moduleTemplatePHP($file, $tVars);
+// 		$name = $this->getName();
+// 		$tVars['lang'] = $this->lang;
+// 		$tVars['module'] = $this;
+// 		return GWF_Template::templateMain("module/{$name}/{$file}", $tVars);
 	}
 	public function templatePHP($file, $tVars=array())
 	{
-		$name = $this->getName();
-		return $this->coreTemplatePHP(GWF_WWW_PATH."tpl/%DESIGN%/module/{$name}/{$file}", $tVars);
+		return $this->moduleTemplatePHP($file, $tVars);
 	}
 	
-	public function coreTemplatePHP($file, $tVars=array()) {
+	public function moduleTemplatePHP($file, $tVars=array())
+	{
+		$name = $this->getName();
 		$tVars['lang'] = $this->lang;
 		$tVars['module'] = $this;
-		return GWF_Template::templatePHPRaw($file, $tVars);
+		return GWF_Template::moduleTemplatePHP($name, $file, $tVars);
 	}
+	
+// 	public function coreTemplatePHP($file, $tVars=array()) {
+// 		$tVars['lang'] = $this->lang;
+// 		$tVars['module'] = $this;
+// 		return GWF_Template::templatePHPRaw($file, $tVars);
+// 	}
 	
 
 	##############

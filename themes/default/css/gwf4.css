@@ -6,13 +6,6 @@
 	list-style: none;
 }
 
-
-
-
-
-
-
-
 /*** UNNEEEDEED? */
 a img { border: 0; }
 ul, ol { list-style: none; }
@@ -302,10 +295,10 @@ div.gwf_errors li, div.gwf_messages li {
 	padding: 0px 10px 2px 22px;
 }
 div.gwf_errors li {
-	background: url(../../../img/default/cross_shield_2.png) left center no-repeat;
+	background: url(../img/default/cross_shield_2.png) left center no-repeat;
 }
 div.gwf_messages li {
-	background: url(../../../img/default/accept.png) left center no-repeat;
+	background: url(../img/default/accept.png) left center no-repeat;
 }
 
 /** Top Menu **/

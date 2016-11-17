@@ -10,7 +10,7 @@ header('content-security-policy: default-src \'self\'');
 require_once 'protected/config.php'; # <-- You might need to adjust this path.
 
 # Init GDO and GWF core
-require_once '%%GWFPATH%%inc/gwf3.class.php';
+require_once '%%GWFPATH%%gwf3.class.php';
 
 # Init GWF
 $gwf = new GWF3(getcwd(), array(
