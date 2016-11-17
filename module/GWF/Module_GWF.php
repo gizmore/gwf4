@@ -8,11 +8,10 @@
  */
 final class Module_GWF extends GWF_Module
 {
-	public function getVersion() { return 3.11; }
+	public function getVersion() { return 4.01; }
+	public function getDefaultAutoLoad() { return true; }
 	public function onInstall($dropTable) { require_once GWF_CORE_PATH.'module/GWF/GWF_InstallGWF.php'; return GWF_InstallGWF::onInstall($this, $dropTable); }
 	public function onLoadLanguage() { return $this->loadLanguage('lang/gwf'); }
-
-//	public function cfgDesign() { return $this->getModuleVar('Design', GWF_Template::getDesign()); }
 
 	# Fancy Config
 	public function cfgFancyIndex() { return $this->getModuleVarBool('FancyIndex', '0'); }
@@ -57,5 +56,16 @@ final class Module_GWF extends GWF_Module
 				return false;
 		return $paths;
 	}
+
+	public function onStartup()
+	{
+		$min = GWF_DEBUG_JS ? '' : '.min';
+		GWF_Website::addBowerJavascript("jquery/dist/jquery$min.js");
+		GWF_Website::addBowerJavascript("angular/angular$min.js");
+		GWF_Website::addBowerJavascript("angular-animate/angular-animate$min.js");
+		GWF_Website::addBowerJavascript("angular-aria/angular-aria$min.js");
+		GWF_Website::addBowerJavascript("angular-material/angular-material$min.js");
+		GWF_Website::addBowerJavascript("angular-messages/angular-messages$min.js");
+		GWF_Website::addBowerJavascript("angular-ui-router/release/angular-ui-router$min.js");
+	}
 }
-?>

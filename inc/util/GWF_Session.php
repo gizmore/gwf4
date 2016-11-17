@@ -55,6 +55,7 @@ final class GWF_Session extends GDO
 	public static function getCurrentURL() { return isset($_SERVER['REDIRECT_URL']) ? $_SERVER['REDIRECT_URL'] : $_SERVER['REQUEST_URI']; }
 	public static function getUserID() { return self::$USER === false ? '0' : self::$USER->getID(); }
 	public static function isLoggedIn() { return self::$USER !== false; }
+	public static function hasSession() { return self::$SESSION ? true : false; }
 	############
 	### Init ###
 	############

@@ -18,6 +18,7 @@ define('GWF_SITENAME', 'LinkUup'); # Your Site`s name. htmlspecialchars() it you
 define('GWF_WEB_ROOT_NO_LANG', '/'); # Add trailing and leading slash. Example: '/' or '/mywebdir/'.
 define('GWF_DEFAULT_DOCTYPE', 'html5'); # Set the default html-doctype for gwf. Modules can change it.
 define('GWF_LOG_BITS', 4095); # bitmask for logging: NONE = 0; GWF_WARNING = 0x01; GWF_MESSAGE = 0x02; GWF_ERROR = 0x04; GWF_CRITICAL = 0x08; PHP_ERROR = 0x10; DB_ERROR = 0x20; SMARTY = 0x40; HTTP_ERROR = 0x80; HTTP_GET = 0x100; HTTP_POST = 0x200; IP = 0x400;
+define('GWF_DEBUG_JS', true);
 
 ################
 ### Defaults ###

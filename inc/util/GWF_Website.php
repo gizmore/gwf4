@@ -226,6 +226,11 @@ final class GWF_Website
 			self::$_javascripts[] = $path;
 		}
 	}
+	
+	public static function addBowerJavascript($path)
+	{
+		self::addJavascript(GWF_WEB_ROOT."bower_components/$path");
+	}
 
 	public static function displayJavascripts()
 	{

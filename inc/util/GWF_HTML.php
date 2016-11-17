@@ -24,7 +24,7 @@ final class GWF_HTML
 	#################
 	public static function init() { self::$trans = new GWF_LangTrans(GWF_CORE_PATH.'inc/lang/base/base'); }
 	public static function &getLang() { return self::$trans; }
-	public static function lang($key, $args=NULL) { return self::$trans->lang($key, $args); }
+	public static function lang($key, $args=NULL) { return self::$trans ? self::$trans->lang($key, $args) : $key; }
 	public static function langAdmin($key, $args=NULL) { return self::$trans->langAdmin($key, $args); }
 	public static function langISO($iso, $key, $args=NULL) { return self::$trans->langISO($iso, $key, $args); }
 	public static function langUser(GWF_User $user, $key, $args=NULL) { return self::$trans->langUser($user, $key, $args); }

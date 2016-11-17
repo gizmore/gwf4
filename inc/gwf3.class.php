@@ -1,6 +1,6 @@
 <?php
 define('GWF_DEBUG_TIME_START', microtime(true));
-define('GWF_CORE_VERSION', '4.00-2016.Nov.16');
+define('GWF_CORE_VERSION', '4.01-2016.Nov.17');
 
 /**
  * Welcome to GWF3
@@ -73,7 +73,8 @@ class GWF3
 		Common::defineConst('GWF_LANG_ADMIN', 'en');
 		Common::defineConst('GWF_SUPPORTED_LANGS', 'en;de;fr;it;pl;hu;es;bs;et;fi;ur;tr;sq;nl;ru;cs;sr');
 		Common::defineConst('GWF_SERVER_VERSION', 'APACHE2.2');
-
+		Common::defineConst('GWF_DEBUG_JS', false);
+		
 		# Load config
 		if (true === $config['load_config'])
 		{
@@ -142,6 +143,11 @@ class GWF3
 
 // 		$db = gdo_db();
 		
+		if (true === $config['do_logging'])
+		{
+			$this->onStartLogging($config['no_session']);
+		}
+		
 		if (false === $config['no_session'])
 		{
 			$this->onStartSession($config['blocking']);
@@ -151,11 +157,6 @@ class GWF3
 		{ 
 			$db = gdo_db();
 			GWF_Website::init();
-		}
-		
-		if (true === $config['do_logging'])
-		{
-			$this->onStartLogging($config['no_session']);
 		}
 		
 		if (true === $config['autoload_modules']) 
@@ -203,7 +204,7 @@ class GWF3
 			$this->onSessionCommit(self::getConfig('store_last_url'));
 		}
 		
-		if ( self::getConfig('load_module') && self::$MODULE->isEnabled() )
+		if ( self::getConfig('load_module') && self::$MODULE && self::$MODULE->isEnabled() )
 		{
 			$db = gdo_db();
 			GWF_CachedCounter::persist();
@@ -453,13 +454,16 @@ class GWF3
 	 */
 	public function onSessionCommit($store_last_url=true) 
 	{
-		# Commit the session
-		if (false !== ($user = GWF_Session::getUser()))
+		if (GWF_Session::hasSession())
 		{
-			$user->saveVar('user_lastactivity', time());
+			# Commit the session
+			if (false !== ($user = GWF_Session::getUser()))
+			{
+				$user->saveVar('user_lastactivity', time());
+			}
+			GWF_Session::commit($store_last_url);
+			return $this;
 		}
-		GWF_Session::commit($store_last_url);
-		return $this;
 	}
 
 	/**
