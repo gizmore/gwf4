@@ -1,4 +1,4 @@
-<div class="gwf3_form">
+<div class="GWF4_form">
 <!-- <div class="gw3_form_title" ><?php echo $tVars['title']?></div>  -->
 	<form action="<?php echo $tVars['action']; ?>" method="<?php echo $tVars['method']; ?>" enctype="<?php echo $tVars['enctype']; ?>">
 	<table>
@@ -58,7 +58,7 @@ foreach ($tVars['data'] as $key => $data)
 //			break;
 			
 		default:
-			GWF3::logDie(sprintf('Your '.__FILE__.' is missing datatype %d', $data[0]));
+			GWF4::logDie(sprintf('Your '.__FILE__.' is missing datatype %d', $data[0]));
 		
 	}
 	echo '</td>';

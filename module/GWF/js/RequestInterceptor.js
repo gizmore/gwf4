@@ -15,11 +15,14 @@ factory('RequestInterceptor', function($q, $injector) {
 			return response;
 		},
 		'responseError': function(rejection) {
+	        if (!ErrorSrvc) { ErrorSrvc = $injector.get('ErrorSrvc'); }
 			var code = rejection.status;
 			if ((code == 403) || (code == 405)) {
 			}
+			else if (code == 404) {
+				ErrorSrvc.show404Error(rejection);
+			}
 			else {
-		        if (!ErrorSrvc) { ErrorSrvc = $injector.get('ErrorSrvc'); }
 				ErrorSrvc.showServerError(rejection);
 			}
 			return $q.reject(rejection);

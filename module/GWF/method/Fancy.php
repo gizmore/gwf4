@@ -57,11 +57,11 @@ final class GWF_Fancy extends GWF_Method
 		switch(substr(Common::getGetString('fancy'), 0, 4))
 		{
 			case 'head': 
-				GWF_Website::addCSS(sprintf('/tpl/%s/css/fancy.css', GWF3::getDesign()));
-				return GWF3::onDisplayHead();
+				GWF_Website::addCSS(sprintf('/tpl/%s/css/fancy.css', GWF4::getDesign()));
+				return GWF4::onDisplayHead();
 				
 			case 'foot': 
-				return GWF3::onDisplayFoot();
+				return GWF4::onDisplayFoot();
 				
 			default:
 				return GWF_HTML::err('ERR_PARAMETER', array(__FILE__, __LINE__, 'fancy'));

@@ -60,28 +60,45 @@ final class Module_GWF extends GWF_Module
 
 	public function onStartup()
 	{
-		$min = GWF_DEBUG_JS ? '' : '.min';
+		$min = GWF_DEBUG_JS ? '' : '.min'; $v = 1;
+		
+		$this->addCSS("gwf4.css");
+		GWF_Website::addBowerCSS("angular-material/angular-material$min.css?v=$v");
+		GWF_Website::addCSS("https://fonts.googleapis.com/icon?family=Material+Icons");
+		
+		
+		$this->addJavascript('gwf-string-util.js');
 		$this->addJavascript('gwf-user.js');
+		
 		GWF_Website::addJavascriptInline($this->getConfigJS());
 		GWF_Website::addJavascriptInline($this->getUserJS());
-		GWF_Website::addBowerJavascript("jquery/dist/jquery$min.js");
-		GWF_Website::addBowerJavascript("angular/angular$min.js");
-		GWF_Website::addBowerJavascript("angular-animate/angular-animate$min.js");
-		GWF_Website::addBowerJavascript("angular-aria/angular-aria$min.js");
-		GWF_Website::addBowerJavascript("angular-material/angular-material$min.js");
-		GWF_Website::addBowerJavascript("angular-messages/angular-messages$min.js");
-		GWF_Website::addBowerJavascript("angular-ui-router/release/angular-ui-router$min.js");
+
+		GWF_Website::addBowerJavascript("jquery/dist/jquery$min.js?v=$v");
+		GWF_Website::addBowerJavascript("angular/angular$min.js?v=$v");
+		GWF_Website::addBowerJavascript("angular-animate/angular-animate$min.js?v=$v");
+		GWF_Website::addBowerJavascript("angular-aria/angular-aria$min.js?v=$v");
+		GWF_Website::addBowerJavascript("angular-material/angular-material$min.js?v=$v");
+		GWF_Website::addBowerJavascript("angular-messages/angular-messages$min.js?v=$v");
+		GWF_Website::addBowerJavascript("angular-ui-router/release/angular-ui-router$min.js?v=$v");
+		
 		$this->addJavascript('gwf-angular.js');
+		$this->addJavascript('ng-html.js');
+		$this->addJavascript('ErrorSrvc.js');
 		$this->addJavascript('RequestSrvc.js');
 		$this->addJavascript('PingSrvc.js');
 		$this->addJavascript('ngEnter.js');
 		$this->addJavascript('RequestInterceptor.js');
-		}
+		$this->addJavascript('gwf-sidebar-service.js');
+	}
 	
 	private function getConfigJS()
 	{
 		$json = json_encode(array(
 			'WEB_ROOT' => GWF_WEB_ROOT,
+			'MO' => Common::getGetString('mo'),
+			'ME' => Common::getGetString('me'),
+			'DEFAULT_MO' => GWF_DEFAULT_MODULE,
+			'DEFAULT_ME' => GWF_DEFAULT_METHOD,
 		));
 		return "var GWF_CONFIG = $json;";
 	}

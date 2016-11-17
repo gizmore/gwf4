@@ -1,5 +1,5 @@
-<!-- GWF3 BB CODE BAR  -->
-<div class="gwf3_bb_code_bar">
+<!-- GWF4 BB CODE BAR  -->
+<div class="GWF4_bb_code_bar">
 <div>
 	<img src="<?php echo $root; ?>img/default/bb/b.png"
 		alt="[b]"
@@ -85,5 +85,5 @@
 <?php echo *	<input type="submit" onclick="" value="Add" /> *; ?>
 </div>
 
-<!-- /GWF3 BB CODE BAR  -->
+<!-- /GWF4 BB CODE BAR  -->
 </div>

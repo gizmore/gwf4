@@ -41,8 +41,12 @@ service('ErrorSrvc', function($q, $mdDialog) {
 		return ErrorSrvc.showError(error, 'Netz doof');
 	};
 
+	ErrorSrvc.show404Error = function(error) {
+		return ErrorSrvc.showError(error.statusText, 'Server Error');
+	};
+
 	ErrorSrvc.showServerError = function(error) {
-		return ErrorSrvc.showError(error, 'Server doof')
+		return ErrorSrvc.showError(error, 'Server Error');
 	};
 	
 	ErrorSrvc.showUserError = function(error) {

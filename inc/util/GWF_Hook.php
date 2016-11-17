@@ -61,7 +61,7 @@ final class GWF_Hook
 	}
 	public static function writeHooks()
 	{
-		GWF_Settings::setSetting('gwf3_hooks', serialize(self::$_write_hooks));
+		GWF_Settings::setSetting('GWF4_hooks', serialize(self::$_write_hooks));
 	}
 
 	###################
@@ -72,7 +72,7 @@ final class GWF_Hook
 	{
 		if (self::$HOOKS === true)
 		{
-			if (false !== ($hooks = GWF_Settings::getSetting('gwf3_hooks', false)))
+			if (false !== ($hooks = GWF_Settings::getSetting('GWF4_hooks', false)))
 			{
 				self::$HOOKS = unserialize($hooks);
 			}

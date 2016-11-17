@@ -43,7 +43,7 @@ final class GWF_AutoConfig
 		define('GWF_DB_DATABASE', 'GWF');
 		define('GWF_DB_TYPE', 'mysqli');
 		define('GWF_DB_ENGINE', 'myIsam');
-		define('GWF_TABLE_PREFIX', 'gwf3_');
+		define('GWF_TABLE_PREFIX', 'GWF4_');
 
 		define('GWF_SESS_NAME', 'GWF');
 		define('GWF_SESS_LIFETIME', 14400);

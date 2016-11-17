@@ -16,7 +16,7 @@ final class GWF_ShowError extends GWF_Method
 	public function execute()
 	{
 		# Do not remember this "non 200" page
-		GWF3::setConfig('store_last_url', false);
+		GWF4::setConfig('store_last_url', false);
 		
 		return $this->templateError();
 	}
@@ -27,7 +27,7 @@ final class GWF_ShowError extends GWF_Method
 		$module instanceof Module_GWF;
 
 		$codes = $module->lang('ERR_HTTP');
-
+		
 		# Get the error page
 		$code = Common::getGetString('code', '0');
 		if (false === isset($codes[$code]))
@@ -35,12 +35,15 @@ final class GWF_ShowError extends GWF_Method
 			return GWF_HTML::err('ERR_NO_PERMISSION');
 		}
 
-		@header($_SERVER['SERVER_PROTOCOL'].' '.$code.' '.$codes[$code]);
+		$message = $module->getLang()->langA('ERR_HTTP', $code);
+		$message = sprintf($message, $_SERVER['REQUEST_URI']);
+		
+		@header($_SERVER['SERVER_PROTOCOL'].' '.$code.' '.$message);
 		
 		# Generate template
 		$tVars = array(
 			'code' => $code,
-			'file' => GWF_HTML::error(GWF_SITENAME, $module->getLang()->langA('ERR_HTTP', $code, array(htmlspecialchars($_SERVER['REQUEST_URI']))), false), # FIXME: this is frontend work!
+			'file' => $message,
 		);
 		$template = $module->template($this->_tpl, $tVars);
 
@@ -68,6 +71,10 @@ final class GWF_ShowError extends GWF_Method
 			GWF_Log::logHTTP($message);
 		}
 
+		if (GWF_Website::isAjax()) {
+			die();
+		}
+		
 		return $template;
 	}
 	

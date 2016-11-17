@@ -26,7 +26,7 @@ $lang = array(
 	'md_wizard' => 'Installazione guidata di GWFv4. Non dovresti vedermi ;)',
 
 	'foot_progress' => 'Percentuale installazione: %0.02f%%',
-	'license' => 'GWF3 è &copy; di gizmore.<br/>GWF3 è correntemente senza licenza. Una licenza compitibile con la licenza MIT è in programma.<br/>GWF3 shall be free as in beer.',
+	'license' => 'GWF4 è &copy; di gizmore.<br/>GWF4 è correntemente senza licenza. Una licenza compitibile con la licenza MIT è in programma.<br/>GWF4 shall be free as in beer.',
 	'pagegen' => 'Pagina generata in %.03fs.',
 
 	'menu_0' => 'Stato',
@@ -116,5 +116,5 @@ $lang = array(
 	'step_12' => 'Proteggi la cartella di installazione',
 	'step_12_0' => 'La tua cartella di installazione dovrebbe essere protetta, rispondendo con errori 404 ad ogni richiesta.',
 	
-	'msg_all_done' => 'Congratulazioni, la tua installazione è completa!<br/>Grazie per aver scelto GWF3<br/>Speriamo che sia di tuo gradimento.<br/><br/>gizmore e spaceone',
+	'msg_all_done' => 'Congratulazioni, la tua installazione è completa!<br/>Grazie per aver scelto GWF4<br/>Speriamo che sia di tuo gradimento.<br/><br/>gizmore e spaceone',
 );

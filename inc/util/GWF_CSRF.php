@@ -8,7 +8,7 @@
 final class GWF_CSRF
 {
 //	const DEBUG = false; # Debug mode
-	const TOKEN_NAME = 'gwf3_csrf'; # session and input name
+	const TOKEN_NAME = 'GWF4_csrf'; # session and input name
 	const TOKEN_ENTROPY = 8; # number of random chars
 	const MAX_TOKENS = 63;
 	

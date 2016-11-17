@@ -5,7 +5,7 @@
  * [+] Factorization
  * [+] Digit sums
  * @author gizmore
- * @since GWF3
+ * @since GWF4
  */
 final class GWF_Numeric
 {

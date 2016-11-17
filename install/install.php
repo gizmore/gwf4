@@ -12,8 +12,8 @@ if (!is_readable('protected/config.php')) {
 set_time_limit(0);
 
 require_once 'protected/config.php';
-require_once '../gwf3.class.php'; 
-$gwf = new GWF3(getcwd(), array(
+require_once '../GWF4.class.php'; 
+$gwf = new GWF4(getcwd(), array(
 	'website_init' => false,
 	'autoload_modules' => false,
 	'load_module' => false,
@@ -35,7 +35,7 @@ if (!GWF_IP6::isLocal())
 {
 	if ($_SERVER['REMOTE_ADDR'] !== $worker_ip)
 	{
-		GWF3::logDie(sprintf('You have no valid $worker_ip in %s line %s.', __FILE__, __LINE__));
+		GWF4::logDie(sprintf('You have no valid $worker_ip in %s line %s.', __FILE__, __LINE__));
 	}
 }
 

@@ -1,10 +1,10 @@
-<div id="gwf3_footmenu">
+<div id="GWF4_footmenu">
 	<?php include 'menu_foot.php'; ?>
 </div>
 
-<div id="gwf3_debug_foot">
+<div id="GWF4_debug_foot">
 <div class="fl">
-	<div id="oos_gwf3">GWF-4</div>
+	<div id="oos_GWF4">GWF-4</div>
 	<div>Logged in as <?php echo $user->display('user_name'); ?></div>
 	<div>&copy;2009-2017 C.Busch</div>
 </div>
@@ -30,7 +30,7 @@
 </div>
 <div class="fl">
 	<div>PAGE SIZE: Unknown</div>
-	<div>PAGES SERVED: <?php echo GWF_Counter::getAndCount('gwf3_pagecount'); ?></div>
+	<div>PAGES SERVED: <?php echo GWF_Counter::getAndCount('GWF4_pagecount'); ?></div>
 </div>
 
 </div>

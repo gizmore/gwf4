@@ -26,7 +26,7 @@ $lang = array(
 	'md_wizard' => 'GWFv3  Installations-Assistent. You should not see me ;)',
 
 	'foot_progress' => 'Installationsfortschritt: %0.02f%%',
-	'license' => 'GWF3 is &copy; by gizmore.<br/>GWF3 ist zur Zeit unlizensiert. Eine MIT-Kompatible Lizenz ist geplant.<br/>GWF3 soll Frei sein!',
+	'license' => 'GWF4 is &copy; by gizmore.<br/>GWF4 ist zur Zeit unlizensiert. Eine MIT-Kompatible Lizenz ist geplant.<br/>GWF4 soll Frei sein!',
 	'pagegen' => 'Seite erzeugt in in %.03fs.',
 
 	'menu_0' => 'Status',
@@ -117,6 +117,6 @@ $lang = array(
 	'step_12' => 'Protect the install folder',
 	'step_12_0' => 'Your install folder should now be protected by throwing 404 errors.',
 	
-	'msg_all_done' => 'Glückwunsch, Ihre Installation ist abgeschlossen!<br/>Vielen Dank das Sie sich für GWF3 entschieden haben.<br/>Wir wünschen viel Spass damit.<br/><br/>gizmore und spaceone',
+	'msg_all_done' => 'Glückwunsch, Ihre Installation ist abgeschlossen!<br/>Vielen Dank das Sie sich für GWF4 entschieden haben.<br/>Wir wünschen viel Spass damit.<br/><br/>gizmore und spaceone',
 );
 ?>

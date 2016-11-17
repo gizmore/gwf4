@@ -239,7 +239,7 @@ final class GWF_InstallConfig
 			array('text', 'Database', 'GWF_DB_DATABASE', '', 'Database db-name.'),
 			array('text', 'Database', 'GWF_DB_TYPE', 'mysqli', 'Database type. Currently only \'mysql\' is supported.'),
 			array('text', 'Database', 'GWF_DB_ENGINE', 'myIsam', 'Default database table type. Either \'innoDB\' or \'myIsam\'.'),
-			array('text', 'Database', 'GWF_TABLE_PREFIX', 'gwf_', 'Database table prefix. Example: \'gwf3_\'.'),
+			array('text', 'Database', 'GWF_TABLE_PREFIX', 'gwf_', 'Database table prefix. Example: \'GWF4_\'.'),
 			
 			# Session
 			array('text',  'Session', 'GWF_SESS_NAME', 'GWF', 'Cookie Prefix. Example: \'GWF\'.'),

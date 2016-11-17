@@ -14,7 +14,7 @@ if (PHP_SAPI !== 'cli')
 
 # GWF_PATH
 chdir('../../../');
-require_once 'gwf3.class.php'; 
+require_once 'GWF4.class.php'; 
 
 if(!defined('GWF_CONFIG_PATH'))
 {
@@ -29,7 +29,7 @@ if ( false === file_exists(GWF_CONFIG_PATH) )
 }
 else
 {
-	GWF3::onLoadConfig(GWF_CONFIG_PATH);
+	GWF4::onLoadConfig(GWF_CONFIG_PATH);
 }
 
 require_once GWF_CORE_PATH.'inc/install/GWF_InstallWizard.php';
@@ -46,7 +46,7 @@ if (isset($write_a_config))
 {
 	GWF_InstallConfig::writeConfig($lang);
 	echo 'I have written a default config to protected/config.php'.PHP_EOL;
-	echo 'Please edit that config.php, before installing gwf3.'.PHP_EOL;
+	echo 'Please edit that config.php, before installing GWF4.'.PHP_EOL;
 	die(0);
 }
 

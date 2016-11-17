@@ -173,8 +173,8 @@ final class GWF_Mail
 		$from = $this->getUTF8Sender();
 		$subject = $this->getUTF8Subject();
 		$random_hash = md5(microtime(true));
-		$bound_mix = "GWF3-MIX-{$random_hash}";
-		$bound_alt = "GWF3-ALT-{$random_hash}";
+		$bound_mix = "GWF4-MIX-{$random_hash}";
+		$bound_alt = "GWF4-ALT-{$random_hash}";
 		$headers = 
 			"Content-Type: multipart/mixed; boundary=\"{$bound_mix}\"".self::HEADER_NEWLINE
 			."MIME-Version: 1.0".self::HEADER_NEWLINE

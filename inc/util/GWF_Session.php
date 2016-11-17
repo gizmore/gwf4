@@ -74,7 +74,7 @@ final class GWF_Session extends GDO
 		self::$SESSDATA = array();
 		self::$SESSION = new self(array(
 			'sess_id' => '0',
-			'sess_sid' => 'xxxx_gwf3_nope_sess',
+			'sess_sid' => 'xxxx_GWF4_nope_sess',
 			'sess_user' => NULL,
 			'sess_data' => NULL,
 			'sess_time' => time(),

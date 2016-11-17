@@ -442,10 +442,18 @@ class GWF_Module extends GDO
 	##################
 	### Javascript ###
 	##################
+	public function addCSS($file)
+	{
+		$name = $this->getName();
+		$v = $this->getVersionFS();
+		return GWF_Website::addCSS(GWF_WEB_ROOT."module/$name/css/$file?v=$v");
+	}
+	
 	public function addJavascript($file)
 	{
 		$name = $this->getName();
-		return GWF_Website::addJavascript(GWF_WEB_ROOT."module/$name/js/$file");
+		$v = $this->getVersionFS();
+		return GWF_Website::addJavascript(GWF_WEB_ROOT."module/$name/js/$file?v=$v");
 	}
 	
 	

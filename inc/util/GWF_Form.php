@@ -416,7 +416,7 @@ class GWF_Form
 	###############
 	### Captcha ###
 	###############
-	const SESS_NEXT_CAPTCHA = 'GWF3FNC';
+	const SESS_NEXT_CAPTCHA = 'GWF4FNC';
 	public function onNewCaptcha()
 	{
 		GWF_Session::remove(self::SESS_NEXT_CAPTCHA);

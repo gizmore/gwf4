@@ -8,9 +8,9 @@ if (PHP_SAPI !== 'cli')
 # GWF_PATH
 chdir('../../../www');
 require_once 'protected/config.php';
-require_once '../gwf3.class.php';
+require_once '../GWF4.class.php';
 
-$gwf = new GWF3(getcwd(), array(
+$gwf = new GWF4(getcwd(), array(
 'init' => true,
 'bootstrap' => false,
 'website_init' => true,

@@ -460,7 +460,7 @@ final class GWF_ModuleLoader
 
 		if (false === ($dir = scandir($path)))
 		{
-			GWF3::logDie('Cannot access '.$path.' in '.__METHOD__.' line '.__LINE__);
+			GWF4::logDie('Cannot access '.$path.' in '.__METHOD__.' line '.__LINE__);
 		}
 
 		foreach ($dir as $file)
@@ -476,7 +476,7 @@ final class GWF_ModuleLoader
 			{
 				if (false === ($method = $module->getMethod(substr($file, 0, -4))))
 				{
-					GWF3::logDie('NO METHOD for '.$file);
+					GWF4::logDie('NO METHOD for '.$file);
 				}
 				$back[] = $method;
 			}

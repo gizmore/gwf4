@@ -1,12 +1,12 @@
 ------------------------------------------------------------------------
 r999 | spaceone | 2011-12-07 00:05:45 +0100 (Mi, 07. Dez 2011) | 2 Zeilen
 
-GWF3: converted moGuestbook templates to smarty
+GWF4: converted moGuestbook templates to smarty
 
 ------------------------------------------------------------------------
 r998 | spaceone | 2011-12-06 23:37:24 +0100 (Di, 06. Dez 2011) | 2 Zeilen
 
-GWF3: converted moAccount templates to smarty
+GWF4: converted moAccount templates to smarty
 
 ------------------------------------------------------------------------
 r997 | Gizmore | 2011-12-06 22:09:12 +0100 (Di, 06. Dez 2011) | 1 Zeile
@@ -27,20 +27,20 @@ Shadowlamb: Unlocked Renraku floor 3 and added help to the bots enable flags. (t
 ------------------------------------------------------------------------
 r991 | Gizmore | 2011-12-06 16:14:13 +0100 (Di, 06. Dez 2011) | 1 Zeile
 
-GWF3: Fixed group edit in admin module.
+GWF4: Fixed group edit in admin module.
 ------------------------------------------------------------------------
 r990 | Gizmore | 2011-12-06 06:29:49 +0100 (Di, 06. Dez 2011) | 1 Zeile
 
-GWF3: Fixed the langfiles where the order of arguments is important. There might be still a lot of these errors lurking.
+GWF4: Fixed the langfiles where the order of arguments is important. There might be still a lot of these errors lurking.
 ------------------------------------------------------------------------
 r989 | spaceone | 2011-12-05 20:23:23 +0100 (Mo, 05. Dez 2011) | 2 Zeilen
 
-GWF3: edited language files (Todo #4)
+GWF4: edited language files (Todo #4)
 
 ------------------------------------------------------------------------
 r988 | spaceone | 2011-12-04 23:52:49 +0100 (So, 04. Dez 2011) | 2 Zeilen
 
-GWF3: fixes in PageBuilder, embeddet CSS is now working and tested.
+GWF4: fixes in PageBuilder, embeddet CSS is now working and tested.
 
 ------------------------------------------------------------------------
 r986 | Gizmore | 2011-12-04 22:35:58 +0100 (So, 04. Dez 2011) | 1 Zeile
@@ -53,7 +53,7 @@ Shadowlamb: New fun item, TinfoilSandals. Fixed a link in Shadowhelp. (thx total
 ------------------------------------------------------------------------
 r984 | spaceone | 2011-12-04 19:57:07 +0100 (So, 04. Dez 2011) | 2 Zeilen
 
-GWF3: added InlineCSS support for PageBuilder. Removed unused column. (all untested)
+GWF4: added InlineCSS support for PageBuilder. Removed unused column. (all untested)
 
 ------------------------------------------------------------------------
 r982 | spaceone | 2011-12-04 01:19:40 +0100 (So, 04. Dez 2011) | 2 Zeilen
@@ -93,7 +93,7 @@ SF: added SF/Debug
 ------------------------------------------------------------------------
 r969 | spaceone | 2011-12-01 15:37:00 +0100 (Do, 01. Dez 2011) | 2 Zeilen
 
-GWF3: Fixes in Module Navigation, Installer; Updated changelog
+GWF4: Fixes in Module Navigation, Installer; Updated changelog
 
 ------------------------------------------------------------------------
 r968 | jjk | 2011-11-30 21:30:45 +0100 (Mi, 30. Nov 2011) | 1 Zeile
@@ -102,40 +102,40 @@ ShadowLamb: stay in TrollHQ's rooms after #entering them
 ------------------------------------------------------------------------
 r967 | spaceone | 2011-11-29 20:53:40 +0100 (Di, 29. Nov 2011) | 2 Zeilen
 
-GWF3: added core of new Module "Navigation"
+GWF4: added core of new Module "Navigation"
 
 ------------------------------------------------------------------------
 r966 | Gizmore | 2011-11-28 18:43:29 +0100 (Mo, 28. Nov 2011) | 1 Zeile
 
-GWF3: GWF_Form does now use $_GET/$_POST again for generating default values. This is more intuitive and less overhead than $_REQUEST. This fixed the Admin_Module method to change config vars. + SYNC + Shadowlamb fixes (thx jjk)
+GWF4: GWF_Form does now use $_GET/$_POST again for generating default values. This is more intuitive and less overhead than $_REQUEST. This fixed the Admin_Module method to change config vars. + SYNC + Shadowlamb fixes (thx jjk)
 ------------------------------------------------------------------------
 r964 | spaceone | 2011-11-28 17:12:29 +0100 (Mo, 28. Nov 2011) | 2 Zeilen
 
-GWF3: ModuleVar fixes
+GWF4: ModuleVar fixes
 
 ------------------------------------------------------------------------
 r963 | spaceone | 2011-11-28 16:38:35 +0100 (Mo, 28. Nov 2011) | 2 Zeilen
 
-GWF3: changed handling for ModuleVars
+GWF4: changed handling for ModuleVars
 
 ------------------------------------------------------------------------
 r962 | Gizmore | 2011-11-28 16:14:31 +0100 (Mo, 28. Nov 2011) | 1 Zeile
 
-GWF3: Fixed Fancy Indexing?
+GWF4: Fixed Fancy Indexing?
 ------------------------------------------------------------------------
 r959 | spaceone | 2011-11-27 23:24:59 +0100 (So, 27. Nov 2011) | 3 Zeilen
 
-GWF3: Captcha is now configurable by modulevars
+GWF4: Captcha is now configurable by modulevars
 SF: little template Changes
 
 ------------------------------------------------------------------------
 r958 | Gizmore | 2011-11-25 22:55:50 +0100 (Fr, 25. Nov 2011) | 1 Zeile
 
-GWF3: It is now possible to set a default limit of 0 PMs. (thx Kender)
+GWF4: It is now possible to set a default limit of 0 PMs. (thx Kender)
 ------------------------------------------------------------------------
 r957 | Gizmore | 2011-11-25 21:33:06 +0100 (Fr, 25. Nov 2011) | 1 Zeile
 
-GWF3: Code cleanup.
+GWF4: Code cleanup.
 ------------------------------------------------------------------------
 r955 | Gizmore | 2011-11-25 16:01:21 +0100 (Fr, 25. Nov 2011) | 1 Zeile
 
@@ -155,7 +155,7 @@ ShadowLamb: added missing name in FirstEmployee quest
 ------------------------------------------------------------------------
 r947 | Gizmore | 2011-11-20 00:15:28 +0100 (So, 20. Nov 2011) | 1 Zeile
 
-GWF3: Having your username beeing part of your password is denied. Also synced with localhost. (thx kwisatz)
+GWF4: Having your username beeing part of your password is denied. Also synced with localhost. (thx kwisatz)
 ------------------------------------------------------------------------
 r945 | Gizmore | 2011-11-18 06:14:58 +0100 (Fr, 18. Nov 2011) | 1 Zeile
 
@@ -187,20 +187,20 @@ Shadowlamb: You cannot use your mount inside dungeons anymore. If you are inside
 ------------------------------------------------------------------------
 r936 | Gizmore | 2011-11-16 02:46:29 +0100 (Mi, 16. Nov 2011) | 1 Zeile
 
-GWF3: Added a new public TODO item.
+GWF4: Added a new public TODO item.
 ------------------------------------------------------------------------
 r935 | Gizmore | 2011-11-15 23:46:47 +0100 (Di, 15. Nov 2011) | 1 Zeile
 
-GWF3: Monster commit. PHP6 compatible. Removed the insecure_php_upload check. Added some readme files to /install.
+GWF4: Monster commit. PHP6 compatible. Removed the insecure_php_upload check. Added some readme files to /install.
 ------------------------------------------------------------------------
 r931 | spaceone | 2011-11-15 21:40:22 +0100 (Di, 15. Nov 2011) | 2 Zeilen
 
-GWF3: The Captcha method
+GWF4: The Captcha method
 
 ------------------------------------------------------------------------
 r930 | spaceone | 2011-11-15 21:38:19 +0100 (Di, 15. Nov 2011) | 2 Zeilen
 
-GWF3: Added Captcha as method for GWFmodule
+GWF4: Added Captcha as method for GWFmodule
 
 ------------------------------------------------------------------------
 r927 | Gizmore | 2011-11-14 04:19:45 +0100 (Mo, 14. Nov 2011) | 1 Zeile
@@ -217,33 +217,33 @@ Synced my localhost because i am changing the IDE.
 ------------------------------------------------------------------------
 r916 | Gizmore | 2011-11-12 10:28:43 +0100 (Sa, 12. Nov 2011) | 1 Zeile
 
-GWF3: Cleaned up install_wizard.php. You can now access it via install/install_wizard.php. The /protected folder is now always "deny all", and only for logs, backups and cronjobs.
+GWF4: Cleaned up install_wizard.php. You can now access it via install/install_wizard.php. The /protected folder is now always "deny all", and only for logs, backups and cronjobs.
 ------------------------------------------------------------------------
 r910 | spaceone | 2011-11-12 01:32:21 +0100 (Sa, 12. Nov 2011) | 3 Zeilen
 
 SF: added 2 new templates (Graffiti, Bewerbung)
-GWF3: fixed an error in modGWF Upgradescript (thx gizmore)
+GWF4: fixed an error in modGWF Upgradescript (thx gizmore)
 
 ------------------------------------------------------------------------
 r908 | Gizmore | 2011-11-11 23:48:55 +0100 (Fr, 11. Nov 2011) | 1 Zeile
 
-GWF3: Tiny bug in module loader. (thx spaceone) + Re-Upload also saves username now (thx Mr.B.AiM)
+GWF4: Tiny bug in module loader. (thx spaceone) + Re-Upload also saves username now (thx Mr.B.AiM)
 ------------------------------------------------------------------------
 r907 | Gizmore | 2011-11-11 23:17:54 +0100 (Fr, 11. Nov 2011) | 1 Zeile
 
-GWF3: Re-Upload of downloads was broken. Also i have allowed "dangerous <?" uploads by default, as the probability for a false positive is 1:65535, hapens once every 64kb. (thx Mr. B.AiM)
+GWF4: Re-Upload of downloads was broken. Also i have allowed "dangerous <?" uploads by default, as the probability for a false positive is 1:65535, hapens once every 64kb. (thx Mr. B.AiM)
 ------------------------------------------------------------------------
 r904 | Gizmore | 2011-11-11 21:26:05 +0100 (Fr, 11. Nov 2011) | 1 Zeile
 
-GWF3: Fixed some tiny bugs in Forum and Shoutbox. ThreadEdit was broken. DeletePost was bugged. Also, the Forum module now allows to set a min-time between two forum posts and specify a min-level to post.
+GWF4: Fixed some tiny bugs in Forum and Shoutbox. ThreadEdit was broken. DeletePost was bugged. Also, the Forum module now allows to set a min-time between two forum posts and specify a min-level to post.
 ------------------------------------------------------------------------
 r903 | Gizmore | 2011-11-11 21:22:56 +0100 (Fr, 11. Nov 2011) | 1 Zeile
 
-GWF3: The email fields in database are now UTF8. The module_name field in the module table is now a unique index.
+GWF4: The email fields in database are now UTF8. The module_name field in the module table is now a unique index.
 ------------------------------------------------------------------------
 r902 | spaceone | 2011-11-11 19:56:20 +0100 (Fr, 11. Nov 2011) | 2 Zeilen
 
-GWF3: PageBuilder checkPermission performance optimized (Ticket #24)
+GWF4: PageBuilder checkPermission performance optimized (Ticket #24)
 
 ------------------------------------------------------------------------
 r901 | Gizmore | 2011-11-10 07:29:11 +0100 (Do, 10. Nov 2011) | 1 Zeile
@@ -256,21 +256,21 @@ WC5: Probably fixed scoring script for RightAnswer. (thx shadum)
 ------------------------------------------------------------------------
 r899 | Gizmore | 2011-11-09 20:26:36 +0100 (Mi, 09. Nov 2011) | 1 Zeile
 
-GWF3: It was possible to cause a database error by entering UTF8 chars into the email field on registration. Are UTF8 chars not allowed?!
+GWF4: It was possible to cause a database error by entering UTF8 chars into the email field on registration. Are UTF8 chars not allowed?!
 ------------------------------------------------------------------------
 r898 | spaceone | 2011-11-08 23:37:10 +0100 (Di, 08. Nov 2011) | 3 Zeilen
 
-GWF3: some code cleanup
-GWF3: [+] Common::get()
+GWF4: some code cleanup
+GWF4: [+] Common::get()
 
 ------------------------------------------------------------------------
 r897 | Gizmore | 2011-11-08 22:33:28 +0100 (Di, 08. Nov 2011) | 1 Zeile
 
-GWF3: Synced SVN. UTF8 BOM was left in lang/paypal_et and added some JS and cleanup.
+GWF4: Synced SVN. UTF8 BOM was left in lang/paypal_et and added some JS and cleanup.
 ------------------------------------------------------------------------
 r896 | Gizmore | 2011-11-08 22:01:15 +0100 (Di, 08. Nov 2011) | 1 Zeile
 
-GWF3: Fixed some bugs in forum. The cronjob did an error because a post could not find it's thread after a merge!!! EditThread always triggered a merge. Moving boards in hirarchy was broken. (thx AngryCustomer)
+GWF4: Fixed some bugs in forum. The cronjob did an error because a post could not find it's thread after a merge!!! EditThread always triggered a merge. Moving boards in hirarchy was broken. (thx AngryCustomer)
 ------------------------------------------------------------------------
 r895 | Gizmore | 2011-11-05 06:24:12 +0100 (Sa, 05. Nov 2011) | 1 Zeile
 
@@ -278,11 +278,11 @@ Lamb3: The IRC bot now supports links from anonet IRC-Cloud, by ignoring echoes 
 ------------------------------------------------------------------------
 r894 | Gizmore | 2011-11-03 03:16:00 +0100 (Do, 03. Nov 2011) | 1 Zeile
 
-GWF3: Userinput in quicksearch can return false, invalid input. this is always catched now. (thx wannabe7331)
+GWF4: Userinput in quicksearch can return false, invalid input. this is always catched now. (thx wannabe7331)
 ------------------------------------------------------------------------
 r892 | Gizmore | 2011-11-03 02:20:14 +0100 (Do, 03. Nov 2011) | 1 Zeile
 
-GWF3: Userinput in quicksearch can return false, invalid input. this is always catched now. (thx wannabe7331)
+GWF4: Userinput in quicksearch can return false, invalid input. this is always catched now. (thx wannabe7331)
 ------------------------------------------------------------------------
 r891 | Gizmore | 2011-11-03 01:17:51 +0100 (Do, 03. Nov 2011) | 1 Zeile
 
@@ -298,24 +298,24 @@ Shadowlamb: Fixed the MCLaren bartender quest. (thx paipai)
 ------------------------------------------------------------------------
 r885 | spaceone | 2011-10-30 21:55:54 +0100 (So, 30. Okt 2011) | 2 Zeilen
 
-GWF3: fixed spelling mistake in module Register
+GWF4: fixed spelling mistake in module Register
 
 ------------------------------------------------------------------------
 r884 | Gizmore | 2011-10-30 02:08:47 +0100 (So, 30. Okt 2011) | 1 Zeile
 
-GWF3: A lot of fixes for lang files since the new vsprintf change. Some tiny fixes to the WC5 module.
+GWF4: A lot of fixes for lang files since the new vsprintf change. Some tiny fixes to the WC5 module.
 ------------------------------------------------------------------------
 r882 | Gizmore | 2011-10-30 01:05:34 +0200 (So, 30. Okt 2011) | 1 Zeile
 
-GWF3: Fixed 3 bugs. 1) GWF_Form::CHECKBOX did not copy user input. 2) GWF_FormValidator did not validate files nicely. 3) GWF_FormUpload failed to compute the max upload size.
+GWF4: Fixed 3 bugs. 1) GWF_Form::CHECKBOX did not copy user input. 2) GWF_FormValidator did not validate files nicely. 3) GWF_FormUpload failed to compute the max upload size.
 ------------------------------------------------------------------------
 r881 | Gizmore | 2011-10-29 23:18:53 +0200 (Sa, 29. Okt 2011) | 1 Zeile
 
-GWF3: Module GWF now has two new modulevars, log_404 and mail_404. 404 errors are now logged in a separate file too. (thx spaceone)
+GWF4: Module GWF now has two new modulevars, log_404 and mail_404. 404 errors are now logged in a separate file too. (thx spaceone)
 ------------------------------------------------------------------------
 r879 | Gizmore | 2011-10-29 22:07:08 +0200 (Sa, 29. Okt 2011) | 1 Zeile
 
-GWF3: GWF_Website main templates are working again. Also synced all stuff.
+GWF4: GWF_Website main templates are working again. Also synced all stuff.
 ------------------------------------------------------------------------
 r878 | Gizmore | 2011-10-29 21:48:52 +0200 (Sa, 29. Okt 2011) | 1 Zeile
 
@@ -323,7 +323,7 @@ WC5: Voting for a site now requires a min-score on that site. (thx awe) (thx sab
 ------------------------------------------------------------------------
 r877 | Gizmore | 2011-10-29 21:47:01 +0200 (Sa, 29. Okt 2011) | 1 Zeile
 
-GWF3: Module Login can now send email alerts on failed login attempts. (thx wannabe7331)
+GWF4: Module Login can now send email alerts on failed login attempts. (thx wannabe7331)
 ------------------------------------------------------------------------
 r872 | Gizmore | 2011-10-28 23:52:00 +0200 (Fr, 28. Okt 2011) | 1 Zeile
 
@@ -335,7 +335,7 @@ Shadowlamb: Point out that you have to spend karma to lvlup. (thx RatHat)
 ------------------------------------------------------------------------
 r868 | Gizmore | 2011-10-25 23:18:46 +0200 (Di, 25. Okt 2011) | 1 Zeile
 
-GWF3: A couple of tiny fixes and comments.
+GWF4: A couple of tiny fixes and comments.
 ------------------------------------------------------------------------
 r866 | Gizmore | 2011-10-21 20:19:33 +0200 (Fr, 21. Okt 2011) | 1 Zeile
 
@@ -367,7 +367,7 @@ Thxwars directory
 ------------------------------------------------------------------------
 r858 | Gizmore | 2011-10-16 19:20:06 +0200 (So, 16. Okt 2011) | 1 Zeile
 
-GWF3: GWF_Module`s have 3 new methods: isCoreModule, getDependencies and getOptionalDependencies. Core modules cannot be disabled. (thx spaceone)
+GWF4: GWF_Module`s have 3 new methods: isCoreModule, getDependencies and getOptionalDependencies. Core modules cannot be disabled. (thx spaceone)
 ------------------------------------------------------------------------
 r856 | Gizmore | 2011-10-16 18:07:17 +0200 (So, 16. Okt 2011) | 1 Zeile
 
@@ -383,7 +383,7 @@ WC5: The YaBFDbg tool now has a makefile and configure. (thx awe)
 ------------------------------------------------------------------------
 r852 | Gizmore | 2011-10-13 03:44:25 +0200 (Do, 13. Okt 2011) | 1 Zeile
 
-GWF3: Cleanup and htaccess change for FancyIndex.
+GWF4: Cleanup and htaccess change for FancyIndex.
 ------------------------------------------------------------------------
 r851 | Gizmore | 2011-10-13 03:33:02 +0200 (Do, 13. Okt 2011) | 1 Zeile
 
@@ -396,59 +396,59 @@ little bugfix in Fancy, strange behavior of Apache?!
 ------------------------------------------------------------------------
 r849 | Gizmore | 2011-10-12 20:14:04 +0200 (Mi, 12. Okt 2011) | 1 Zeile
 
-GWF3: Tiny error fixed in FancyIndexing error handling (thx spaceone)
+GWF4: Tiny error fixed in FancyIndexing error handling (thx spaceone)
 ------------------------------------------------------------------------
 r848 | Gizmore | 2011-10-12 18:09:08 +0200 (Mi, 12. Okt 2011) | 1 Zeile
 
-GWF3: More tiny fixes, discoverd while running baim3 website.
+GWF4: More tiny fixes, discoverd while running baim3 website.
 ------------------------------------------------------------------------
 r844 | Gizmore | 2011-10-08 23:48:12 +0200 (Sa, 08. Okt 2011) | 1 Zeile
 
-GWF3: More tiny fixes. Currently there are 2 sites running the gwf3 code :)
+GWF4: More tiny fixes. Currently there are 2 sites running the GWF4 code :)
 ------------------------------------------------------------------------
 r843 | Gizmore | 2011-10-07 16:26:03 +0200 (Fr, 07. Okt 2011) | 1 Zeile
 
-GWF3: Fixes for lot's of tiny problems.
+GWF4: Fixes for lot's of tiny problems.
 ------------------------------------------------------------------------
 r842 | Gizmore | 2011-10-06 23:39:38 +0200 (Do, 06. Okt 2011) | 1 Zeile
 
-GWF3: Core fixes in hook engine.
+GWF4: Core fixes in hook engine.
 ------------------------------------------------------------------------
 r841 | Gizmore | 2011-10-06 18:37:46 +0200 (Do, 06. Okt 2011) | 1 Zeile
 
-GWF3: The __DIR__ constant is not available in PHP5.2, and the major server is debian whatever ...
+GWF4: The __DIR__ constant is not available in PHP5.2, and the major server is debian whatever ...
 ------------------------------------------------------------------------
 r840 | Gizmore | 2011-10-06 16:35:55 +0200 (Do, 06. Okt 2011) | 1 Zeile
 
-GWF3: Module_VersionServer is partially working again (method zipper). Also synced everything again :)
+GWF4: Module_VersionServer is partially working again (method zipper). Also synced everything again :)
 ------------------------------------------------------------------------
 r837 | Gizmore | 2011-10-04 18:31:29 +0200 (Di, 04. Okt 2011) | 1 Zeile
 
-GWF3: Lot of tiny fixes. everything synced again
+GWF4: Lot of tiny fixes. everything synced again
 ------------------------------------------------------------------------
 r836 | Gizmore | 2011-10-04 18:29:48 +0200 (Di, 04. Okt 2011) | 1 Zeile
 
-GWF3: FancyIndexing now supports sorting.
+GWF4: FancyIndexing now supports sorting.
 ------------------------------------------------------------------------
 r835 | Gizmore | 2011-10-03 03:41:57 +0200 (Mo, 03. Okt 2011) | 1 Zeile
 
-GWF3: Profile meta descriptions were not working. (thx ynori7)
+GWF4: Profile meta descriptions were not working. (thx ynori7)
 ------------------------------------------------------------------------
 r833 | Gizmore | 2011-09-30 21:31:47 +0200 (Fr, 30. Sep 2011) | 1 Zeile
 
-GWF3: Fixed an annoying thing in GWF_Template that also borked rahat 's install. The tiny "install.php" should work better now too. All is synced here!
+GWF4: Fixed an annoying thing in GWF_Template that also borked rahat 's install. The tiny "install.php" should work better now too. All is synced here!
 ------------------------------------------------------------------------
 r831 | Gizmore | 2011-09-30 13:07:10 +0200 (Fr, 30. Sep 2011) | 1 Zeile
 
-GWF3: Installer and JS fixes.
+GWF4: Installer and JS fixes.
 ------------------------------------------------------------------------
 r830 | Gizmore | 2011-09-30 07:28:36 +0200 (Fr, 30. Sep 2011) | 1 Zeile
 
-GWF3: Moved all the javascript around.
+GWF4: Moved all the javascript around.
 ------------------------------------------------------------------------
 r829 | Gizmore | 2011-09-30 01:14:50 +0200 (Fr, 30. Sep 2011) | 1 Zeile
 
-GWF3: Synced with everything. Moved installers back to www/protected.
+GWF4: Synced with everything. Moved installers back to www/protected.
 ------------------------------------------------------------------------
 r827 | Gizmore | 2011-09-29 12:51:01 +0200 (Do, 29. Sep 2011) | 1 Zeile
 
@@ -460,7 +460,7 @@ fixed GWF_Installer Part 2/3
 ------------------------------------------------------------------------
 r824 | Gizmore | 2011-09-28 18:08:15 +0200 (Mi, 28. Sep 2011) | 1 Zeile
 
-GWF3: Fixed some module vars.
+GWF4: Fixed some module vars.
 ------------------------------------------------------------------------
 r822 | spaceone | 2011-09-28 00:20:54 +0200 (Mi, 28. Sep 2011) | 1 Zeile
 
@@ -468,7 +468,7 @@ installer bugfixes
 ------------------------------------------------------------------------
 r820 | Gizmore | 2011-09-27 00:23:00 +0200 (Di, 27. Sep 2011) | 1 Zeile
 
-GWF3: New method GWF_String::strrchr to find the last occurance of a char.
+GWF4: New method GWF_String::strrchr to find the last occurance of a char.
 ------------------------------------------------------------------------
 r819 | Gizmore | 2011-09-24 01:04:09 +0200 (Sa, 24. Sep 2011) | 1 Zeile
 
@@ -476,7 +476,7 @@ Big Sync of everything. Also fixing the //D problem in all preg_matches. (thx lu
 ------------------------------------------------------------------------
 r814 | Gizmore | 2011-09-18 13:51:14 +0200 (So, 18. Sep 2011) | 1 Zeile
 
-GWF3: SVN Sync with latest local version.
+GWF4: SVN Sync with latest local version.
 ------------------------------------------------------------------------
 r813 | Gizmore | 2011-09-18 13:32:57 +0200 (So, 18. Sep 2011) | 1 Zeile
 
@@ -492,7 +492,7 @@ Shadowlamb: Item fixes.
 ------------------------------------------------------------------------
 r809 | Gizmore | 2011-09-16 13:24:00 +0200 (Fr, 16. Sep 2011) | 1 Zeile
 
-GWF3 Security: It is now forbidden to upload files that contain the two magic bytes <? (thx sabretooth)
+GWF4 Security: It is now forbidden to upload files that contain the two magic bytes <? (thx sabretooth)
 ------------------------------------------------------------------------
 r808 | Gizmore | 2011-09-16 08:31:53 +0200 (Fr, 16. Sep 2011) | 1 Zeile
 
@@ -500,11 +500,11 @@ Shadowlamb: Two new experimental magic staffs. (thx somerandomnick)
 ------------------------------------------------------------------------
 r806 | Gizmore | 2011-09-12 08:12:14 +0200 (Mo, 12. Sep 2011) | 1 Zeile
 
-GWF3: User uploads can now be moderated.
+GWF4: User uploads can now be moderated.
 ------------------------------------------------------------------------
 r805 | Gizmore | 2011-09-10 14:48:48 +0200 (Sa, 10. Sep 2011) | 1 Zeile
 
-GWF3: Moved Votes javascript to www directory.
+GWF4: Moved Votes javascript to www directory.
 ------------------------------------------------------------------------
 r804 | Gizmore | 2011-09-09 07:50:58 +0200 (Fr, 09. Sep 2011) | 1 Zeile
 
@@ -564,19 +564,19 @@ A lot of tiny fixes and changes.
 ------------------------------------------------------------------------
 r778 | Gizmore | 2011-08-28 08:42:55 +0200 (So, 28. Aug 2011) | 1 Zeile
 
-GWF3: There is now email moderation for the shoutbox.
+GWF4: There is now email moderation for the shoutbox.
 ------------------------------------------------------------------------
 r777 | Gizmore | 2011-08-28 05:59:20 +0200 (So, 28. Aug 2011) | 1 Zeile
 
-GWF3: The login module has now links to register and recovery.
+GWF4: The login module has now links to register and recovery.
 ------------------------------------------------------------------------
 r774 | Gizmore | 2011-08-27 23:45:21 +0200 (Sa, 27. Aug 2011) | 1 Zeile
 
-GWF3: Fixed Admin edit user groups. (thx spaceone)
+GWF4: Fixed Admin edit user groups. (thx spaceone)
 ------------------------------------------------------------------------
 r773 | Gizmore | 2011-08-27 23:06:22 +0200 (Sa, 27. Aug 2011) | 1 Zeile
 
-GWF3: Fixes for Pagebuilder and Comments. (thx spaceone)
+GWF4: Fixes for Pagebuilder and Comments. (thx spaceone)
 ------------------------------------------------------------------------
 r772 | Gizmore | 2011-08-27 22:09:41 +0200 (Sa, 27. Aug 2011) | 1 Zeile
 
@@ -588,7 +588,7 @@ Shadowlamb: Backup sync to SVN. Note that the new AI is not working yet.
 ------------------------------------------------------------------------
 r770 | Gizmore | 2011-08-27 21:54:54 +0200 (Sa, 27. Aug 2011) | 1 Zeile
 
-GWF3: Module Category might be almost working now.
+GWF4: Module Category might be almost working now.
 ------------------------------------------------------------------------
 r769 | Gizmore | 2011-08-27 19:05:33 +0200 (Sa, 27. Aug 2011) | 1 Zeile
 
@@ -600,15 +600,15 @@ shortform for GWF_Login
 ------------------------------------------------------------------------
 r763 | Gizmore | 2011-08-24 20:53:14 +0200 (Mi, 24. Aug 2011) | 1 Zeile
 
-GWF3: Pagebuilder pages now have a "sitemap" flag. (thx spaceone)
+GWF4: Pagebuilder pages now have a "sitemap" flag. (thx spaceone)
 ------------------------------------------------------------------------
 r762 | Gizmore | 2011-08-24 20:11:08 +0200 (Mi, 24. Aug 2011) | 1 Zeile
 
-GWF3: GWF_Method::execute is now back and abstract. (thx spaceone)
+GWF4: GWF_Method::execute is now back and abstract. (thx spaceone)
 ------------------------------------------------------------------------
 r761 | Gizmore | 2011-08-24 20:10:23 +0200 (Mi, 24. Aug 2011) | 1 Zeile
 
-GWF3: GWF_Method::execute is now back and abstract. (thx spaceone)
+GWF4: GWF_Method::execute is now back and abstract. (thx spaceone)
 ------------------------------------------------------------------------
 r757 | spaceone | 2011-08-23 01:32:38 +0200 (Di, 23. Aug 2011) | 1 Zeile
 
@@ -620,7 +620,7 @@ inc3p/ => inc/3p/
 ------------------------------------------------------------------------
 r752 | Gizmore | 2011-08-22 22:31:34 +0200 (Mo, 22. Aug 2011) | 1 Zeile
 
-GWF3: www and core can now be complete separate locations in the file system. (thx spaceone)
+GWF4: www and core can now be complete separate locations in the file system. (thx spaceone)
 ------------------------------------------------------------------------
 r751 | Gizmore | 2011-08-22 22:09:45 +0200 (Mo, 22. Aug 2011) | 1 Zeile
 
@@ -1273,7 +1273,7 @@ little SF changes, u can hide shell now ;)
 ------------------------------------------------------------------------
 r548 | spaceone | 2011-07-08 21:19:21 +0200 (Fr, 08. Jul 2011) | 1 Zeile
 
-SF-tpl and gwf3-class
+SF-tpl and GWF4-class
 ------------------------------------------------------------------------
 r546 | spaceone | 2011-07-08 19:27:09 +0200 (Fr, 08. Jul 2011) | 1 Zeile
 
@@ -1345,7 +1345,7 @@ Forum thread subscription fixed. (thx paipai)
 ------------------------------------------------------------------------
 r522 | Gizmore | 2011-07-07 01:07:55 +0200 (Do, 07. Jul 2011) | 1 Zeile
 
-Lamb3 fixes for new GWF3 baselayout.
+Lamb3 fixes for new GWF4 baselayout.
 ------------------------------------------------------------------------
 r521 | Gizmore | 2011-07-07 00:59:19 +0200 (Do, 07. Jul 2011) | 1 Zeile
 
@@ -1409,7 +1409,7 @@ Fixed Shadowlamb install. (thx digitalseraphim)
 ------------------------------------------------------------------------
 r497 | Gizmore | 2011-07-04 23:20:31 +0200 (Mo, 04. Jul 2011) | 1 Zeile
 
-Big GWF3 backup, i am ready for a new baselayout.
+Big GWF4 backup, i am ready for a new baselayout.
 ------------------------------------------------------------------------
 r492 | Gizmore | 2011-07-04 22:10:56 +0200 (Mo, 04. Jul 2011) | 1 Zeile
 
@@ -1441,7 +1441,7 @@ More fixes for bugs found by (thx paipai)
 ------------------------------------------------------------------------
 r471 | Gizmore | 2011-07-02 23:50:07 +0200 (Sa, 02. Jul 2011) | 1 Zeile
 
-GWF3: edit_thread did not check usergroup permissions. This was a new introduced bug. (thx paipai)
+GWF4: edit_thread did not check usergroup permissions. This was a new introduced bug. (thx paipai)
 ------------------------------------------------------------------------
 r468 | Gizmore | 2011-07-02 22:26:11 +0200 (Sa, 02. Jul 2011) | 1 Zeile
 
@@ -1477,7 +1477,7 @@ Shadowlamb: 2 new cars :)
 ------------------------------------------------------------------------
 r457 | spaceone | 2011-07-02 19:46:20 +0200 (Sa, 02. Jul 2011) | 1 Zeile
 
-Updated gwf3.class.php, html_head.php, index.php. error.php
+Updated GWF4.class.php, html_head.php, index.php. error.php
 ------------------------------------------------------------------------
 r455 | Gizmore | 2011-07-02 18:47:02 +0200 (Sa, 02. Jul 2011) | 1 Zeile
 
@@ -1497,7 +1497,7 @@ Language selector for wechall is back.
 ------------------------------------------------------------------------
 r450 | spaceone | 2011-07-01 00:20:04 +0200 (Fr, 01. Jul 2011) | 1 Zeile
 
-GWF3 goes to an own Class...
+GWF4 goes to an own Class...
 ------------------------------------------------------------------------
 r449 | spaceone | 2011-06-30 21:30:12 +0200 (Do, 30. Jun 2011) | 1 Zeile
 
@@ -1927,7 +1927,7 @@ Fixed some dependencies for shadowlamb.
 ------------------------------------------------------------------------
 r268 | Gizmore | 2011-06-15 18:39:24 +0200 (Mi, 15. Jun 2011) | 1 Zeile
 
-First commit of WC5/GWF3.
+First commit of WC5/GWF4.
 ------------------------------------------------------------------------
 r261 | Gizmore | 2011-06-15 18:31:59 +0200 (Mi, 15. Jun 2011) | 1 Zeile
 
@@ -2007,7 +2007,7 @@ ShowThread does not require a board::init anymore?
 ------------------------------------------------------------------------
 r230 | Gizmore | 2011-06-13 18:14:19 +0200 (Mo, 13. Jun 2011) | 1 Zeile
 
-GWF3 fixes
+GWF4 fixes
 ------------------------------------------------------------------------
 r229 | Gizmore | 2011-06-13 18:06:37 +0200 (Mo, 13. Jun 2011) | 1 Zeile
 

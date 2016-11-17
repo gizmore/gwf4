@@ -17,7 +17,7 @@ final class GWF_Template
 {
 	protected static $MODULE_FILE = NULL;
 
-	public static function getDesign() { return GWF3::getDesign(); }
+	public static function getDesign() { return GWF4::getDesign(); }
 	private static function pathError($path) { return GWF_HTML::err('ERR_FILE_NOT_FOUND', array( htmlspecialchars(str_replace('%DESIGN%', 'default', $path)) )); }
 
 	public static function templatePHPMain($file, $tVars=NULL) { return self::templatePHP(GWF_WWW_PATH.'themes/%DESIGN%/'.$file, $tVars); }

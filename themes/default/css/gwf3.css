@@ -182,10 +182,10 @@ textarea {
 }
 
 /** Default YForms **/
-.gwf3_formY table tr > td {
+.GWF4_formY table tr > td {
 	text-align: right;
 }
-.gwf3_formY table tr > td + td {
+.GWF4_formY table tr > td + td {
 	text-align: left;
 }
 
@@ -297,7 +297,7 @@ div.gwf_messages li {
 }
 
 /** Top Menu **/
-#gwf3_topmenu li, #gwf3_footmenu li {
+#GWF4_topmenu li, #GWF4_footmenu li {
 	display: inline-block;
 	padding: 2px 8px;
 }

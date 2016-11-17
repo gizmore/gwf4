@@ -1,1 +1,1 @@
-{$file}
+<?php echo $file; ?>

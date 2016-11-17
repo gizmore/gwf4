@@ -1,4 +1,4 @@
-<div class="gwf3_top">
+<div class="GWF4_top">
 	<div class="fl">
 		<h1>GWF v<?php echo GWF_CORE_VERSION; ?></h1>
 	</div>
@@ -8,7 +8,7 @@
 	<div class="cl"></div>
 </div>
 
-<div class="gwf3_topmenu">
+<div class="GWF4_topmenu">
 	<ul>
 		<!-- BOTH -->
 		<li><a href="<?php echo $root; ?>news">News<?php echo GWF_Notice::getUnreadNews($user); ?></a></li>

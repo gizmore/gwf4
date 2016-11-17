@@ -1,5 +1,5 @@
 <?php $required = "(*)"; $cols = 3; ?>
-<div class="gwf3_formY">
+<div class="GWF4_formY">
 	<form action="<?php echo $tVars['action']; ?>" method="<?php echo $tVars['method']; ?>" enctype="<?php echo $tVars['enctype']; ?>">
 	<table>
 		<thead><tr><th colspan="<?php echo $cols; ?>"><?php echo $tVars['title']; ?></th></tr></thead>
@@ -108,7 +108,7 @@
 				break;
 			default:
 				var_dump($data);
-				GWF3::logDie(sprintf('Your tpl/formY.php is missing datatype %d', $data[0]));
+				GWF4::logDie(sprintf('Your tpl/formY.php is missing datatype %d', $data[0]));
 		}
 		?>
 		<?php } ?>

@@ -3,14 +3,13 @@ define('GWF_DEBUG_TIME_START', microtime(true));
 define('GWF_CORE_VERSION', '4.01-2016.Nov.17');
 
 /**
- * Welcome to GWF3
+ * Welcome to GWF4
  * @author spaceone <space@wechall.net>
  * @author gizmore <gizmore@gizmore.org>
- * @version 1.04
- * @since 01.07.2011
- * @todo better design handling
+ * @version 4.01
+ * @since 17.11.2016
  */
-class GWF3 
+class GWF4 
 {
 	private static $DESIGN = 'default';
 	private static $MODULE, $page, $user;
@@ -480,10 +479,10 @@ class GWF3
 		}
 		
 		# Display the page
-		if (true === isset($_GET['ajax']))
+		if (GWF_Website::isAjax())
 		{
 			GWF_Website::plaintext();
-			return self::$page;
+			die(self::$page);
 		}
 		else
 		{
@@ -525,6 +524,10 @@ class GWF3
 		return $class.' &gt;&gt; '.$module.' &gt; '.$method;
 	}
 }
-
-GWF3::_init();
-?>
+#############
+### WOHOO ###
+#############
+GWF4::_init();
+#############
+### WOHOO ###
+#############

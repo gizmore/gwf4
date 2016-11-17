@@ -7,11 +7,11 @@ $worker_ip = 'YOUR.IP.GOES.HERE';
 ### Try to find GWF automagically ###
 #####################################
 $gwf_path = '';
-$inc_path = 'inc/:../GWF3/:'.get_include_path();
+$inc_path = 'inc/:../GWF4/:'.get_include_path();
 foreach (explode(':', $inc_path) as $path)
 {
 	$path = rtrim($path, '/\\');
-	$fullpath = "{$path}/gwf3.class.php";
+	$fullpath = "{$path}/GWF4.class.php";
 	if (is_file($fullpath) && is_readable($fullpath))
 	{
 		$gwf_path = "{$path}/";
@@ -29,7 +29,7 @@ define('GWF_DETECT_PATH', $gwf_path);
 ########################
 ### Include GWF core ###
 ########################
-require_once $gwf_path.'gwf3.class.php';
+require_once $gwf_path.'GWF4.class.php';
 
 ###################################
 ### Try to load the config file ###

@@ -15,7 +15,7 @@ require_once GWF_CORE_PATH.'inc/install/GWF_InstallWizardLanguage.php';
 define('GWF_STEP', Common::getGetString('step', '0'));
 define('GWF_LOGGING_PATH', getcwd().'/protected/installog');
 
-$gwf = new GWF3(getcwd(), array(
+$gwf = new GWF4(getcwd(), array(
 	'website_init' => false,
 	'autoload_modules' => false,
 	'load_module' => false,
@@ -42,7 +42,7 @@ $il = new GWF_LangTrans(GWF_CORE_PATH.'inc/lang/install/install');
 GWF_InstallWizard::setGWFIL($il);
 
 # Design init
-GWF3::setDesign('install');
+GWF4::setDesign('install');
 GWF_Website::addCSS(GWF_WEB_ROOT.'themes/install/css/install.css');
 GWF_Website::addCSS(GWF_WEB_ROOT.'themes/install/css/design.css');
 GWF_Website::setPageTitle('GWF Install Wizard');

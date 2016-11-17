@@ -12,10 +12,10 @@ $_GET['ajax'] = 1;
 require_once 'protected/config.php'; # <-- You may need to change this path.
 
 # Include core
-require_once '%%GWFPATH%%gwf3.class.php';
+require_once '%%GWFPATH%%GWF4.class.php';
 
 # Init
-$gwf = new GWF3(getcwd(), array(
+$gwf = new GWF4(getcwd(), array(
 	'bootstrap' => false,
 	'website_init' => true,
 	'autoload_modules' => false,

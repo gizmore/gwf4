@@ -51,6 +51,7 @@ final class GWF_Website
 	}
 
 	public static function plaintext() { header('Content-Type: text/plain; charset=UTF-8'); }
+	public static function isAjax() { return (isset($_REQUEST['ajax'])) || (isset($_SERVER['REDIRECT_QUERY_STRING']) && (strpos($_SERVER['REDIRECT_QUERY_STRING'], 'ajax=') !== false)); }
 	public static function isHTML() { return false === strpos(GWF_DEFAULT_DOCTYPE, 'xhtml'); }
 	public static function getBirthdate() { return GWF_Settings::getSetting('gwf_site_birthdate', date('Ymd')); } //TODO: move to other file
 	public static function getDefaultOutput() { return self::$_output; }
@@ -77,7 +78,8 @@ final class GWF_Website
 	public static function addMetaTags($s) { self::$_meta['keywords'][1] .= $s; }
 	public static function addFeed($href, $title, $media=0) { self::addLink($href, 'application/rss+xml', 'alternate', $media, $title); }
 	public static function addCSS($path, $media=0) { self::addLink($path, 'text/css', 'stylesheet', $media); }
-
+	public static function addBowerCSS($path) { self::addCSS(GWF_WEB_ROOT."bower_components/$path"); }
+	
 	public static function setMetaTags($s) { self::$_meta['keywords'][1] = $s; }
 	public static function setMetaDescr($s) { self::$_meta['description'][1] = $s; }
 	public static function setPageTitle($title) { self::$_page_title = $title; }

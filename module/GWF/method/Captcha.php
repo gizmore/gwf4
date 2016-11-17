@@ -9,20 +9,20 @@ class GWF_Captcha extends GWF_Method
 	public function getHTAccess()
 	{
 		return
-			'RewriteRule ^Captcha/?$ index.php?mo=GWF&me=Captcha'.PHP_EOL.
-			'RewriteRule ^Captcha/([^/]+)$ index.php?mo=GWF&me=Captcha&chars=$1'.PHP_EOL;
+			'RewriteRule ^Captcha/?$ index.php?mo=GWF&me=Captcha [QSA]'.PHP_EOL.
+			'RewriteRule ^Captcha/([^/]+)$ index.php?mo=GWF&me=Captcha&chars=$1 [QSA]'.PHP_EOL;
 	}
 	
 	public function execute() 
 	{
 		# Don't store this url.
-		GWF3::setConfig('store_last_url', false);
+		GWF4::setConfig('store_last_url', false);
 		
 		# Load the Captcha class
 		require(GWF_CORE_PATH.'inc/3p/Class_Captcha.php');
 		
 		# disable Logging
-		GWF3::setConfig('log_request', false);
+		GWF4::setConfig('log_request', false);
 		
 		# disable HTTP Caching
 		GWF_HTTP::noCache();
