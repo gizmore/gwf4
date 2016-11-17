@@ -61,9 +61,13 @@ service('RequestSrvc', function($http) {
 		console.log('RequestSrvc.fixForms()', selector);
 		jQuery(selector).each(function(index){
 			var form = $(this);
+			jQuery(selector + " input[type=submit]").click(function() {
+				jQuery("input[type=submit][clicked=true]").removeAttr("clicked");
+				jQuery(this).attr("clicked", "true");
+		    });
 			form.submit(function(event) {
 				event.preventDefault();
-				RequestSrvc.sendForm(event, jQuery(this));
+				RequestSrvc.sendForm(event, jQuery(this)).then($scope.pageRequested);
 				return false;
 			});
 		});
@@ -71,7 +75,7 @@ service('RequestSrvc', function($http) {
 
 	RequestSrvc.sendForm = function(event, form) {
 		console.log('RequestSrvc.sendForm()', event, form);
-		RequestSrvc.send(RequestSrvc.formAction(form), RequestSrvc.formData(form));
+		return RequestSrvc.send(RequestSrvc.formAction(form), RequestSrvc.formData(form));
 	};
 
 	RequestSrvc.formAction = function(form) {
@@ -81,7 +85,19 @@ service('RequestSrvc', function($http) {
 	};
 
 	RequestSrvc.formData = function(form) {
-		return form.serializeObject();
+		// Checkboxes
+        var data = form.serializeObject();
+        form.find('md-checkbox.md-checked').each(function(index){
+        	var cbx = jQuery(this);
+        	data[cbx.attr('name')] = true;
+        });
+        // Submit button
+        var input = jQuery("input[type=submit][clicked=true]");
+        var key = input.attr('name');
+        var val = input.val();
+        data[key] = val;
+        // Done
+        return data;
 	};
 
 });

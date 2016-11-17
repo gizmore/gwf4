@@ -75,6 +75,7 @@ final class Register_Form extends GWF_Method
 		$form = $this->getForm();
 		
 		$errorsA = $errorsB = '';
+		
 		if ( (false !== ($errorsA = $form->validate($this->module))) || (false !== ($errorsB = $this->onRegisterB())) ) {
 			return $errorsA.$errorsB.$this->templateForm();
 		}

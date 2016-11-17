@@ -112,15 +112,15 @@ final class GWF_Error
 			}
 		}
 
-		if (true === isset($_GET['ajax']))
-		{
-			$back = '';
-			foreach ($this->all as $subject)
-			{
-				$back .= self::displayAjax($subject);
-			}
-			return $back;
-		}
+// 		if (true === isset($_GET['ajax']))
+// 		{
+// 			$back = '';
+// 			foreach ($this->all as $subject)
+// 			{
+// 				$back .= self::displayAjax($subject);
+// 			}
+// 			return $back;
+// 		}
 
 		return GWF_Template::templateMain('errors.php', array('messages' => $this->all));
 	}

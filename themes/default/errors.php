@@ -1,17 +1,17 @@
 <?php
 foreach ($tVars['messages'] as $type => $msgs)
 {
-	printf('<ul class="gwf_%s">', $type);
+	printf('<md-content layout="row" flex class="gwf_%s">', $type);
 
 	foreach ($msgs as $title => $msg)
 	{
-		printf('<li><span class="gwf_%s_t">%s</span>', $type, $title);
+		printf('<h3>%s</h3>', $title);
 		foreach ($msg as $message)
 		{
-			echo $message.PHP_EOL;
+			printf('<div><i class="material-icons">error</i>%s</div>', $message);
 		}
 		echo "</li>\n";
 	}
 	
-	echo "</ul>\n";
+	echo "</md-content>\n";
 }

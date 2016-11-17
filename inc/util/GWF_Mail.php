@@ -131,7 +131,7 @@ final class GWF_Mail
 		$tVars = array(
 			'content' => nl2br($this->body),
 		);
-		return GWF_Template::templateMain('mail.tpl', $tVars);
+		return GWF_Template::templateMain('mail.php', $tVars);
 	}
 
 	public function nestedTextBody()

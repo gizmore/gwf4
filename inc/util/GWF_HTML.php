@@ -61,17 +61,6 @@ final class GWF_HTML
 	{
 		if(count($errors) === 0) return ''; 
 
-		if (isset($_GET['ajax']))
-		{
-			$err = '';
-			foreach ($errors['messages'] as $m)
-			{
-				$m2 = GWF_Debug::shortpath(self::decode($m));
-				$err .= sprintf('0:%d:%s', strlen($m2), $m2).PHP_EOL;
-			}
-			return $err;
-//			return GWF_Website::addDefaultOutput($err);
-		}
 		return GWF_Template::templateMain('error.php', array('title' => $errors['title'], 'errors' => $errors['messages']));
 	}
 
@@ -93,17 +82,6 @@ final class GWF_HTML
 	{
 		if(count($messages) === 0) return ''; 
 
-		if (Common::getGet('ajax') !== false)
-		{
-			$output = '';
-			foreach ($messages['messages'] as $m)
-			{
-				$m2 = GWF_Debug::shortpath(self::decode($m));
-				$output .= sprintf('1:%d:%s', strlen($m2), $m2).PHP_EOL;
-			}
-			return $output;
-// 			return GWF_Website::addDefaultOutput($output);
-		}
 		return GWF_Template::templateMain('message.php', array('title' => $messages['title'], 'messages' => $messages['messages']));
 	}
 

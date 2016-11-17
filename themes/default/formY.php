@@ -1,5 +1,5 @@
 <?php $required = " required"; $input = null; ?>
-<section layout="row" flex>
+<section layout="column" flex>
 	<form action="<?php echo $action; ?>" method="<?php echo $method; ?>" enctype="<?php echo $enctype; ?>">
 	<h2><?php echo $title; ?></h2>
 	<?php foreach ($tVars['data'] as $key => $data) {
@@ -45,8 +45,10 @@
 				break;
 				
 			case GWF_Form::CHECKBOX:
-				$checked = $data[1] ? ' checked="checked"' : '';
-				$input = sprintf('<input type="checkbox" name="%s"%s value="" />', $key, $checked);
+				$checked = $data[1] ? ' class="md-checked"' : '';
+				$input = sprintf('<md-checkbox type="checkbox" name="%s"%s />', $key, $checked);
+				echo "<md-input-container class=\"gwf-checkbox\">$label $tt $input</md-input-container>";
+				$input = null;
 				break;
 				
 			case GWF_Form::CAPTCHA:
@@ -80,7 +82,7 @@
 				
 			case GWF_Form::SUBMIT:
 				echo '<section class="gwf-button-bar" layout="row" layout-sm="column" layout-align="center center" layout-wrap>';
-				printf('<button name="%s" value="%s" type="submit">%2$s</button>', $key, $value);
+				printf('<input name="%s" value="%s" type="submit" />', $key, $value);
 				echo '</section>';
 				break;
 				
@@ -88,7 +90,7 @@
 				echo '<section class="gwf-button-bar" layout="row" layout-sm="column" layout-align="center center" layout-wrap>';
 				foreach ($data[1] as $key => $value)
 				{
-					printf('<button type="submit" name="%s" value="%s" onclick="form.submit()">%2$s</button>', $key, $value);
+					printf('<input name="%s" value="%s" type="submit" />', $key, $value);
 				}
 				echo '</section>';
 				break;

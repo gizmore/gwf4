@@ -1,10 +1,8 @@
-<div class="gwf_messages">
-	<span class="gwf_msg_t"><?php echo $title; ?></span>
-		<ul>
-<?php foreach ($messages as $msg) {
-	printf('<li>%s</li><br/>', $msg);
+<?php
+printf('<md-content layout="column" flex class="gwf-messages">');
+printf('<h3>%s</h3>', $title);
+foreach ($messages as $message)
+{
+	printf('<div class="gwf-message"><i class="material-icons">done</i>%s</div>', $message);
 }
-?>
-		</ul>
-</div>
-<div class="cl"></div>
+echo "</md-content>\n";

@@ -74,7 +74,7 @@ class GWF_Module extends GDO
 	 * @todo rethink the output handling...
 	 */
 	public function onCronjob() {}
-	public function isAjax() { return isset($_REQUEST['ajax']); }
+	public function isAjax() { return GWF_Website::isAjax(); }
 
 	/**
 	 * Save a module var the quick way. No validation is performed.
