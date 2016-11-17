@@ -3,7 +3,7 @@ final class Register_Form extends GWF_Method
 {
 	public function getHTAccess()
 	{
-		return 'RewriteRule ^register/?$ index.php?mo=Register&me=Form&se=1'.PHP_EOL;
+		return 'RewriteRule ^register/?$ index.php?mo=Register&me=Form&se=1 [QSA]'.PHP_EOL;
 	}
 	
 	public function execute()

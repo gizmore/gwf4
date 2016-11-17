@@ -2,9 +2,7 @@
 
 	</section>
 	
-	<footer id="gwf4-footer">
-		<?php include 'html_footer.php'; ?>
-	</footer>
+	<section layout="row" flex class="gwf-bottom-content">{{data.bottomContent}}</section>
 
 	<script>angular.element(document).ready(function() { angular.bootstrap(document.body, ['gwf4']); });</script>
 </body>

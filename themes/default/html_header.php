@@ -6,5 +6,5 @@
 			<md-button ng-click="toggleRightMenu()">Right Bar Button</md-button>
 		</div>
 	</md-toolbar>
-	<md-content>The Better Website Framework</md-content>
+	<md-content ng-html="data.topContent"></md-content>
 </div>

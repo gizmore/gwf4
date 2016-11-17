@@ -9,12 +9,11 @@ final class Login_Form extends GWF_Method
 	
 	public function getHTAccess()
 	{
-		return 'RewriteRule ^login/?$ index.php?mo=Login&me=Form'.PHP_EOL;
+		return 'RewriteRule ^login/?$ index.php?mo=Login&me=Form '.PHP_EOL;
 	}
 	
 	public function execute()
 	{
-		$isAjax = isset($_GET['ajax']);
 		GWF_Website::setPageTitle($this->module->lang('pt_login'));
 		$result = $this->executeMethod();
 		return $result;
@@ -30,9 +29,9 @@ final class Login_Form extends GWF_Method
 		{
 			return $this->onLogin();
 		}
-		if (isset($_GET['ajax']))
+		if (GWF_Website::isAjax())
 		{
-			return "{error: \"Missing post var: login\"}";
+			return $this->module->error('err_missing_var', array('login'));
 		}
 		return $this->form();
 	}
@@ -41,7 +40,7 @@ final class Login_Form extends GWF_Method
 	{
 		$form = $this->getForm();
 		$tVars = array(
-			'form' => $form->templateY($this->module->lang('title_login')),
+			'form' => $form->templateY($this->module->lang('title_login'), $this->getAction()),
 			'have_cookies' => GWF_Session::haveCookies(),
 // 			'token' => $form->getFormCSRFToken(),
 			'tooltip' => $form->getTooltipText('bind_ip'),

@@ -1,2 +1,2 @@
-{$cookie_info}
-{$form}
+<?php echo $cookie_info; ?>
+<?php echo $form; ?>

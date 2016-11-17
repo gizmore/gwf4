@@ -26,8 +26,32 @@ final class Module_Login extends GWF_Module
 	public function cfgCleanupTime() { return $this->getModuleVar('lf_cleanup_t', 2592000); }
 	public function cfgCleanupAlways() { return $this->getModuleVarBool('lf_cleanup_i', '1'); }
 	public function cfgAlerts() { return $this->getModuleVarBool('send_alerts'); }
+// 	public function cfgBarPositions { return $this->getModuleVar}
 	
 	public function onCronjob() { GWF_LoginFailure::cleanupCron($this->cfgCleanupTime()); }
+	
+	public function sidebarContent($bar)
+	{
+		if ($bar === 'top') {
+			if ($user = GWF_Session::getUser()) {
+				return $this->topLogout($user);
+			}
+		}
+		if ($bar === 'right') {
+			if (!($user = GWF_Session::getUser())) {
+				return $this->sidebarLogin();
+			}
+		}
+	}
+	
+	private function topLogout(GWF_User $user)
+	{
+		return sprintf('<i class="material-icons">lock_outline</i> %s', $user->getName());
+	}
+	
+	private function sidebarLogin()
+	{
+		$this->onLoadLanguage();
+		return $this->getMethod('Form')->form();
+	}
 }
-
-?>

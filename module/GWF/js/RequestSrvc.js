@@ -55,6 +55,33 @@ service('RequestSrvc', function($http) {
 				a.click($scope.requestPage.bind($scope, RequestSrvc.ajaxURL(a.attr('href'))));
 			}
 		});
-
 	};
+	
+	RequestSrvc.fixForms = function($scope, selector) {
+		console.log('RequestSrvc.fixForms()', selector);
+		jQuery(selector).each(function(index){
+			var form = $(this);
+			form.submit(function(event) {
+				event.preventDefault();
+				RequestSrvc.sendForm(event, jQuery(this));
+				return false;
+			});
+		});
+	};
+
+	RequestSrvc.sendForm = function(event, form) {
+		console.log('RequestSrvc.sendForm()', event, form);
+		RequestSrvc.send(RequestSrvc.formAction(form), RequestSrvc.formData(form));
+	};
+
+	RequestSrvc.formAction = function(form) {
+		var action = form.attr('action');
+		action += action.indexOf('?') > 0 ? '&' : '?';
+		return action + 'ajax=1&gwf4am=1';
+	};
+
+	RequestSrvc.formData = function(form) {
+		return form.serializeObject();
+	};
+
 });

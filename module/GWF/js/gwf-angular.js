@@ -17,7 +17,11 @@ controller('GWFCtrl', function($scope, $sce, $mdSidenav, ErrorSrvc, PingSrvc, Re
 	
 	$scope.data = {
 		user: GWF_USER,
-		content: '<div id="gwf-loading-text">Loading</div>',
+		mainContent: '<div id="gwf-loading-text">Loading</div>',
+		topContent: '',
+		leftContent: '',
+		rightContent: '',
+		bottomContent: '',
 	};
 	
 	$scope.requestPage = function(url) {
@@ -27,18 +31,31 @@ controller('GWFCtrl', function($scope, $sce, $mdSidenav, ErrorSrvc, PingSrvc, Re
 	};
 
 	$scope.pageRequested = function(result) {
-		console.log(result);
+		console.log('GWFCtrl.pageRequested()', result);
 		$scope.data.content = result.data;
-//		RequestSrvc.fixAnchors($scope, '#gwf-dynamic-content A');
+		setTimeout(function(){
+			RequestSrvc.fixForms($scope, '.gwf-main-content FORM');
+			RequestSrvc.fixAnchors($scope, '.gwf-main-content A');
+		}, 1);
 	};
 	
 	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
 		if (toState.name === 'loading') {
+			RequestSrvc.fixForms($scope, 'FORM');
 			RequestSrvc.fixAnchors($scope, 'A');
 			PingSrvc.ping().then($scope.pageRequested);
-			SidebarSrvc.refreshSidebars($scope);
+			SidebarSrvc.refreshSidebarsFor($scope);
 		}
 	});
+	
+	$scope.refreshedSidebar = function(bar, result) {
+		console.log('GWFCtrl.refreshedSidebar()', bar, result);
+		$scope.data[bar+'Content'] = result.data;
+		setTimeout(function() {
+			RequestSrvc.fixForms($scope, '.gwf-'+bar+'-content FORM');
+			RequestSrvc.fixAnchors($scope, '.gwf-'+bar+'-content A');
+		}, 1);
+	};
 
 	$scope.toggleLeftMenu = function() {
 		$mdSidenav('left').toggle();

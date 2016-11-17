@@ -66,7 +66,6 @@ final class Module_GWF extends GWF_Module
 		GWF_Website::addBowerCSS("angular-material/angular-material$min.css?v=$v");
 		GWF_Website::addCSS("https://fonts.googleapis.com/icon?family=Material+Icons");
 		
-		
 		$this->addJavascript('gwf-string-util.js');
 		$this->addJavascript('gwf-user.js');
 		
@@ -74,6 +73,8 @@ final class Module_GWF extends GWF_Module
 		GWF_Website::addJavascriptInline($this->getUserJS());
 
 		GWF_Website::addBowerJavascript("jquery/dist/jquery$min.js?v=$v");
+		$this->addJavascript('jq-serialize-object.js');
+		
 		GWF_Website::addBowerJavascript("angular/angular$min.js?v=$v");
 		GWF_Website::addBowerJavascript("angular-animate/angular-animate$min.js?v=$v");
 		GWF_Website::addBowerJavascript("angular-aria/angular-aria$min.js?v=$v");

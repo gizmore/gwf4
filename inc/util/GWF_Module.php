@@ -55,7 +55,7 @@ class GWF_Module extends GDO
 	public function isInstalled() { return $this->getVersionDB() > 0; }
 	public function getModuleFilePath($file) { return GWF_CORE_PATH.'module/'.$this->getName().'/'.$file; }
 	public function isMethodSelected($method) { return ($_GET['mo'] === $this->getName()) && ($_GET['me'] === $method); }
-
+	public function sidebarContent($bar) { return ''; }
 	/**
 	 * Returns a formated String within loaded modules
 	 * @param string $pattern %1$=modules seperated by comata, %2$=number of loaded modules

@@ -8,7 +8,6 @@
 final class GWF_Button
 {
 	private static $templateButtons = true;
-	private static $templateTooltip = true;
 
 	/**
 	 * Preload button template.
@@ -18,7 +17,6 @@ final class GWF_Button
 		if (self::$templateButtons === true)
 		{
 			self::$templateButtons = GWF_Template::templateMain('buttons.php');
-			self::$templateTooltip = GWF_Template::templateMain('tooltip.php');
 		}
 	}
 
@@ -85,12 +83,9 @@ final class GWF_Button
 	public static function prev($href='#', $text=true, $command='', $onclick='') { return self::imgbtn('prev', $href, $text, $command, $onclick); }
 
 
-	public static function tooltip($text, $id='gwf_tt')
+	public static function tooltip($text)
 	{
-		return str_replace(
-			array('%TEXT_HTML%', '%TEXT_JS%', '%ID%'),
-			array(htmlspecialchars($text), GWF_HTML::displayJS($text), $id),
-			self::$templateTooltip);
+		return sprintf('<md-tooltip md-direction="bottom">%s</md-tooltip>', $text);
 	}
 
 	public static function up($href)

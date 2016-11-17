@@ -32,7 +32,7 @@ abstract class GWF_Method
 	public function setTemplate($tpl) { $this->_tpl = $tpl; return $this; }
 	public function l($key, $args=NULL) { return $this->module->lang($key, $args); }
 	public function lu(GWF_User $user, $key, $args=NULL) { return $this->module->langUser($user, $key, $args); }
-	
+	public function getAction() { return $this->getMethodHREF(); }
 	/**
 	 * this method is called before real execution of method
 	 * @todo implement :D:D
