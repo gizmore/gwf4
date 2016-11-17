@@ -9,4 +9,4 @@
 /protected/db_backup.sh
 
 .htaccess
-/jslib/bower
+/bower_components
