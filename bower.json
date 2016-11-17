@@ -1,0 +1,23 @@
+{
+  "directory": "jslib/bower",
+  "name": "gwf4",
+  "homepage": "https://github.com/gizmore/gwf4",
+  "authors": [
+    "gizmore <gizmore@wechall.net>"
+  ],
+  "description": "Gizmore Website Framework",
+  "main": "",
+  "keywords": [
+    "PHP",
+    "AngularMaterial",
+    "Framework"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
