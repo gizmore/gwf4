@@ -438,4 +438,15 @@ class GWF_Module extends GDO
 
 		return $back;
 	}
+	
+	##################
+	### Javascript ###
+	##################
+	public function addJavascript($file)
+	{
+		$name = $this->getName();
+		return GWF_Website::addJavascript(GWF_WEB_ROOT."module/$name/js/$file");
+	}
+	
+	
 }

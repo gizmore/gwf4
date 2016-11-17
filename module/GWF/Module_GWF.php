@@ -9,6 +9,7 @@
 final class Module_GWF extends GWF_Module
 {
 	public function getVersion() { return 4.01; }
+	public function getDefaultPriority() { return 1; }
 	public function getDefaultAutoLoad() { return true; }
 	public function onInstall($dropTable) { require_once GWF_CORE_PATH.'module/GWF/GWF_InstallGWF.php'; return GWF_InstallGWF::onInstall($this, $dropTable); }
 	public function onLoadLanguage() { return $this->loadLanguage('lang/gwf'); }
@@ -60,6 +61,9 @@ final class Module_GWF extends GWF_Module
 	public function onStartup()
 	{
 		$min = GWF_DEBUG_JS ? '' : '.min';
+		$this->addJavascript('gwf-user.js');
+		GWF_Website::addJavascriptInline($this->getConfigJS());
+		GWF_Website::addJavascriptInline($this->getUserJS());
 		GWF_Website::addBowerJavascript("jquery/dist/jquery$min.js");
 		GWF_Website::addBowerJavascript("angular/angular$min.js");
 		GWF_Website::addBowerJavascript("angular-animate/angular-animate$min.js");
@@ -67,5 +71,41 @@ final class Module_GWF extends GWF_Module
 		GWF_Website::addBowerJavascript("angular-material/angular-material$min.js");
 		GWF_Website::addBowerJavascript("angular-messages/angular-messages$min.js");
 		GWF_Website::addBowerJavascript("angular-ui-router/release/angular-ui-router$min.js");
+		$this->addJavascript('gwf-angular.js');
+		$this->addJavascript('RequestSrvc.js');
+		$this->addJavascript('PingSrvc.js');
+		$this->addJavascript('ngEnter.js');
+		$this->addJavascript('RequestInterceptor.js');
+		}
+	
+	private function getConfigJS()
+	{
+		$json = json_encode(array(
+			'WEB_ROOT' => GWF_WEB_ROOT,
+		));
+		return "var GWF_CONFIG = $json;";
 	}
-}
+
+	private function getUserJS()
+	{
+		$user = GWF_User::getStaticOrGuest();
+		$json = json_encode(array(
+				'user_id' => (int)$user->getVar('user_id'),
+				'user_options' => (int)$user->getVar('user_options'),
+				'user_name' => $user->getVar('user_name'),
+				'user_password' => $user->getVar('user_password'),
+				'user_regdate' => $user->getVar('user_regdate'),
+				'user_email' => $user->getVar('user_email'),
+				'user_gender' => $user->getVar('user_gender'),
+				'user_birthdate' => $user->getVar('user_birthdate'),
+				'user_avatar_v' => (int)$user->getVar('user_avatar_v'),
+				'user_countryid' => (int)$user->getVar('user_countryid'),
+				'user_langid' => (int)$user->getVar('user_langid'),
+				'user_langid2' => (int)$user->getVar('user_langid2'),
+				'user_level' => (int)$user->getVar('user_level'),
+				'user_title' => $user->getVar('user_title'),
+				'user_credits' => round($user->getVar('user_credits'), 2),
+		));
+		return "var GWF_USER = new GWF_User($json);";
+	}
+	}
