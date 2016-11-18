@@ -1,1 +1,1 @@
-{$form}
+<?php echo $form; ?>

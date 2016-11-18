@@ -5,8 +5,8 @@
  */
 final class GWF_Table
 {
-	public static function start($class='', $id='') { $cl = $class === '' ? '' : " class=\"$class\""; $id = $id === '' ? '' : " id=\"$id\""; return '<div class="gwf_table"><table'.$cl.$id.'>'.PHP_EOL; }
-	public static function end() { return '</table></div>'.PHP_EOL; }
+	public static function start($class='', $id='') { $cl = $class === '' ? '' : " class=\"$class\""; $id = $id === '' ? '' : " id=\"$id\""; return '<md-list'.$cl.$id.'>'.PHP_EOL; }
+	public static function end() { return '</md-list>'.PHP_EOL; }
 
 	public static function rowStart($flip=true, $class='', $id='', $style='')
 	{
@@ -14,20 +14,20 @@ final class GWF_Table
 		if ($flip)
 		{
 			$odd = 1 - $odd;
-			$class .= $odd === 0 ? ' gwf_even' : ' gwf_odd';
+			$class .= $odd === 0 ? ' gwf-even' : ' gwf-odd';
 		}
 		$id = $id === '' ? '' : ' id="'.$id.'"';
 		$class = $class === '' ? '' : ' class="'.$class.'"';
 		$style = $style === '' ? '' : ' style="'.$style.'"';
-		return sprintf('<tr%s%s%s>', $id, $class, $style).PHP_EOL;
+		return sprintf('<md-list-item%s%s%s>', $id, $class, $style).PHP_EOL;
 	}
-	public static function rowEnd() { return '</tr>'.PHP_EOL; }
+	public static function rowEnd() { return '</md-list-item>'.PHP_EOL; }
 
 	public static function column($text='', $class='', $colspan=1)
 	{
 		$colspan = $colspan === 1 ? '' : " colspan=\"{$colspan}\"";
 		$class = $class === '' ? '' : ' class="'.$class.'"';
-		return sprintf('<td%s%s>%s</td>', $class, $colspan, $text);
+		return sprintf('<span%s%s>%s</span>', $class, $colspan, $text);
 	}
 
 	/**

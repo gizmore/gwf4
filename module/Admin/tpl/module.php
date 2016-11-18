@@ -1,6 +1,6 @@
 <table class="fl">
 	<?php
-	$admin_sect = $tLang->lang('btn_admin_section');
+	$admin_sect = $lang->lang('btn_admin_section');
 	foreach ($tVars['modules'] as $d)
 	{
 		$m = $d['module']; $m instanceof GWF_Module;
@@ -27,7 +27,7 @@ if (false !== ($error = GWF_ModuleLoader::checkModuleDependencies($module))) {
 $methods = GWF_ModuleLoader::getAllMethods($module);
 if (count($methods) > 0)
 {
-	printf('<div class="box box_c">%s</div>', $tLang->lang('info_methods', array(count($methods))));
+	printf('<div class="box box_c">%s</div>', $lang->lang('info_methods', array(count($methods))));
 	foreach ($methods as $method)
 	{
 		$method instanceof GWF_Method;

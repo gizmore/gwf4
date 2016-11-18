@@ -1,5 +1,5 @@
-<div class="gwf_buttons_outer"><div class="gwf_buttons">
-{foreach $buttons as $btn}
-{button type='generic' url=$btn[0] text=$btn[1] selected=$btn[2]}
-{/foreach}
-</div></div>
+<section class="gwf-button-bar" layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+	<?php foreach ($buttons as $btn) { ?>
+	<md-button href="<?php echo $btn[0] ?>" ng-class="{'gwf-nav-selected': $btn[2]}"><?php echo $btn[1]; ?></md-button>
+	<?php } ?>
+</section>

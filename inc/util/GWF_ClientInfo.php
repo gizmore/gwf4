@@ -230,11 +230,10 @@ final class GWF_ClientInfo
 
 	/**
 	* Returns an HTML Imagestring
-	* @param $path = GWF_WEB_ROOT/img/GWF_ICON_SET/{$path}/$name.png
 	*/
 	public static function image($name, $path='client/', $check=true)
 	{
-		$path = sprintf('img/%s/%s.png', GWF_ICON_SET, $path . self::validateImgPath($name));
+		$path = sprintf('themes/%s/img/%1$s/%s.png', GWF_DEFAULT_DESIGN, $path . self::validateImgPath($name));
 		return ( !$check || is_file(GWF_WWW_PATH.$path) ) ? sprintf('<img src="%s" title="%s" alt="%s" class="gwf_icon">', GWF_WEB_ROOT.$path, self::lang($name), self::lang($name)) : '';
 	}
 	public static function imgBrowser($path='client/') { return self::image( self::getBrowser(), $path ); }

@@ -16,14 +16,14 @@ else
 	echo $tVars['pagemenu'];
 	
 	$headers = array(
-		array($tLang->lang('th_userid'), 'user_id'),
-		array($tLang->lang('th_country'), 'user_countryid'),
-		array($tLang->lang('th_user_name'), 'user_name'),
-		array($tLang->lang('th_regdate'), 'user_regdate'),
-		array($tLang->lang('th_email'), 'user_email'),
-		array($tLang->lang('th_birthdate'), 'user_birthdate'),
-		array($tLang->lang('th_regip'), 'user_regip'),
-		array($tLang->lang('th_lastactivity'), 'user_lastactivity')
+		array($lang->lang('th_userid'), 'user_id'),
+		array($lang->lang('th_country'), 'user_countryid'),
+		array($lang->lang('th_user_name'), 'user_name'),
+		array($lang->lang('th_regdate'), 'user_regdate'),
+		array($lang->lang('th_email'), 'user_email'),
+		array($lang->lang('th_birthdate'), 'user_birthdate'),
+		array($lang->lang('th_regip'), 'user_regip'),
+		array($lang->lang('th_lastactivity'), 'user_lastactivity')
 	);
 	
 	echo GWF_Table::start();

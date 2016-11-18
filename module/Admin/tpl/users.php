@@ -1,16 +1,16 @@
 <?php
 echo $tVars['search_form'];
 $headers = array(
-	array($tLang->lang('th_userid'), 'user_id', 'ASC'),
-	array($tLang->lang('th_user_credits'), 'user_credits', 'ASC'),
-	array($tLang->lang('th_user_level'), 'user_level', 'ASC'),
-	array($tLang->lang('th_country'), 'user_countryid', 'ASC'),
-	array($tLang->lang('th_user_name'), 'user_name', 'ASC'),
-	array($tLang->lang('th_regdate'), 'user_regdate', 'ASC'),
-	array($tLang->lang('th_email'), 'user_email', 'ASC'),
-	array($tLang->lang('th_birthdate'), 'user_birthdate', 'ASC'),
-	array($tLang->lang('th_regip'), 'user_regip', 'ASC'),
-	array($tLang->lang('th_lastactivity'), 'user_lastactivity', 'DESC'),
+	array($lang->lang('th_userid'), 'user_id', 'ASC'),
+	array($lang->lang('th_user_credits'), 'user_credits', 'ASC'),
+	array($lang->lang('th_user_level'), 'user_level', 'ASC'),
+	array($lang->lang('th_country'), 'user_countryid', 'ASC'),
+	array($lang->lang('th_user_name'), 'user_name', 'ASC'),
+	array($lang->lang('th_regdate'), 'user_regdate', 'ASC'),
+	array($lang->lang('th_email'), 'user_email', 'ASC'),
+	array($lang->lang('th_birthdate'), 'user_birthdate', 'ASC'),
+	array($lang->lang('th_regip'), 'user_regip', 'ASC'),
+	array($lang->lang('th_lastactivity'), 'user_lastactivity', 'DESC'),
 );
 echo $tVars['pagemenu'];
 echo GWF_Table::start();

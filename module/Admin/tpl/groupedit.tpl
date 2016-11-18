@@ -1,23 +1,31 @@
-{$form}
+<?php echo $form; ?>
 
-{$form_add}
+<?php echo $form_add; ?>
 
-{$pagemenu}
+<?php echo $pagemenu; ?>
 
-<div class="gwf_table"><table>
-{$headers}
+<md-list>
 
-	{assign var="gid" value={$group->getID()}}
-{foreach $userids as $userid}
-	<tr>
-	{if false === GWF_User::getByID($userid)}
-		{GWF_Table::column(GWF_Guest::getGuest()->displayProfileLink())}
-	{else}
-		{GWF_Table::column(GWF_User::getByID($userid)->displayProfileLink())}
-	{/if}
-	{GWF_Table::column(GWF_Button::delete( $module->getMethodURL('GroupEdit', "&rem={$userid}&gid={$gid}"), $lang->lang('btn_rem_from_group') ))}
-	</tr>
-{/foreach}
-</table></div>
+<?php echo $headers; ?>
 
-{$pagemenu}
+<?php $gid = $group->getID(); ?>
+<?php foreach ($userids as $userid) { ?>
+	<md-list-item>
+	<?php
+	$user = GWF_User::getByID($userid);
+	if (!$user) {
+		echo GWF_Table::column(GWF_Guest::getGuest()->displayProfileLink());
+	}
+	else {
+		echo GWF_Table::column($user)->displayProfileLink();
+	}
+	echo GWF_Table::column(GWF_Button::delete( $module->getMethodURL('GroupEdit', "&rem={$userid}&gid={$gid}"), $lang->lang('btn_rem_from_group') ));
+	?>
+	</md-list-item>
+
+<?php } ?>
+
+
+</md-list>
+
+<?php echo $pagemenu; ?>

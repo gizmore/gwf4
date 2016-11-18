@@ -1,3 +1,3 @@
 <pre>
-{$cron_output|htmlspecialchars}
+<?php echo htmlspecialchars($cron_output); ?>
 </pre>

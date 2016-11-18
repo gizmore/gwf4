@@ -1,2 +1,2 @@
-{$nav}
-{$form_gpg}
+<?php echo $nav; ?>
+<?php echo $form_gpg; ?>

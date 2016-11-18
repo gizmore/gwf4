@@ -22,7 +22,6 @@ final class GWF_AutoConfig
 		define('GWF_DEFAULT_MODULE', 'GWF');
 		define('GWF_DEFAULT_METHOD', 'About');
 		define('GWF_DEFAULT_DESIGN', 'default');
-		define('GWF_ICON_SET', 'default');
 		
 		define('GWF_SMARTY_PATH', GWF_CORE_PATH.'inc/3p/smarty/Smarty.class.php');
 		define('GWF_SMARTY_DIRS', GWF_PATH.'extra/temp/smarty/');
