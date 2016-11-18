@@ -39,7 +39,7 @@ final class Module_GWF extends GWF_Module
 	public function cfgCaptchaBG() { $bgcolor = $this->getModuleVar('CaptchaBGColor', 'FFFFFF'); return false === $this->validate_CaptchaColor($bgcolor) ? 'FFFFFF' : $bgcolor;; }
 	public function cfgCaptchaFont()
 	{
-		$default = GWF_PATH.'extra/font/teen.ttf';
+		$default = GWF_PATH.'inc/fonts/teen.ttf';
 		$paths = explode(',', $this->getModuleVar('CaptchaFont', $default));
 		return false === $this->validate_CaptchaFont($paths) ? (array)$default : $paths;
 	}

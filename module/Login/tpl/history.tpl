@@ -1,21 +1,27 @@
-{box content=$cleared}
+<?php
 
-{$pagemenu}
+# Login History and clear form.
 
-<table>
-	<thead>{$tablehead}</thead>
-	<tbody>
-	{foreach $history as $h}
-		<tr class="{cycle values="odd,even"}">
-			<td class="gwf_date">{$h->displayDate()}</td>
-			<td>{$h->displayIP()}</td>
-			<td>{$h->displayHostname()}</td>
-		</tr>
-	{/foreach}
-	</tbody>
-</table>
+echo GWF_Box::box($cleared);
 
-{$pagemenu}
+echo $pagemenu;
 
-{$form}
+echo GWF_Table::start();
+
+echo $tablehead;
+
+foreach ($history as $h)
+{
+	echo GWF_Table::rowStart();
+	echo GWF_Table::column($h->displayDate(), 'gwf-date');
+	echo GWF_Table::column($h->displayIP(), 'gwf-ip');
+	echo GWF_Table::column($h->displayHostname(), 'gwf-name');
+	echo GWF_Table::rowEnd();
+}
+
+echo GWF_Table::end();
+
+echo $pagemenu;
+
+echo $form;
 

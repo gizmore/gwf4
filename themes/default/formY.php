@@ -56,12 +56,17 @@
 				$label = '<label>'.GWF_HTML::lang('th_captcha1').'</label>'; 
 				$tt = GWF_Button::tooltip(GWF_HTML::lang('tt_captcha1'));
 				$img = sprintf('<img src="%sCaptcha%s" onclick="this.src=\'%1$sCaptcha/?\'+(new Date()).getTime();" alt="Captcha" />', $root, $foo);
-				echo "<md-input-container>$label$tt$img</md-input-container>";
+				echo "<md-input-container>$label$tt</md-input-container>";
+				echo "<md-input-container>$img</md-input-container>";
+				
+				
 				$tt = GWF_Button::tooltip(GWF_HTML::lang('tt_captcha2'));
 				$label = GWF_HTML::lang('th_captcha2');
 				$input = sprintf('<input type="text" name="%s" value="%s" />', $key, $value);
+				echo "<md-input-container>$label $tt $input</md-input-container>";
+				$input = null;
 				break;
-			
+				
 			case GWF_Form::ENUM:
 			case GWF_Form::TIME:
 			case GWF_Form::DATE:

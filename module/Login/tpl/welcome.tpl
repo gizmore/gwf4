@@ -1,6 +1,1 @@
-<div class="box">
-	<div class="box_c">
-		{$welcome}
-		{$last_login}
-	</div>
-</div>
+<?php echo GWF_Box::box($welcome.'<br/>'.$last_login); ?>

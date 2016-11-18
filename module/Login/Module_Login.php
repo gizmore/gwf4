@@ -46,7 +46,7 @@ final class Module_Login extends GWF_Module
 	
 	private function topLogout(GWF_User $user)
 	{
-		return sprintf('<i class="material-icons">lock_outline</i> %s', $user->getName());
+		return sprintf('<md-button href="%slogout"><i class="material-icons">lock_outline</i></md-button><span class="gwf-top-username">%s</span>', GWF_WEB_ROOT, $user->getName());
 	}
 	
 	private function sidebarLogin()

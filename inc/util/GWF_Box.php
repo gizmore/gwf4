@@ -28,7 +28,7 @@ final class GWF_Box
 	 */
 	private static function boxT($content, $title)
 	{
-		return GWF_Template::templateMain('box_t.tpl', array('title'=>$title,'content'=>$content));
+		return GWF_Template::templateMain('box_t.php', array('title'=>$title,'content'=>$content));
 	}
 
 	/**
@@ -38,7 +38,7 @@ final class GWF_Box
 	 */
 	private static function boxNT($content)
 	{
-		return GWF_Template::templateMain('box_nt.tpl', array('content'=>$content));
+		return GWF_Template::templateMain('box_nt.php', array('content'=>$content));
 	}
 }
 
