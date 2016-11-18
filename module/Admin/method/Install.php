@@ -7,9 +7,9 @@ final class Admin_Install extends GWF_Method
 	public function getHTAccess()
 	{
 		return 
-			sprintf('RewriteRule ^%s/install_all$ index.php?mo=Admin&me=Install&all=true'.PHP_EOL, Module_Admin::ADMIN_URL_NAME).
-			sprintf('RewriteRule ^%s/install/([a-zA-Z]+)$ index.php?mo=Admin&me=Install&module=$1&drop=0'.PHP_EOL, Module_Admin::ADMIN_URL_NAME).
-			sprintf('RewriteRule ^%s/wipe/([a-zA-Z]+)$ index.php?mo=Admin&me=Install&module=$1&drop=1'.PHP_EOL, Module_Admin::ADMIN_URL_NAME);
+			sprintf('RewriteRule ^%s/install_all$ index.php?mo=Admin&me=Install&all=true [QSA]'.PHP_EOL, Module_Admin::ADMIN_URL_NAME).
+			sprintf('RewriteRule ^%s/install/([a-zA-Z]+)$ index.php?mo=Admin&me=Install&module=$1&drop=0 [QSA]'.PHP_EOL, Module_Admin::ADMIN_URL_NAME).
+			sprintf('RewriteRule ^%s/wipe/([a-zA-Z]+)$ index.php?mo=Admin&me=Install&module=$1&drop=1 [QSA]'.PHP_EOL, Module_Admin::ADMIN_URL_NAME);
 	}
 	
 	public function getPageMenuLinks()

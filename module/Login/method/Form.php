@@ -9,7 +9,7 @@ final class Login_Form extends GWF_Method
 	
 	public function getHTAccess()
 	{
-		return 'RewriteRule ^login/?$ index.php?mo=Login&me=Form '.PHP_EOL;
+		return 'RewriteRule ^login/?$ index.php?mo=Login&me=Form [QSA]'.PHP_EOL;
 	}
 	
 	public function execute()

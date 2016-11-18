@@ -10,7 +10,7 @@ final class GWF_ShowError extends GWF_Method
 
 	public function getHTAccess()
 	{
-		return 'RewriteRule ^error/(.*?)$ index.php?mo=GWF&me=ShowError&code=$1'.PHP_EOL;
+		return 'RewriteRule ^error/(.*?)$ index.php?mo=GWF&me=ShowError&code=$1 [QSA]'.PHP_EOL;
 	}
 	
 	public function execute()

@@ -10,7 +10,7 @@ final class GWF_ShowHeaders extends GWF_Method
 
 	public function getHTAccess()
 	{
-		return 'RewriteRule ^GWF/headers/?$ index.php?mo=GWF&me=ShowHeaders'.PHP_EOL;
+		return 'RewriteRule ^GWF/headers/?$ index.php?mo=GWF&me=ShowHeaders [QSA]'.PHP_EOL;
 	}
 
 	public function execute()

@@ -16,7 +16,7 @@ final class Admin_Move extends GWF_Method
 
 	public function getHTAccess()
 	{
-		return sprintf('RewriteRule ^%s/move/(up|down|first|last)/([a-zA-Z]+)$ index.php?mo=Admin&me=Move&$1=now&modulename=$2'.PHP_EOL, Module_Admin::ADMIN_URL_NAME);
+		return sprintf('RewriteRule ^%s/move/(up|down|first|last)/([a-zA-Z]+)$ index.php?mo=Admin&me=Move&$1=now&modulename=$2 [QSA]'.PHP_EOL, Module_Admin::ADMIN_URL_NAME);
 	}
 	
 	public function execute()

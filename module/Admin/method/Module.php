@@ -21,7 +21,7 @@ final class Admin_Module extends GWF_Method
 	
 	public function getHTAccess()
 	{
-		return sprintf('RewriteRule ^%s/configure/([a-zA-Z]+)$ index.php?mo=Admin&me=Module&module=$1'.PHP_EOL, Module_Admin::ADMIN_URL_NAME);
+		return sprintf('RewriteRule ^%s/configure/([a-zA-Z]+)$ index.php?mo=Admin&me=Module&module=$1 [QSA]'.PHP_EOL, Module_Admin::ADMIN_URL_NAME);
 	}
 	public function execute()
 	{

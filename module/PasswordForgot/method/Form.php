@@ -8,9 +8,7 @@ final class PasswordForgot_Form extends GWF_Method
 {
 	public function getHTAccess()
 	{
-		return 'RewriteRule ^recovery$ index.php?mo=PasswordForgot&me=Form'.PHP_EOL;
-//		$rewrites = array('recovery', 'passwort_vergessen', 'Dimenticati_il_Password');
-//		return $this->getHTAccessMethods($rewrites);
+		return 'RewriteRule ^recovery$ index.php?mo=PasswordForgot&me=Form [QSA]'.PHP_EOL;
 	}
 	
 	public function execute()

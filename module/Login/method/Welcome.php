@@ -8,7 +8,7 @@ final class Login_Welcome extends GWF_Method
 	{
 		return
 //			'RewriteRule ^welcome_back$ index.php?mo=Login&me=Welcome'.PHP_EOL.
-			'RewriteRule ^welcome$ index.php?mo=Login&me=Welcome&activated=true'.PHP_EOL;
+			'RewriteRule ^welcome$ index.php?mo=Login&me=Welcome&activated=true [QSA]'.PHP_EOL;
 //			'RewriteRule ^willkommen$ index.php?mo=Login&me=Welcome'.PHP_EOL.
 //			'RewriteRule ^willkommen_zurück$ index.php?mo=Login&me=Welcome&activated=true'.PHP_EOL;
 	}

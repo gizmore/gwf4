@@ -7,7 +7,7 @@ final class Login_Logout extends GWF_Method
 	public function getHTAccess()
 	{
 		return 
-			'RewriteRule ^logout$ index.php?mo=Login&me=Logout'.PHP_EOL;
+			'RewriteRule ^logout$ index.php?mo=Login&me=Logout [QSA]'.PHP_EOL;
 //			'RewriteRule ^ausloggen$ index.php?mo=Login&me=Logout'.PHP_EOL;
 	}
 	

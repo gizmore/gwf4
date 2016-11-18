@@ -188,6 +188,20 @@ final class Module_Admin extends GWF_Module
 			),
 		);
 	}
+	
+	public function sidebarContent($bar)
+	{
+		if ($bar === 'top') {
+			if (GWF_User::isAdminS()) {
+				return $this->topNanny();
+			}
+		}
+	}
+	
+	private function topNanny()
+	{
+		$this->onLoadLanguage();
+		return sprintf('<a href="%snanny">%s</a>', GWF_WEB_ROOT, $this->lang('btn_admin_section'));
+	}
+	
 }
-
-?>
