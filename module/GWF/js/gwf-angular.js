@@ -17,7 +17,7 @@ controller('GWFCtrl', function($scope, $sce, $mdSidenav, ErrorSrvc, PingSrvc, Re
 	
 	$scope.data = {
 		user: GWF_USER,
-		mainContent: '<div id="gwf-loading-text">Loading</div>',
+		mainContent: 'aaaa',
 		topContent: '',
 		leftContent: '',
 		rightContent: '',
@@ -26,24 +26,37 @@ controller('GWFCtrl', function($scope, $sce, $mdSidenav, ErrorSrvc, PingSrvc, Re
 	
 	$scope.requestPage = function(url) {
 		console.log('GWFCtrl.requestPage()', url);
-		RequestSrvc.send(url).then($scope.pageRequested);
+		RequestSrvc.send(url).then($scope.pageRequested.bind($scope, 'main'));
 		return false;
 	};
 
-	$scope.pageRequested = function(result) {
-		console.log('GWFCtrl.pageRequested()', result);
-		$scope.data.content = result.data;
+	$scope.pageRequested = function(bar, result) {
+		console.log('GWFCtrl.pageRequested()', bar, result.data);
+		$scope.data.mainContent = result.data;
 		setTimeout(function(){
-			RequestSrvc.fixForms($scope, '.gwf-main-content FORM');
-			RequestSrvc.fixAnchors($scope, '.gwf-main-content A');
+			RequestSrvc.fixForms($scope, bar, '.gwf-'+bar+'-content FORM');
+			RequestSrvc.fixAnchors($scope, '.gwf-'+bar+'-content A');
 		}, 1);
+	};
+
+	$scope.formRequested = function(bar, result) {
+		console.log('GWFCtrl.formRequested()', bar, result);
+		$scope.data[bar+'Content'] = result.data;
+		setTimeout(function(){
+			RequestSrvc.fixForms($scope, bar, '.gwf-'+bar+'-content FORM');
+			RequestSrvc.fixAnchors($scope, '.gwf-'+bar+'-content A');
+		}, 1);
+		
+		setTimeout(function(){
+			SidebarSrvc.refreshSidebarsFor($scope);
+		}, 3000);
 	};
 	
 	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
 		if (toState.name === 'loading') {
-			RequestSrvc.fixForms($scope, 'FORM');
+			RequestSrvc.fixForms($scope, 'main', 'FORM');
 			RequestSrvc.fixAnchors($scope, 'A');
-			PingSrvc.ping().then($scope.pageRequested);
+			PingSrvc.ping().then($scope.pageRequested.bind($scope, 'main'));
 			SidebarSrvc.refreshSidebarsFor($scope);
 		}
 	});
@@ -52,7 +65,7 @@ controller('GWFCtrl', function($scope, $sce, $mdSidenav, ErrorSrvc, PingSrvc, Re
 		console.log('GWFCtrl.refreshedSidebar()', bar, result);
 		$scope.data[bar+'Content'] = result.data;
 		setTimeout(function() {
-			RequestSrvc.fixForms($scope, '.gwf-'+bar+'-content FORM');
+			RequestSrvc.fixForms($scope, bar, '.gwf-'+bar+'-content FORM');
 			RequestSrvc.fixAnchors($scope, '.gwf-'+bar+'-content A');
 		}, 1);
 	};

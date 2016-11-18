@@ -57,17 +57,24 @@ service('RequestSrvc', function($http) {
 		});
 	};
 	
-	RequestSrvc.fixForms = function($scope, selector) {
-		console.log('RequestSrvc.fixForms()', selector);
+	RequestSrvc.fixForms = function($scope, area, selector) {
+		console.log('RequestSrvc.fixForms()', area, selector);
 		jQuery(selector).each(function(index){
 			var form = $(this);
+			console.log(form);
 			jQuery(selector + " input[type=submit]").click(function() {
 				jQuery("input[type=submit][clicked=true]").removeAttr("clicked");
 				jQuery(this).attr("clicked", "true");
 		    });
 			form.submit(function(event) {
 				event.preventDefault();
-				RequestSrvc.sendForm(event, jQuery(this)).then($scope.pageRequested);
+				var f = jQuery(this);
+				if (!f.attr('gwf-sent')) {
+					f.attr('gwf-sent', '1');
+					RequestSrvc.sendForm(event, jQuery(this)).then(function(result){
+						$scope.formRequested(area, result);
+					}); 
+				}
 				return false;
 			});
 		});

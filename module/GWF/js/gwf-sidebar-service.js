@@ -8,10 +8,13 @@ service('SidebarSrvc', function($state, RequestSrvc) {
 	
 	SidebarSrvc.refreshSidebarsFor = function($scope) {
 		console.log('SidebarSrvc.refreshSidebarsFor()');
-		SidebarSrvc.LISTENERS.push($scope);
+		if (SidebarSrvc.LISTENERS.length == 0) {
+			SidebarSrvc.LISTENERS.push($scope);
+		}
 		SidebarSrvc.refreshSidebar('top');
 		SidebarSrvc.refreshSidebar('left');
 		SidebarSrvc.refreshSidebar('right');
+		SidebarSrvc.refreshSidebar('bottom');
 	};
 	
 	SidebarSrvc.refreshSidebar = function(sidebar) {

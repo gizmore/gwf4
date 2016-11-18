@@ -13,7 +13,7 @@
 				<md-button ng-click="toggleLeftMenu()" class="toggle md-raised" aria-label="Close Left Menu"><i class="material-icons">account_circle</i></md-button>
 			</div>
 			<md-toolbar class="md-theme-indigo">
-				<md-content class="gwf-left-content" class="gwf-left-content" ng-html="data.leftContent"></md-content>
+				<md-content class="gwf-left-content" class="gwf-dynamic-content gwf-left-content" ng-html="data.leftContent"></md-content>
 			</md-toolbar>
 		</md-sidenav>
 
@@ -24,7 +24,7 @@
 				<md-button ng-click="toggleRightMenu()" class="md-raised" aria-label="Close Right Menu"><i class="material-icons">android</i></md-button>
 			</div>
 			<md-toolbar class="md-theme-indigo">
-				<md-content class="gwf-right-content" class="gwf-right-content" ng-html="data.rightContent"></md-content>
+				<md-content class="gwf-right-content" class="gwf-dynamic-content gwf-right-content" ng-html="data.rightContent"></md-content>
 			</md-toolbar>
 		</md-sidenav>
 
