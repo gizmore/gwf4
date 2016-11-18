@@ -11,3 +11,5 @@
 .htaccess
 /bower_components
 /module/Websockets
+/module/LinkUUp
+

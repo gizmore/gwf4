@@ -29,10 +29,6 @@ final class Login_Form extends GWF_Method
 		{
 			return $this->onLogin();
 		}
-		if (GWF_Website::isAjax())
-		{
-			return $this->module->error('err_missing_var', array('login'));
-		}
 		return $this->form();
 	}
 	
@@ -70,16 +66,11 @@ final class Login_Form extends GWF_Method
 	public function onLogin($doValidate=true)
 	{
 		require_once GWF_CORE_PATH.'module/Login/GWF_LoginFailure.php';
-		$isAjax = isset($_GET['ajax']);
 		$form = $this->getForm();
 		if ($doValidate)
 		{
 			if (false !== ($errors = $form->validate($this->module, $isAjax))) {
-				if ($isAjax) {
-					return $errors;
-				} else {
-					return $errors.$this->form();
-				}
+				return $errors.$this->form();
 			}
 		}
 		
@@ -96,22 +87,13 @@ final class Login_Form extends GWF_Method
 			}
 		}
 		elseif (true !== ($error = $this->checkBruteforce($user, $isAjax))) {
-			if ($isAjax) {
-				return $error;
-			} else {
-				return $error.$this->form();
-			}
+			return $error.$this->form();
 		}
 		elseif (false === GWF_Hook::call(GWF_HOOK::LOGIN_PRE, $user, array($password, ''))) {
 			return ''; #GWF_HTML::err('ERR_GENERAL', array( __FILE__, __LINE__));
 		}
 		elseif (false === (GWF_Password::checkPasswordS($password, $user->getVar('user_password')))) {
-			if ($isAjax) {
-				return $this->onLoginFailed($user, $isAjax);
-			}
-			else { 
-				return $this->onLoginFailed($user, $isAjax).$this->form();
-			}
+			return $this->onLoginFailed($user, $isAjax).$this->form();
 		}
 		
 		GWF_Password::clearMemory('password');
@@ -211,4 +193,3 @@ final class Login_Form extends GWF_Method
 	public function validate_password(Module_Login $module, $arg) { return false; } 
 }
 
-?>

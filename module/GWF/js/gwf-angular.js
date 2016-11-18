@@ -31,7 +31,7 @@ controller('GWFCtrl', function($scope, $sce, $mdSidenav, ErrorSrvc, PingSrvc, Re
 	};
 
 	$scope.pageRequested = function(bar, result) {
-		console.log('GWFCtrl.pageRequested()', bar, result.data);
+		console.log('GWFCtrl.pageRequested()', bar, result);
 		$scope.data.mainContent = result.data;
 		setTimeout(function(){
 			RequestSrvc.fixForms($scope, bar, '.gwf-'+bar+'-content FORM');
