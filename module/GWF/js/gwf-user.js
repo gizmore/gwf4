@@ -5,4 +5,5 @@ var GWF_User = function(json) {
 	this.authenticated = function() { return this.id() > 0; };
 	
 	this.id = function(id) { if(id) this.JSON.user_id = id; return this.JSON.user_id; };
+	this.secret = function() { return GWF_CONFIG.wss_secret; };
 };

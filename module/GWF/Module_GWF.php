@@ -60,7 +60,7 @@ final class Module_GWF extends GWF_Module
 
 	public function onStartup()
 	{
-		$min = GWF_DEBUG_JS ? '' : '.min'; $v = 1;
+		$min = GWF_DEBUG_JS ? '' : '.min'; $v = 2;
 		
 		$this->addCSS("gwf4.css");
 		GWF_Website::addBowerCSS("angular-material/angular-material$min.css?v=$v");
@@ -83,12 +83,14 @@ final class Module_GWF extends GWF_Module
 		GWF_Website::addBowerJavascript("angular-ui-router/release/angular-ui-router$min.js?v=$v");
 		
 		$this->addJavascript('gwf-angular.js');
+
+		$this->addJavascript('ng-enter.js');
 		$this->addJavascript('ng-html.js');
-		$this->addJavascript('ErrorSrvc.js');
-		$this->addJavascript('RequestSrvc.js');
-		$this->addJavascript('PingSrvc.js');
-		$this->addJavascript('ngEnter.js');
-		$this->addJavascript('RequestInterceptor.js');
+
+		$this->addJavascript('gwf-error-service.js');
+		$this->addJavascript('gwf-request-service.js');
+		$this->addJavascript('gwf-ping-service.js');
+		$this->addJavascript('gwf-request-interceptor.js');
 		$this->addJavascript('gwf-sidebar-service.js');
 	}
 	
