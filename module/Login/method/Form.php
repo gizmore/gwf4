@@ -69,7 +69,7 @@ final class Login_Form extends GWF_Method
 		$form = $this->getForm();
 		if ($doValidate)
 		{
-			if (false !== ($errors = $form->validate($this->module, $isAjax))) {
+			if (false !== ($errors = $form->validate($this->module, false))) {
 				return $errors.$this->form();
 			}
 		}
@@ -80,25 +80,25 @@ final class Login_Form extends GWF_Method
 		
 		if (false === ($user = $users->selectFirstObject('*', sprintf('user_name=\'%s\' AND user_options&%d=0', $users->escape($username), GWF_User::DELETED))))
 		{
-			if ($isAjax) {
+			if (false) {
 				return $this->module->error('err_login');
 			} else {
 				return $this->module->error('err_login').$this->form();
 			}
 		}
-		elseif (true !== ($error = $this->checkBruteforce($user, $isAjax))) {
+		elseif (true !== ($error = $this->checkBruteforce($user, false))) {
 			return $error.$this->form();
 		}
 		elseif (false === GWF_Hook::call(GWF_HOOK::LOGIN_PRE, $user, array($password, ''))) {
 			return ''; #GWF_HTML::err('ERR_GENERAL', array( __FILE__, __LINE__));
 		}
 		elseif (false === (GWF_Password::checkPasswordS($password, $user->getVar('user_password')))) {
-			return $this->onLoginFailed($user, $isAjax).$this->form();
+			return $this->onLoginFailed($user, false).$this->form();
 		}
 		
 		GWF_Password::clearMemory('password');
 		
-		return $this->onLoggedIn($user, $isAjax);
+		return $this->onLoggedIn($user, false);
 	}
 	
 	private function onLoginFailed(GWF_User $user, $isAjax)
@@ -150,7 +150,7 @@ final class Login_Form extends GWF_Method
 			GWF_LoginFailure::cleanupUser($user->getID());
 		}
 		
-		if ($isAjax)
+		if (false)
 		{
 			return sprintf('1:%s', GWF_Session::getSessID());
 		}

@@ -10,6 +10,7 @@
 			<?php echo GWF_Table::column($mod['vdb'], $enabledClass); ?>
 			<?php echo GWF_Table::column($mod['vfs']); ?>
 			<?php echo GWF_Table::column(sprintf('<a href="%s">%s</a>', $mod['edit_url'], $configure)); ?>
+			<?php echo GWF_Table::column(sprintf('<a href="%s">%s</a>', $mod['install_url'], $install)); ?>
 			<?php echo GWF_Table::column(sprintf('<a href="%s">%s</a>', $mod['admin_url'], $adminsect)); ?>
 		</md-list-item>
 	<?php } ?>

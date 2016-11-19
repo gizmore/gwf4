@@ -12,4 +12,7 @@
 /bower_components
 /module/Websockets
 /module/LinkUUp
-
+/module/Download/
+/module/Maps/
+/module/Payment/
+/module/PaymentPaypal/
