@@ -63,9 +63,10 @@ final class Module_GWF extends GWF_Module
 		$min = GWF_DEBUG_JS ? '' : '.min'; $v = 2;
 		
 		$this->addCSS("gwf4.css");
+
 		GWF_Website::addBowerCSS("angular-material/angular-material$min.css?v=$v");
 		GWF_Website::addCSS("https://fonts.googleapis.com/icon?family=Material+Icons");
-		
+
 		$this->addJavascript('gwf-string-util.js');
 		$this->addJavascript('gwf-user.js');
 		
@@ -81,6 +82,19 @@ final class Module_GWF extends GWF_Module
 		GWF_Website::addBowerJavascript("angular-material/angular-material$min.js?v=$v");
 		GWF_Website::addBowerJavascript("angular-messages/angular-messages$min.js?v=$v");
 		GWF_Website::addBowerJavascript("angular-ui-router/release/angular-ui-router$min.js?v=$v");
+		GWF_Website::addBowerJavascript("angular-file-upload/dist/angular-file-upload$min.js?v=$v");
+		
+		# Text angular
+		GWF_Website::addBowerCSS("font-awesome/css/font-awesome$min.css?v=$v");
+		GWF_Website::addBowerCSS("textAngular/dist/textAngular$min.css?v=$v");
+		$this->addCSS("gwf-material.css");
+		$this->addCSS("gwf-text-angular.css");
+		
+// 		GWF_Website::addBowerJavascript("rangy");
+		GWF_Website::addBowerJavascript("textAngular/dist/textAngular-rangy.min.js?v=$v");
+		GWF_Website::addBowerJavascript("textAngular/dist/textAngular-sanitize$min.js?v=$v");
+		GWF_Website::addBowerJavascript("textAngular/dist/textAngularSetup.js?v=$v");
+		GWF_Website::addBowerJavascript("textAngular/dist/textAngular$min.js?v=$v");
 		
 		$this->addJavascript('gwf-angular.js');
 

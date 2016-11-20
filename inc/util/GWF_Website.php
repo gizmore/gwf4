@@ -58,8 +58,18 @@ final class GWF_Website
 	public static function displayPageTitle() { return htmlspecialchars(self::$_page_title_pre.self::$_page_title.self::$_page_title_post); }
 	public static function indent(&$str, $num=1) { return str_replace("\n", "\n".  str_repeat("\t", $num), $str); }
 
-	public static function redirect($url) { header('Location: ' . $url); }
-	public static function redirectMeta($url, $seconds) { header(sprintf('refresh: %d; url=%s', $seconds, $url)); }
+	public static function redirect($url)
+	{
+		if (!self::isAjax()) {
+			header('Location: ' . $url);
+		}
+	}
+	public static function redirectMeta($url, $seconds)
+	{
+		if (!self::isAjax()) {
+			header(sprintf('refresh: %d; url=%s', $seconds, $url));
+		}
+	}
 	public static function redirectBack()
 	{
 		$url = GWF_WEB_ROOT;

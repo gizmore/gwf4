@@ -1,0 +1,30 @@
+.ta-editor {
+    min-height: 300px;
+    height: auto;
+    overflow: auto;
+    font-family: inherit;
+    font-size: 100%;
+    margin:20px 0;
+}
+
+.gwf-text-angular {
+	width: 100%;
+}
+
+.gwf-text-angular .btn-group {
+	float: left;
+	margin-right: 1em;
+}
+
+.gwf-text-angular .btn-group div {
+	display: none;
+}
+
+
+.gwf-text-input-container label {
+	top: -3.5em;
+}
+
+.ta-scroll-window {
+	clear: left;
+}

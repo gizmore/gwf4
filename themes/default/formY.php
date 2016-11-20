@@ -20,6 +20,8 @@
 			$have_required = true;
 			$req = $required;
 		}
+		
+		$class = '';
 
 		switch ($data[0])
 		{
@@ -101,10 +103,13 @@
 				break;
 				
 			case GWF_Form::MESSAGE:
-				echo GWF_Message::getCodeBar($key);
+// 				echo GWF_Message::getCodeBar($key);
+				$class = 'gwf-text-input-container';
+				$input = sprintf('<div text-angular class="gwf-text-angular" name="%s" value="%s"></div>', $key, $value);
+				break;
 				### Fallthrough...
 			case GWF_Form::MESSAGE_NOBB:
-				$input = sprintf('<textarea id="%s" name="%s" cols="80" rows="8">%s</textarea>', $key, $value);
+				$input = sprintf('<textarea name="%s" cols="80" rows="8">%s</textarea>', $key, $value);
 				break;
 				
 			case GWF_Form::VALIDATOR:
@@ -112,7 +117,7 @@
 				
 			case GWF_Form::FILE:
 			case GWF_Form::FILE_OPT:
-				$input = sprintf('<input type="file" name="%s" />', $key);
+				printf('<div class="button" ngf-select ng-model="data.%1$s" name="%1$s">Select</div>', $key);
 				break;
 			case GWF_Form::HTML:
 				echo $data[1].PHP_EOL;
@@ -123,7 +128,7 @@
 		}
 		
 		if ($input) {
-			echo "<md-input-container>$label $tt $input</md-input-container>";
+			echo "<md-input-container class=\"$class\" layout=\"row\" flex>$label $tt $input</md-input-container>";
 			$input = null;
 		}
 		

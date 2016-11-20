@@ -1,12 +1,12 @@
 <?php
 $headers = array(
-	array($tLang->lang('th_username'), 'username', 'ASC'),
-	array($tLang->lang('th_token'), 'token', 'ASC'),
-	array($tLang->lang('th_email'), 'email', 'ASC'),
-	array($tLang->lang('th_birthdate'), 'birthdate', 'ASC'),
-	array($tLang->lang('th_countryid'), 'countryid', 'ASC'),
-	array($tLang->lang('th_timestamp'), 'timestamp', 'ASC'),
-	array($tLang->lang('th_ip'), 'ip', 'ASC'),
+	array($lang->lang('th_username'), 'username', 'ASC'),
+	array($lang->lang('th_token'), 'token', 'ASC'),
+	array($lang->lang('th_email'), 'email', 'ASC'),
+	array($lang->lang('th_birthdate'), 'birthdate', 'ASC'),
+	array($lang->lang('th_countryid'), 'countryid', 'ASC'),
+	array($lang->lang('th_timestamp'), 'timestamp', 'ASC'),
+	array($lang->lang('th_ip'), 'ip', 'ASC'),
 );
 
 $data = array();

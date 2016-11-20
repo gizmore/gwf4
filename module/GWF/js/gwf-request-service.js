@@ -19,22 +19,31 @@ service('RequestSrvc', function($http) {
 		return sprintf('%sindex.php?mo=%s&me=%s&ajax=1&gwf4am=1', GWF_CONFIG.WEB_ROOT, module, method);
 	};
 
-	RequestSrvc.send = function(url, data) {
-		console.log('RequestSrvc.send()', url, data);
+	RequestSrvc.send = function(url, data, contentType) {
+		console.log('RequestSrvc.send()', url, data, contentType);
+		var contentType = contentType ? contentType : 'application/x-www-form-urlencoded'; // 'multipart/form-data; charset=utf-8'
+		var isFile = contentType.indexOf('multipart/') === 0;
+		contentType = isFile ? undefined : contentType;
+		var headers = {
+			'Content-Type': contentType	
+		};
+		var transform = isFile ? angular.identity : RequestSrvc.transformPostData;
 		return $http({
 			method: 'POST',
 			url: url,
 			data: data,
 			withCredentials: true,
-			headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-			transformRequest: function(obj) {
-				var str = [];
-				for(var p in obj) {
-					str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-				}
-				return str.join("&");
-			},
+			headers: headers,
+			transformRequest: transform
 		});
+	};
+	
+	RequestSrvc.transformPostData = function(obj) {
+		var str = [];
+		for(var p in obj) {
+			str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+		}
+		return str.join("&");
 	};
 	
 	RequestSrvc.ajaxURL = function(url) {
@@ -82,9 +91,14 @@ service('RequestSrvc', function($http) {
 
 	RequestSrvc.sendForm = function(event, form) {
 		console.log('RequestSrvc.sendForm()', event, form);
-		return RequestSrvc.send(RequestSrvc.formAction(form), RequestSrvc.formData(form));
+		return RequestSrvc.send(RequestSrvc.formAction(form), RequestSrvc.formData(form), RequestSrvc.formEncoding(form));
 	};
 
+	RequestSrvc.formEncoding = function(form) {
+		console.log('RequestSrvc.formEncoding()', form);
+		return form.attr('enctype');
+	};
+	
 	RequestSrvc.formAction = function(form) {
 		var action = form.attr('action');
 		action += action.indexOf('?') > 0 ? '&' : '?';

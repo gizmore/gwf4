@@ -150,11 +150,11 @@ final class Login_Form extends GWF_Method
 			GWF_LoginFailure::cleanupUser($user->getID());
 		}
 		
-		if (false)
-		{
-			return sprintf('1:%s', GWF_Session::getSessID());
-		}
-		else
+// 		if (GWF_Website::isAjax())
+// 		{
+// 			return sprintf('1:%s', GWF_Session::getSessID());
+// 		}
+// 		else
 		{
 			GWF_Session::set('GWF_LOGIN_BACK', $last_url);
 			

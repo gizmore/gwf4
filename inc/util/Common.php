@@ -21,6 +21,7 @@ final class Common
 	public static function getPost($var, $default=false) { return true === isset($_POST[$var]) ? ($_POST[$var]) : $default; }
 	public static function cmpPost($var, $cmp, $default=false) { return $cmp === self::getPost($var, $default) ? true : $default; }
 	public static function getPostInt($var, $default=0) { return true === isset($_POST[$var]) ? ((int)$_POST[$var]) : $default; }
+	public static function getPostFloat($var, $default=0) { return true === isset($_POST[$var]) ? ((float)$_POST[$var]) : $default; }
 	public static function getPostString($var, $default='') { return true === isset($_POST[$var]) ? (string)$_POST[$var] : $default; }
 	public static function getPostArray($var, $default=false) { return (true === isset($_POST[$var]) && is_array($_POST[$var])) ? $_POST[$var] : $default; }
 	public static function displayPost($var, $default='') { return true === isset($_POST[$var]) ? htmlspecialchars($_POST[$var], ENT_QUOTES) : $default; }

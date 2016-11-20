@@ -6,7 +6,7 @@ final class GWF_AdminInstall
 		return GWF_ModuleLoader::installVars($module, array(
 			'users_per_page' => array(50, 'int', 1, 500),
 			'super_hash' => array('', 'script'),
-			'super_time' => array('10 minutes', 'time', 30, 7200),
+			'super_time' => array('600', 'time', 30, 7200),
 			'install_webspiders' => array(false, 'bool'),
 			'hide_web_spiders' => array(false, 'bool'),
 		)).

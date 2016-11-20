@@ -32,15 +32,3 @@ ul, ol { list-style: none; }
 .cf:before, .cf:after { content: ""; display: table; }
 .cf:after { clear: both }
 .cf { zoom: 1 }
-
-
-.gwf-checkbox {
-	width: 100%;
-}
-.gwf-checkbox label {
-	margin-left: 1.6em;
-}
-
-.gwf-checkbox md-checkbox {
-	top: 0.35em;
-}
