@@ -29,4 +29,4 @@
 		</md-sidenav>
 
 		<!-- CONTENT -->
-		<div id="gwf-content">
+		<div id="gwf-page-content">

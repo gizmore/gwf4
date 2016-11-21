@@ -24,6 +24,7 @@ controller('GWFCtrl', function($scope, $sce, $mdSidenav, ErrorSrvc, PingSrvc, Re
 	
 	$scope.requestPage = function(url) {
 		console.log('GWFCtrl.requestPage()', url);
+		$scope.hideGWFContent();
 		RequestSrvc.send(url).then($scope.pageRequested.bind($scope, 'main'));
 		return false;
 	};
@@ -39,8 +40,14 @@ controller('GWFCtrl', function($scope, $sce, $mdSidenav, ErrorSrvc, PingSrvc, Re
 	};
 	
 	$scope.closeSidenavs = function() {
+		console.log('GWFCtrl.closeSidenavs()');
 		$mdSidenav('left').close();
 		$mdSidenav('left').close();
+	};
+	
+	$scope.hideGWFContent = function() {
+		console.log('GWFCtrl.hideGWFContent()');
+		jQuery('#gwf-page-content').hide();
 	};
 
 	$scope.formRequested = function(bar, result) {
