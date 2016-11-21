@@ -11,13 +11,11 @@ config(function($urlRouterProvider, $stateProvider) {
 	});
 	$urlRouterProvider.otherwise('/loading');
 }).
-run(function($state, PingSrvc) {
-}).
 controller('GWFCtrl', function($scope, $sce, $mdSidenav, ErrorSrvc, PingSrvc, RequestSrvc, SidebarSrvc) {
 	
 	$scope.data = {
 		user: GWF_USER,
-		mainContent: 'aaaa',
+		mainContent: '',
 		topContent: '',
 		leftContent: '',
 		rightContent: '',
@@ -36,12 +34,19 @@ controller('GWFCtrl', function($scope, $sce, $mdSidenav, ErrorSrvc, PingSrvc, Re
 		setTimeout(function(){
 			RequestSrvc.fixForms($scope, bar, '.gwf-'+bar+'-content FORM');
 			RequestSrvc.fixAnchors($scope, '.gwf-'+bar+'-content A');
+			$scope.closeSidenavs();
 		}, 1);
+	};
+	
+	$scope.closeSidenavs = function() {
+		$mdSidenav('left').close();
+		$mdSidenav('left').close();
 	};
 
 	$scope.formRequested = function(bar, result) {
 		console.log('GWFCtrl.formRequested()', bar, result);
 		$scope.data[bar+'Content'] = result.data;
+		$scope.closeSidenavs();
 		setTimeout(function(){
 			RequestSrvc.fixForms($scope, bar, '.gwf-'+bar+'-content FORM');
 			RequestSrvc.fixAnchors($scope, '.gwf-'+bar+'-content A');

@@ -29,5 +29,4 @@
 		</md-sidenav>
 
 		<!-- CONTENT -->
-		
-		<ui-view>
+		<div id="gwf-content">
