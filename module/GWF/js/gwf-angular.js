@@ -1,7 +1,6 @@
 'use strict'
 angular.module('gwf4', ['ngMaterial', 'ui.router', 'textAngular', 'angularFileUpload']).
 config(function($urlRouterProvider, $stateProvider) {
-	
 	$stateProvider.state({
 		name: 'loading',
 		url: '/loading',
@@ -14,7 +13,7 @@ config(function($urlRouterProvider, $stateProvider) {
 run(function($injector) {
 	window.ANGULAR_INJECTOR = $injector; // Oops. Angular exposed to window.
 }).
-controller('GWFCtrl', function($scope, $sce, $mdSidenav, ErrorSrvc, PingSrvc, RequestSrvc, SidebarSrvc) {
+controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, RequestSrvc, SidebarSrvc) {
 	
 	$scope.data = {
 		user: GWF_USER,
@@ -23,6 +22,12 @@ controller('GWFCtrl', function($scope, $sce, $mdSidenav, ErrorSrvc, PingSrvc, Re
 		leftContent: '',
 		rightContent: '',
 		bottomContent: '',
+	};
+	
+	$scope.requestState = function(name, params) {
+		console.log('GWFCtrl.requestState()', name, params);
+		$scope.hideGWFContent();
+		return $state.go(name, params);
 	};
 	
 	$scope.requestGWFPage = function(module, method, data) {
@@ -43,7 +48,6 @@ controller('GWFCtrl', function($scope, $sce, $mdSidenav, ErrorSrvc, PingSrvc, Re
 		setTimeout(function(){
 			RequestSrvc.fixForms($scope, bar, '.gwf-'+bar+'-content FORM');
 			RequestSrvc.fixAnchors($scope, '.gwf-'+bar+'-content A');
-			$scope.closeSidenavs();
 		}, 1);
 	};
 	
@@ -82,6 +86,7 @@ controller('GWFCtrl', function($scope, $sce, $mdSidenav, ErrorSrvc, PingSrvc, Re
 			RequestSrvc.fixForms($scope, 'main', 'FORM');
 			RequestSrvc.fixAnchors($scope, 'A');
 			PingSrvc.ping().then($scope.pageRequested.bind($scope, 'main'));
+			$scope.hideGWFContent();
 			SidebarSrvc.refreshSidebarsFor($scope);
 		}
 	});

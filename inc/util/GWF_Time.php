@@ -361,8 +361,11 @@ final class GWF_Time
 		return intval($age / 10000, 10);
 	}
 
-	public static function getTimestamp($gwf_date)
+	public static function getTimestamp($gwf_date="")
 	{
+		if ($gwf_date === '') {
+			return time();
+		}
 		if (0 === preg_match('/^(\d{4})?(\d{2})?(\d{2})?(\d{2})?(\d{2})?(\d{2})?$/D', $gwf_date, $matches)) {
 			return false;
 		}
