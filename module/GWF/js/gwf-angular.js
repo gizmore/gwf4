@@ -54,6 +54,11 @@ controller('GWFCtrl', function($scope, $sce, $mdSidenav, ErrorSrvc, PingSrvc, Re
 		console.log('GWFCtrl.hideGWFContent()');
 		jQuery('#gwf-page-content').hide();
 	};
+	
+	$scope.focusMainContent = function() {
+		$scope.closeSidenavs();
+		$scope.hideGWFContent();
+	};
 
 	$scope.formRequested = function(bar, result) {
 		console.log('GWFCtrl.formRequested()', bar, result);
