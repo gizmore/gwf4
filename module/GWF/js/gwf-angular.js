@@ -22,6 +22,11 @@ controller('GWFCtrl', function($scope, $sce, $mdSidenav, ErrorSrvc, PingSrvc, Re
 		bottomContent: '',
 	};
 	
+	$scope.requestGWFPage = function(module, method, data) {
+		console.log('GWFCtrl.requestGWFPage()', module, method, data);
+		return RequestSrvc.requestPage(module, method, data).then($scope.pageRequested.bind($scope, 'main'));
+	}
+
 	$scope.requestPage = function(url) {
 		console.log('GWFCtrl.requestPage()', url);
 		$scope.hideGWFContent();
