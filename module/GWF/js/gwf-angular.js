@@ -11,6 +11,9 @@ config(function($urlRouterProvider, $stateProvider) {
 	});
 	$urlRouterProvider.otherwise('/loading');
 }).
+run(function($injector) {
+	window.ANGULAR_INJECTOR = $injector; // Oops. Angular exposed to window.
+}).
 controller('GWFCtrl', function($scope, $sce, $mdSidenav, ErrorSrvc, PingSrvc, RequestSrvc, SidebarSrvc) {
 	
 	$scope.data = {
