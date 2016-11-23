@@ -1,5 +1,5 @@
 'use strict'
-angular.module('gwf4', ['ngMaterial', 'ui.router', 'textAngular', 'angularFileUpload']).
+angular.module('gwf4', ['ngMaterial', 'ui.router']).
 config(function($urlRouterProvider, $stateProvider) {
 	$stateProvider.state({
 		name: 'loading',
