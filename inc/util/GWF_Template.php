@@ -45,9 +45,9 @@ final class GWF_Template
 		
 		if (is_array($tVars))
 		{
-			foreach ($tVars as $key => $value)
+			foreach ($tVars as $__key => $__value)
 			{
-				$$key = $value;
+				$$__key = $__value;
 			}
 		}
 

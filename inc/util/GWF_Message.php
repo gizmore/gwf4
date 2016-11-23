@@ -70,7 +70,7 @@ class GWF_Message {
 	{
 		if(!isset(self::$bbSmileyPath))
 		{
-			$path = sprintf('%s/img/%s/smile/', GWF_DEFAULT_DESIGN);
+			$path = sprintf('%1$s/img/%1$s/smile/', GWF_DEFAULT_DESIGN);
 			if(is_dir(GWF_WWW_PATH.$path))
 			{
 				self::$bbSmileyPath = $path;
@@ -309,8 +309,9 @@ class GWF_Message {
 	{
 		$tVars = array(
 			'key' => $key,
+			'imgroot' => sprintf('%sthemes/default/img/default', GWF_WEB_ROOT),
 		);
-		return GWF_Template::templateMain('bb_codebar.tpl', $tVars);
+		return GWF_Template::templateMain('bb_codebar.php', $tVars);
 	}
 }
 

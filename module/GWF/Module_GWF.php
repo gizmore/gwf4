@@ -70,6 +70,7 @@ final class Module_GWF extends GWF_Module
 		$this->addJavascript('gwf-string-util.js');
 		$this->addJavascript('gwf-user.js');
 		
+		
 		GWF_Website::addJavascriptInline($this->getConfigJS());
 		GWF_Website::addJavascriptInline($this->getUserJS());
 
@@ -95,6 +96,9 @@ final class Module_GWF extends GWF_Module
 // 		GWF_Website::addBowerJavascript("textAngular/dist/textAngular-sanitize$min.js?v=$v");
 // 		GWF_Website::addBowerJavascript("textAngular/dist/textAngularSetup.js?v=$v");
 // 		GWF_Website::addBowerJavascript("textAngular/dist/textAngular$min.js?v=$v");
+		
+		$this->addJavascript('gwf-ajax-sync.js');
+		$this->addJavascript('gwf-bb-editor.js');
 		
 		$this->addJavascript('gwf-angular.js');
 

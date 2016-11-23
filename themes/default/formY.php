@@ -103,13 +103,9 @@
 				break;
 				
 			case GWF_Form::MESSAGE:
-// 				echo GWF_Message::getCodeBar($key);
-				$class = 'gwf-text-input-container';
-				$input = sprintf('<div text-angular class="gwf-text-angular" name="%s" value="%s"></div>', $key, $value);
-				break;
-				### Fallthrough...
+				echo GWF_Message::getCodeBar($key);
 			case GWF_Form::MESSAGE_NOBB:
-				$input = sprintf('<textarea name="%s" cols="80" rows="8">%s</textarea>', $key, $value);
+				$input = sprintf('<textarea id="%1$s" name="%1$s" cols="80" rows="8">%2$s</textarea>', $key, $value);
 				break;
 				
 			case GWF_Form::VALIDATOR:
