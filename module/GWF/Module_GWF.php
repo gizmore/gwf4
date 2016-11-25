@@ -47,7 +47,7 @@ final class Module_GWF extends GWF_Module
 	public function cfgCaptchaHeight() { return (int)$this->getModuleVar('CaptchaHeight', '42'); }
 
 	# Security Config
-	public function cfgAllRequests() { return $this->getModuleVarBool('allow_all_requests', false); }
+	public function cfgAllRequests() { return $this->getModuleVarBool('allow_all_requests', '0'); }
 	
 	public static function validate_CaptchaColor($color) { return preg_match('/^[a-f0-9A-F]{6}$/D', $color) ? $color : false; }
 	public static function validate_CaptchaFont(array $paths)
@@ -146,4 +146,4 @@ final class Module_GWF extends GWF_Module
 		));
 		return "var GWF_USER = new GWF_User($json);";
 	}
-	}
+}

@@ -30,6 +30,11 @@ final class GWF_File
 		$dir = dirname($filename);
 		return is_dir($dir) && is_writable($dir);
 	}
+	
+	public static function isFile($filename)
+	{
+		return file_exists($filename) && (!is_dir($filename)) && is_readable($filename);
+	}
 
 	public static function createDir($path)
 	{

@@ -63,6 +63,7 @@ final class GWF_User extends GDO
 			'user_lastactivity' => array(GDO::UINT|GDO::INDEX, 0),
 			'user_birthdate' => array(GDO::CHAR|GDO::ASCII|GDO::CASE_S, '00000000', GWF_Date::LEN_DAY),
 			'user_avatar_v' => array(GDO::UINT, 0),
+			'user_default_avatar' => array(GDO::VARCHAR|GDO::ASCII|GDO::CASE_S, GDO::NULL, 128),
 			'user_countryid' => array(GDO::UINT|GDO::INDEX, 0, 11),
 			'user_langid' => array(GDO::UINT, 0, 11),
 			'user_langid2' => array(GDO::UINT, 0, 11),
