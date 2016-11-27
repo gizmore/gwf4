@@ -2,6 +2,7 @@
 /gwf_cronjob.php
 
 /dbimg/*
+/temp/*
 
 /protected/logs
 /protected/installog
