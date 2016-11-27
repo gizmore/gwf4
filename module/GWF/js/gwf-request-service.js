@@ -22,19 +22,20 @@ service('RequestSrvc', function($http) {
 	RequestSrvc.send = function(url, data, contentType) {
 		console.log('RequestSrvc.send()', url, data, contentType);
 		var contentType = contentType ? contentType : 'application/x-www-form-urlencoded'; // 'multipart/form-data; charset=utf-8'
+		contentType = 'application/x-www-form-urlencoded'; // 'multipart/form-data; charset=utf-8'
 		var isFile = contentType.indexOf('multipart/') === 0;
-		contentType = isFile ? undefined : contentType;
+//		contentType = isFile ? undefined : contentType;
 		var headers = {
 			'Content-Type': contentType	
 		};
-		var transform = isFile ? angular.identity : RequestSrvc.transformPostData;
+//		var transform = isFile ? angular.identity : RequestSrvc.transformPostData;
 		return $http({
 			method: 'POST',
 			url: url,
 			data: data,
 			withCredentials: true,
 			headers: headers,
-			transformRequest: transform
+			transformRequest: RequestSrvc.transformPostData
 		});
 	};
 	

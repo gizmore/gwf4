@@ -1,5 +1,5 @@
 'use strict'
-angular.module('gwf4', ['ngMaterial', 'ui.router']).
+angular.module('gwf4', ['ngMaterial', 'ui.router', 'flow']).
 config(function($urlRouterProvider, $stateProvider) {
 	$stateProvider.state({
 		name: 'loading',

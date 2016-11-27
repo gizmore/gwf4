@@ -1,4 +1,5 @@
 <?php $required = " required"; $input = null; ?>
+
 <section layout="column" flex>
 	<form action="<?php echo $action; ?>" method="<?php echo $method; ?>" enctype="<?php echo $enctype; ?>">
 	<h2><?php echo $title; ?></h2>
@@ -23,7 +24,8 @@
 		
 		$class = '';
 
-		switch ($data[0])
+		$type = $data[0];
+		switch ($type)
 		{
 			case GWF_Form::HIDDEN:
 				printf('<div><input type="hidden" name="%s" value="%s" /></div>', $key, $data[1]);
@@ -111,9 +113,20 @@
 			case GWF_Form::VALIDATOR:
 				break;
 				
+			case GWF_Form::FILE_IMAGE:
 			case GWF_Form::FILE:
 			case GWF_Form::FILE_OPT:
-				printf('<div class="button" ngf-select ng-model="data.%1$s" name="%1$s">Select</div>', $key);
+				?>
+				<input type="hidden" name="<?php echo $key; ?>" value="{{$flow.files.length ? '1' : '' }}" />
+				<div flow-init="{target: '<?php echo $action?>', singleFile: true, fileParameterName: '<?php echo $key; ?>', testChunks: false}"
+					 flow-files-submitted="$flow.upload()"
+					 flow-file-success="$file.msg = $message">
+				<label><?php echo $label; ?></label><span flow-btn>Upload File</span>
+				<?php if ($type === GWF_Form::FILE_IMAGE) { 
+					printf('<div class="gwf-flow-upload-image"><img flow-img="$flow.files[0]" /></div>');
+				} ?>
+				</div>
+				<?php 
 				break;
 			case GWF_Form::HTML:
 				echo $data[1].PHP_EOL;

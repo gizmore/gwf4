@@ -53,6 +53,8 @@ class GWF_Form
 	const HTML = 27;
 	const ENUM = 28; # array(array(key,value),array(key,value),...)
 // 	const ENUM_ASSOC = 29;
+	const FILE_IMAGE = 30;
+	
 
 	# CSRF protection levels.
 	const CSRF_OFF = 0;
@@ -102,7 +104,7 @@ class GWF_Form
 			case self::VALIDATOR:
 				return false;
 				
-			case self::FILE: case self::FILE_OPT:
+			case self::FILE: case self::FILE_OPT: case self::FILE_IMAGE:
 				return $this->getFile($key, $default);
 	
 			case self::DATE: case self::DATE_FUTURE:
@@ -132,7 +134,7 @@ class GWF_Form
 			case self::VALIDATOR:
 				return false;
 				
-			case self::FILE: case self::FILE_OPT:
+			case self::FILE: case self::FILE_OPT: case self::FILE_IMAGE:
 				return $default;
 	
 			case self::DATE: case self::DATE_FUTURE:
@@ -155,20 +157,6 @@ class GWF_Form
 		}
 	}
 
-	private function getFile($key, $default)
-	{
-		if (!isset($_FILES[$key]))
-		{
-			return $default;
-		}
-		$file = $_FILES[$key];
-		if ( ($file['error'] !== 0) || ($file['size'] === 0) )
-		{
-			return $default;
-		}
-		return $file;
-	}
-
 	private function getDate($key, $len, array $array)
 	{
 		$back = '';
@@ -183,13 +171,6 @@ class GWF_Form
 				break;
 			default: die('Form Date Length is invalid for '.$key);
 		}
-
-//		var_dump($back);
-//		
-//		if(str_repeat('0', $len) === $back) {
-//			return '';
-//		}
-
 		return $back;
 	}
 
@@ -225,13 +206,6 @@ class GWF_Form
 
 	private function template($file, $title, $action=true, $colspan)
 	{
-
-//		if (!is_string($method) || ($method !== 'get'))
-//		{
-//			$method = 'post';
-//		}
-//		$this->method = $method;
-
 		if (is_bool($action))
 		{
 			$action = $_SERVER['REQUEST_URI'];
@@ -243,6 +217,7 @@ class GWF_Form
 			'action' => htmlspecialchars($action),
 			'method' => $this->method,
 			'enctype' => $this->getEncType(),
+			'has_files' => $this->hasFiles(),
 			'colspan' => $colspan,
 		);
 
@@ -252,36 +227,23 @@ class GWF_Form
 	private function computeColspanX()
 	{
 		return count($this->form_data) + 1;
-// 		static $hidden = array(self::HIDDEN);
-// 		static $special = array(
-// 			self::CAPTCHA => 2,
-// 		);
-
-// 		$colspan = 0;
-// 		foreach ($this->form_data as $key => $data)
-// 		{
-// 			if (!in_array($data[0], $hidden))
-// 			{
-// 				if (in_array($data[0], $special))
-// 				{
-// 					$colspan += $special[$data[0]];
-// 				}
-// 				$colspan++;
-// 			}
-// 		}
-// 		return $colspan + 1;
 	}
-
-	private function getEncType()
+	
+	public function hasFiles()
 	{
 		foreach ($this->form_data as $key => $data)
 		{
 			if ( ($data[0] === self::FILE) || ($data[0] === self::FILE_OPT) )
 			{
-				return self::ENC_MULTIPART;
+				return true;
 			}
 		}
-		return self::ENC_DEFAULT;
+		return false;
+	}
+
+	private function getEncType()
+	{
+		return self::hasFiles() ? self::ENC_MULTIPART : self::ENC_DEFAULT;
 	}
 
 	private function getTemplateData()
@@ -341,6 +303,7 @@ class GWF_Form
 		
 				case self::FILE:
 				case self::FILE_OPT:
+				case self::FILE_IMAGE:
 				case self::HTML:
 					break;
 		
@@ -495,5 +458,147 @@ class GWF_Form
 		$text = htmlspecialchars($text);
 		return sprintf('<span><input%s type="submit" name="%s" value="%s" /></span>', $id, $name, $text);
 	}
+
+	###################
+	### Flow upload ###
+	###################
+	private function getFile($key, $default)
+	{
+		if (!($name = $this->getFlowFilename($key)))
+		{
+			return null;
+		}
+		return array(
+			'name' => $name,
+			'dir' => $this->getFlowFiledir($key),
+			'path' => $this->getFlowFilepath($key),
+			'size' => $this->getFlowFilesize($key),
+		);
+	}
+	
+	private function getFlowFilename($key)
+	{
+		$nameFile = $this->getFlowFiledir($key).'/name';
+		return @file_get_contents($nameFile);
+	}
+	
+	private function getFlowFiledir($key)
+	{
+		$sessid = GWF_Session::getSessSID();
+		return GWF_PATH.'temp/'.$sessid.'/'.$key;
+	}
+	
+	private function getFlowFilepath($key)
+	{
+		return $this->getFlowFiledir($key).'/'.$key;
+	}
+	
+	private function getFlowFilesize($key)
+	{
+		return filesize($this->getFlowFilepath($key));
+	}
+	
+	public function cleanup()
+	{
+		$tempDir = GWF_PATH.'temp/'.GWF_Session::getSessSID();
+		GWF_File::removeDir($tempDir, false);
+	}
+	
+	public function onFlowUpload()
+	{
+		if (!isset($_REQUEST['flowIdentifier']))
+		{
+			return false;
+		}
+		foreach ($_FILES as $key => $file)
+		{
+			$this->onFlowUploadFile($key, $file);
+		}
+		die();
+		return true;
+	}
+	
+	private function onFlowUploadFile($key, $file)
+	{
+		$sessid = GWF_Session::getSessSID();
+		$chunkDir = GWF_PATH.'temp/'.$sessid.'/'.$key;
+		if (!GWF_File::createDir($chunkDir))
+		{
+			header("HTTP/1.0 500 Create temp dir");
+			GWF_Log::logError('Cannot create temp dir.');
+			return false;
+		}
+	
+		if (!self::onFlowCopyChunk($key, $file))
+		{
+			header("HTTP/1.0 500 Copy chunk");
+			GWF_Log::logError('Cannot create temp dir.');
+			return false;
+		}
+	
+		if ($_REQUEST['flowChunkNumber'] === $_REQUEST['flowTotalChunks'])
+		{
+			if (!self::onFlowFinishFile($key, $file))
+			{
+				header("HTTP/1.0 500 Merge final file");
+				GWF_Log::logError('Cannot finish file.');
+				return false;
+			}
+		}
+	
+		$result = json_encode([
+				'success' => true,
+				'files' => $_FILES,
+				'request' => $_REQUEST,
+				// 				//optional
+				// 				'flowTotalSize' => isset($_FILES['file']) ? $_FILES['file']['size'] : $_REQUEST['flowTotalSize'],
+				// 				'flowIdentifier' => isset($_FILES['file']) ? $_FILES['file']['name'] . '-' . $_FILES['file']['size']
+				// 				: $_REQUEST['flowIdentifier'],
+				// 				'flowFilename' => isset($_FILES['file']) ? $_FILES['file']['name'] : $_REQUEST['flowFilename'],
+				// 				'flowRelativePath' => isset($_FILES['file']) ? $_FILES['file']['tmp_name'] : $_REQUEST['flowRelativePath'],
+		]);
+	
+		echo $result;
+		GWF_Log::logCron($result);
+		return true;
+	}
+	private function onFlowCopyChunk($key, $file)
+	{
+		$sessid = GWF_Session::getSessSID();
+		$chunkDir = GWF_PATH.'temp/'.$sessid.'/'.$key;
+		$chunkNumber = $_REQUEST['flowChunkNumber'];
+		$chunkFile = $chunkDir.'/'.$chunkNumber;
+		return copy($file['tmp_name'], $chunkFile);
+	}
+	
+	private function onFlowFinishFile($key, $file)
+	{
+		$sessid = GWF_Session::getSessSID();
+		$chunkDir = GWF_PATH.'temp/'.$sessid.'/'.$key;
+		GWF_File::filewalker($chunkDir, array($this, 'onMergeFile'), false, true, array($chunkDir, $key, $file));
+		if (!$this->onFlowChecksum($key, $file, $chunkDir))
+		{
+			return false;
+		}
+		# Write user chosen name to a file for later :(
+		GWF_Log::logCron('Test');
+		$nameFile = $chunkDir.'/name';
+		file_put_contents($nameFile, $file['name']);
+		return true;
+	}
+	
+	public function onMergeFile($entry, $fullpath, $args)
+	{
+		list($chunkDir, $key, $file) = $args;
+		$finalFile = $chunkDir.'/'.$key;
+		return file_put_contents($finalFile, file_get_contents($fullpath), FILE_APPEND);
+	}
+	
+	private function onFlowChecksum($key, $file, $chunkDir)
+	{
+		# TODO: Checksum generation and validation. 
+		return true;
+	}
+	
 }
 

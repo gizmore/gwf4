@@ -11,7 +11,7 @@ final class Module_GWF extends GWF_Module
 	public function getVersion() { return 4.01; }
 	public function getDefaultPriority() { return 1; }
 	public function getDefaultAutoLoad() { return true; }
-	public function onInstall($dropTable) { require_once GWF_CORE_PATH.'module/GWF/GWF_InstallGWF.php'; return GWF_InstallGWF::onInstall($this, $dropTable); }
+	public function onInstall($dropTable) { require_once GWF_PATH.'module/GWF/GWF_InstallGWF.php'; return GWF_InstallGWF::onInstall($this, $dropTable); }
 	public function onLoadLanguage() { return $this->loadLanguage('lang/gwf'); }
 
 	# Fancy Config
@@ -83,6 +83,9 @@ final class Module_GWF extends GWF_Module
 		GWF_Website::addBowerJavascript("angular-material/angular-material$min.js?v=$v");
 		GWF_Website::addBowerJavascript("angular-messages/angular-messages$min.js?v=$v");
 		GWF_Website::addBowerJavascript("angular-ui-router/release/angular-ui-router$min.js?v=$v");
+		
+		GWF_Website::addBowerJavascript("ng-flow/dist/ng-flow-standalone$min.js?v=$v");
+		
 // 		GWF_Website::addBowerJavascript("angular-file-upload/dist/angular-file-upload$min.js?v=$v");
 		
 		# Text angular
