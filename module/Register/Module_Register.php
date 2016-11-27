@@ -12,6 +12,7 @@ final class Module_Register extends GWF_Module
 	public function onCronjob() { require_once 'GWF_RegisterCronjob.php'; GWF_RegisterCronjob::onCronjob($this); }
 	public function onLoadLanguage() { return $this->loadLanguage('lang/register'); }
 	public function getClasses() { return array('GWF_UserActivation'); }
+	public function isCoreModule() { return true; }
 	
 	public function onInstall($dropTable)
 	{

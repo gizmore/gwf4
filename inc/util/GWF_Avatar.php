@@ -24,10 +24,11 @@ final class GWF_Avatar extends GDO
 	{
 		return array(
 			'avatar_id' => array(GDO::AUTO_INCREMENT),
-			'avatar_user_id' => array(GDO::UINT|GDO::INDEX),
-			'avatar_sess_id' => array(GDO::UINT|GDO::INDEX),
+			'avatar_user_id' => array(GDO::UINT|GDO::INDEX, '0'),
+			'avatar_sess_id' => array(GDO::UINT|GDO::INDEX, '0'),
 			'avatar_mode' => array(GDO::ENUM, GWF_Avatar::NONE, array(GWF_Avatar::NONE, GWF_Avatar::DEFAULT, GWF_Avatar::CUSTOM)),
 			'avatar_file' => array(GDO::VARCHAR|GDO::ASCII|GDO::CASE_S, GDO::NULL, 128),
+			'avatar_version' => array(GDO::UINT, '0'),
 			
 			'user' => array(GDO::JOIN, GDO::NULL, array('GWF_User', 'user_id', 'avatar_user_id')),
 		);
@@ -42,6 +43,13 @@ final class GWF_Avatar extends GDO
 	public function getMode() { return $this->getVar('avatar_mode'); }
 	public function getFile() { return $this->getVar('avatar_file'); }
 	public function getDir() { return $this->getUserID() == '0' ? 'guest' : 'user'; }
+	public function getVersion() { return $this->getVar('avatar_version'); }
+	public function getVersionInt() { return (int) $this->getVersion(); }
+	public function getDestinationID()  { return $this->isGuest() ? $this->getVar('avatar_sess_id') : $this->getVar('avatar_user_id'); }
+	public function isGuest() { return $this->getVar('avatar_sess_id') !== '0'; }
+	public function isCustomAvatar() { return $this->getMode() === self::CUSTOM; }
+	public function isDefaultAvatar() { return $this->getMode() === self::DEFAULT; }
+	public function getDefaultAvatarFilename() { return $this->isDefaultAvatar() ? $this->getFile() : ''; }
 	
 	###############
 	### Display ###
@@ -53,32 +61,62 @@ final class GWF_Avatar extends GDO
 		return sprintf('<gwf-avatar><img src="%s" alt="%s" /></gwf-avatar>', $href, $alt);
 	}
 	
+	public static function defaultAvatar(array $avatar)
+	{
+		list($label, $wwwPath, $filePath, $fileName) = $avatar;
+		return sprintf('<gwf-avatar><img src="%s" alt="%s" /></gwf-avatar>', $wwwPath, $label);
+	}
+	
 	##################
 	### Validation ###
 	##################
+	public static function isValidDefaultAvatar($arg)
+	{
+		foreach (self::defaultAvatars() as $key => $data)
+		{
+			list($label, $wwwPath, $filePath, $fileName) = $data;
+			if ($arg === $fileName)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public static function validateDefaultAvatar($arg)
 	{
 		if ($arg === '')
 		{
 			return false;
 		}
-		foreach (self::defaultAvatars() as $key => $data)
+		if (self::isValidDefaultAvatar($arg))
 		{
-			list($label, $wwwPath, $filePath, $fileName) = $data;
-			if ($arg === $fileName)
-			{
-				return false; # All fine
-			}
+			return false; # All fine
 		}
 		return self::$LANGFILE->lang('err_default_avatar');
 	}
 	
 	public static function validateCustomAvatar($flowFile, $maxSize, array $formats)
 	{
-// 		if ($flowFile['size'] > $maxSize)
-// 		{
-// 			return self::$LANGFILE->lang('err_filesize', array($maxSize));
-// 		}
+		if (!$flowFile)
+		{
+			return false;
+		}
+		if ($flowFile['size'] > $maxSize)
+		{
+			return self::$LANGFILE->lang('err_filesize', array(GWF_File::humanFilesize($maxSize)));
+		}
+		$mime = mime_content_type(file_get_contents($flowFile['path']));
+		if (!Common::startsWith($mime, 'image'))
+		{
+			return self::$LANGFILE->lang('err_no_image', array(implode(', ', $formats)));
+		}
+		$mime = strtolower(Common::substrFrom($mime, '/'));
+		if (!in_array($mime, $formats, true))
+		{
+			return self::$LANGFILE->lang('err_no_image', array(implode(', ', $formats)));
+		}
+		
 		return false;
 	}
 	
@@ -87,9 +125,61 @@ final class GWF_Avatar extends GDO
 	############
 	public static function saveFlowAvatar(GWF_User $user, $flowFile, $defaultAvatar)
 	{
+		if ($flowFile && $defaultAvatar)
+		{
+			return false;
+		}
 		
+		$avatar = self::avatarForUser($user);
+		$data = array(
+			'avatar_mode' => self::NONE,
+			'avatar_file' => null,
+			'avatar_version' => ''.($avatar->getVersionInt() + 1), # inc version
+		);
+		
+		if ($flowFile)
+		{
+			$data['avatar_mode'] = self::CUSTOM;
+			$data['avatar_file'] = $flowFile['name'];
+			$dir = $avatar->getDir();
+			if (GWF_File::isFile($flowFile['path']))
+			{
+				$destinationDir = sprintf('%sdbimg/avatar/%s/%s', GWF_PATH, $dir, $avatar->getDestinationID());
+				$destinationPath = $destinationDir.'/'.$flowFile['name'];
+				if (!GWF_File::createDir($destinationDir))
+				{
+					GWF_Log::logError('Cannot create dir: '-$destinationDir);
+					return false;
+				}
+				if (!@copy($flowFile['path'], $destinationPath))
+				{
+					GWF_Log::logError('Cannot copy to dest: '.$destinationPath);
+					return false;
+				}
+			}
+			else
+			{
+				GWF_Log::logError('Cannot read source file: '.$flowFile['path']);
+				return false;
+			}
+		}
+		
+		else if ($defaultAvatar)
+		{
+			if (self::isValidDefaultAvatar($defaultAvatar))
+			{
+				$data['avatar_mode'] = self::DEFAULT;
+				$data['avatar_file'] = $defaultAvatar;
+			}
+		}
+		
+		if ($avatar->getID() <= 0)
+		{
+			$avatar->insert();
+		}
+		
+		return $avatar->saveVars($data);
 	}
-	
 	
 	##############
 	### Static ###
@@ -132,7 +222,8 @@ final class GWF_Avatar extends GDO
 			'avatar_user_id' => $userid,
 			'avatar_sess_id' => $sessid,
 			'avatar_mode' => GWF_Avatar::NONE,
-			'avatar_file' => 'default.png',
+			'avatar_file' => null,
+			'avatar_version' => '0',
 		));
 	}
 	
@@ -166,12 +257,12 @@ final class GWF_Avatar extends GDO
 		if ($mode === GWF_Avatar::NONE)
 		{
 			$mode = GWF_Avatar::DEFAULT;
-			$file = 'default.png';
+			$file = 'default.jpeg';
 		}
 		
 		if ($mode === GWF_Avatar::CUSTOM)
 		{
-			return sprintf('%sdbimg/avatar/%s', GWF_PATH, $dir, $file);
+			return sprintf('%sdbimg/avatar/%s/%s', GWF_PATH, $dir, $file);
 		}
 		else
 		{
@@ -187,9 +278,17 @@ final class GWF_Avatar extends GDO
 		if ($mode === GWF_Avatar::NONE)
 		{
 			$mode = GWF_Avatar::DEFAULT;
-			$file = 'default.png';
+			$file = 'default.jpeg';
 		}
-		return sprintf('%s/avatar/%s/%s/%s', GWF_WEB_ROOT, $dir, $mode, $file);
+		
+		if ($mode === GWF_Avatar::CUSTOM)
+		{
+			return sprintf('%savatar/%s/%s/%s/%s?v=%s', GWF_WEB_ROOT, $mode, $dir, $this->getDestinationID(), $file, $this->getVersion());
+		}
+		else
+		{
+			return sprintf('%savatar/%s/%s', GWF_WEB_ROOT, $mode, $file);
+		}
 	}
 	
 	public function wwwURL()
@@ -201,20 +300,32 @@ final class GWF_Avatar extends GDO
 	### Default avatars ###
 	#######################
 	private static $DEFAULT_AVATARS = array();
-	public static function defaultAvatars()
+	public static function defaultAvatars(GWF_User $user)
 	{
+		# Filewalker args
+		$avatar = self::avatarForUser($user);
+		$default = $avatar->getDefaultAvatarFilename();
+		$args = array($user, $avatar, $default);
+		# Default avatars directory
 		$path = sprintf('%1$sthemes/%2$s/img/%2$s/default_avatars', GWF_PATH, GWF_DEFAULT_DESIGN);
-		GWF_File::filewalker($path, function($entry, $fullpath) {
-			$key = Common::substrUntil($entry, '.');
-			$label = self::$LANGFILE->lang($key);
-			$wwwPath = sprintf('%sgavatar/default/%s', GWF_WWW_PATH, $entry);
-			$filePath = $fullpath;
-			$fileName = $entry;
-			self::$DEFAULT_AVATARS[$key] = array($label, $wwwPath, $filePath, $fileName);
-		});
+		# Add them via filewalking
+		GWF_File::filewalker($path, array(__CLASS__, 'addDefaultAvatar'), $args);
+		# Return and empty static helper var
 		$avatars = self::$DEFAULT_AVATARS;
 		self::$DEFAULT_AVATARS = array();
 		return $avatars;
+	}
+	
+	public static function addDefaultAvatar($entry, $fullpath, $args)
+	{
+		list($user, $avatar, $default) = $args;
+		$key = Common::substrUntil($entry, '.');
+		$label = self::$LANGFILE->lang($key);
+		$wwwPath = sprintf('%savatar/default/%s', GWF_WEB_ROOT, $entry);
+		$filePath = $fullpath;
+		$fileName = $entry;
+		$selected = $default === $entry;
+		self::$DEFAULT_AVATARS[$key] = array($label, $wwwPath, $filePath, $fileName, $selected);
 	}
 	
 }

@@ -94,6 +94,11 @@ final class Common
 	{
 		return true === isset($array[$key]) ? $array[$key] : $default;
 	}
+	
+	################
+	### Env Util ###
+	################
+	public static function isCLI() { return php_sapi_name() === 'cli'; }
 
 	#################
 	### File Util ###

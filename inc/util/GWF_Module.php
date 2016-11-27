@@ -37,6 +37,7 @@ class GWF_Module extends GDO
 	public function getVersionDB() { return $this->getVar('module_version'); }
 	public function getPriority() { return $this->getVar('module_priority'); }
 	public function getDefaultEnabled() { return true; }
+	public function getDefaultInstalled() { return true; }
 	public function getDefaultAutoLoad() { return false; }
 	public function getDefaultPriority() { return self::DEFAULT_PRIORITY; }
 	public function isCoreModule() { return false; }

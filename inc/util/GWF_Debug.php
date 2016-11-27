@@ -162,8 +162,9 @@ final class GWF_Debug
 			default: $errnostr = 'PHP Unknown Error'; break;
 		}
 
-		$is_html = PHP_SAPI === 'cli' ? false : !isset($_GET['ajax']); 
-
+// 		$is_html = PHP_SAPI === 'cli' ? false : !isset($_GET['ajax']);
+		$is_html = PHP_SAPI !== 'cli';
+		
 		if ($is_html)
 		{
 			$message = sprintf('<p>%s(%s):&nbsp;%s&nbsp;in&nbsp;<b style=\"font-size:16px;\">%s</b>&nbsp;line&nbsp;<b style=\"font-size:16px;\">%s</b></p>', $errnostr, $errno, $errstr, $errfile, $errline).PHP_EOL;
@@ -181,6 +182,10 @@ final class GWF_Debug
 		elseif (GWF_USER_STACKTRACE)
 		{
 			echo self::backtrace($message, $is_html).PHP_EOL;
+		}
+		elseif ($is_html)
+		{
+			printf('<pre class="gwf4-fatal-error">%s</pre>', $message);
 		}
 		else
 		{
@@ -307,7 +312,7 @@ final class GWF_Debug
 		$message = self::shortpath($message);
 
 		# Append PRE header.
-		$back = $html ? ('<pre class="gwf_backtrace">'.PHP_EOL) : '';
+		$back = $html ? ('<pre class="gwf4-backtrace">'.PHP_EOL) : '';
 
 		# Append general title message.
 		if ($message !== '')

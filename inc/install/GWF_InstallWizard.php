@@ -429,13 +429,12 @@ final class GWF_InstallWizard
 		$back .= self::wizard_modules_form($modules);
 		return $back;
 	}
-
+	
 	public static function wizard_modules_form(array $modules)
 	{
 		$back = '<div><table>';
 		
-		$js = 'var c = $(\'input:checkbox\');  this.checked ? c.attr(\'checked\', \'checked\') : c.removeAttr(\'checked\');';
-		$back .= sprintf('<tr><td><input name="toggle_all" type="checkbox" checked="checked" onclick="%s" /></td><td></td></tr>', $js).PHP_EOL;
+		$back .= sprintf('<tr><td><input name="toggle_all" type="checkbox" checked="checked" onclick="installToggleAllModules(this.checked)" /></td><td></td></tr>').PHP_EOL;
 		
 		$back .= '<form action="wizard.php?step=6" method="post" id="form_install_modules" >'.PHP_EOL;
 
@@ -444,8 +443,8 @@ final class GWF_InstallWizard
 		foreach ($modules as $module)
 		{
 			$module instanceof GWF_Module;
-			$checked = $module->getDefaultAutoLoad() ? '' : ' checked="checked"';
 			$disabled = $module->isCoreModule() ? ' disabled="disabled"' : '';
+			$checked = $module->getDefaultInstalled() ? ' checked="checked"' : '';
 			$name = $module->getName();
 			$style = $disabled === '' ? '' : 'font-style:italic;';
 			$style.= $checked === '' ? 'font-weight:bold;' : '';
@@ -522,12 +521,14 @@ final class GWF_InstallWizard
 		
 		$back = self::wizard_h2('8');
 		
-		if ( (false !== GWF_ModuleLoader::reinstallHTAccess()) && (false !== GWF_HTAccess::installCountryRewrites()) )
+		if (GWF_ModuleLoader::reinstallHTAccess()) # && GWF_HTAccess::installCountryRewrites()
 		{
 			return self::wizard_message('msg_htaccess').self::wizard_btn('9');
 		}
-		
-		return self::wizard_error('err_htaccess');
+		else
+		{
+			return self::wizard_error('err_htaccess');
+		}
 	}
 	
 	/**

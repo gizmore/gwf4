@@ -119,12 +119,13 @@
 				?>
 				<input type="hidden" name="<?php echo $key; ?>" value="{{$flow.files.length ? '1' : '' }}" />
 				<div flow-init="{target: '<?php echo $action?>', singleFile: true, fileParameterName: '<?php echo $key; ?>', testChunks: false}"
-					 flow-files-submitted="$flow.upload()"
-					 flow-file-success="$file.msg = $message">
-				<label><?php echo $label; ?></label><span flow-btn>Upload File</span>
-				<?php if ($type === GWF_Form::FILE_IMAGE) { 
-					printf('<div class="gwf-flow-upload-image"><img flow-img="$flow.files[0]" /></div>');
-				} ?>
+					 flow-file-success="$file.msg = $message; $flow.files.length = 0;"
+					 flow-file-error="$flow.files.length = 0;"
+					 flow-files-submitted="$flow.upload()">
+					<label><?php echo $label; ?></label><span flow-btn>Upload File</span>
+					<?php if ($type === GWF_Form::FILE_IMAGE) { 
+						printf('<div class="gwf-flow-upload-image"><img flow-img="$flow.files[0]" /></div>');
+					} ?>
 				</div>
 				<?php 
 				break;

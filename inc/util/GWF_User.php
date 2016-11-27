@@ -3,12 +3,11 @@
  * The user is holy and not just a profile!
  * @author gizmore
  * @see GWF_Session
- * @see Module_Account
- * @see Module_Usergroups
- * @version 3.0
+ * @version 4.01
  * @since 1.0
+ * @license MIT
  */
-final class GWF_User extends GDO
+class GWF_User extends GDO
 {
 	### Option Bits ###
 	const BOT = 0x01;
@@ -204,7 +203,7 @@ final class GWF_User extends GDO
 	public static function isStaffS() { return self::getStaticOrGuest()->isStaff(); }
 	public function isStaff() { return $this->isInGroupName(GWF_Group::STAFF); }
 	public function isBot() { return $this->isOptionEnabled(self::BOT); }
-	public function isGuest() { return $this->getID() === '0'; }
+	public function isGuest() { return intval($this->getID()) <= 0; }
 	public function isWebspider() { return $this->isOptionEnabled(self::WEBSPIDER); }
 	public function isDeleted() { return $this->isOptionEnabled(self::DELETED); }
 	public function isUser() { return false === ($this->isGuest() || $this->isBot() || $this->isWebspider() || $this->isDeleted()); }

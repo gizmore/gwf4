@@ -153,6 +153,7 @@ final class GWF_InstallFunctions
 				'user_regdate' => GWF_Time::getDate(GWF_Date::LEN_SECOND),
 				'user_regip' => GWF_IP6::getIP(GWF_IP_EXACT),
 				'user_lastactivity' => time(),
+				'user_options' => GWF_User::MAIL_APPROVED,
 			));
 			if (false === $user->insert())
 			{

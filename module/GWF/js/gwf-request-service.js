@@ -67,6 +67,11 @@ service('RequestSrvc', function($http) {
 		});
 	};
 	
+	RequestSrvc.fixSelects = function($scope, selector) {
+		console.log('RequestSrvc.fixSelects()', selector);
+
+	};
+	
 	RequestSrvc.fixForms = function($scope, area, selector) {
 		console.log('RequestSrvc.fixForms()', area, selector);
 		jQuery(selector).each(function(index){

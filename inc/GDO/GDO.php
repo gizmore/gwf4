@@ -97,7 +97,7 @@ abstract class GDO
 	const CASE_I         = 0x00001000;
 	const CASE_S         = 0x00002000;
 	const UNSIGNED       = 0x00004000;
-	const AUTO_INCREMENT = 0x0100C400;
+	const AUTO_INCREMENT = 0x0100C000;
 	
 	const INDEX       = 0x00000100;
 	const UNIQUE      = 0x00000200;

@@ -143,7 +143,7 @@ final class GWF_HTAccess
 			return false;
 		}
 
-		if (false === file_put_contents($path, $content))
+		if (!file_put_contents($path, $content))
 		{
 			GWF_Log::logCritical(sprintf('Cannot write to file %s in %s.', $path, __METHOD__));
 			return false;

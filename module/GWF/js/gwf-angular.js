@@ -51,6 +51,7 @@ controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, 
 		setTimeout(function(){
 			RequestSrvc.fixForms($scope, bar, '.gwf-'+bar+'-content FORM');
 			RequestSrvc.fixAnchors($scope, '.gwf-'+bar+'-content A');
+			RequestSrvc.fixSelects($scope, '.gwf-'+bar+'-content SELECT');
 		}, 1);
 	};
 	
@@ -77,8 +78,8 @@ controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, 
 		setTimeout(function(){
 			RequestSrvc.fixForms($scope, bar, '.gwf-'+bar+'-content FORM');
 			RequestSrvc.fixAnchors($scope, '.gwf-'+bar+'-content A');
+			RequestSrvc.fixSelects($scope, '.gwf-'+bar+'-content SELECT');
 		}, 1);
-		
 		setTimeout(function(){
 			SidebarSrvc.refreshSidebarsFor($scope);
 		}, 3000);
@@ -88,6 +89,7 @@ controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, 
 		if (toState.name === 'loading') {
 			RequestSrvc.fixForms($scope, 'main', 'FORM');
 			RequestSrvc.fixAnchors($scope, 'A');
+			RequestSrvc.fixSelects($scope, 'SELECT');
 			PingSrvc.ping().then($scope.pageRequested.bind($scope, 'main'));
 			$scope.hideGWFContent();
 			SidebarSrvc.refreshSidebarsFor($scope);
@@ -100,6 +102,7 @@ controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, 
 		setTimeout(function() {
 			RequestSrvc.fixForms($scope, bar, '.gwf-'+bar+'-content FORM');
 			RequestSrvc.fixAnchors($scope, '.gwf-'+bar+'-content A');
+			RequestSrvc.fixSelects($scope, '.gwf-'+bar+'-content SELECT');
 		}, 1);
 	};
 
@@ -109,6 +112,11 @@ controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, 
 
 	$scope.toggleRightMenu = function() {
 		$mdSidenav('right').toggle();
+	};
+}).
+controller('SelectCtrl', function($scope) {
+	$scope.data = {
+		selected: '',
 	};
 }).
 controller('LoadingCtrl', function($scope) {
