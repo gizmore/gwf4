@@ -122,11 +122,13 @@ final class GWF_ModuleLoader
 		}
 		$module = new $modulename();
 		$module instanceof GWF_Module;
-
-		if (false === ($module_db = GWF_Module::loadModuleDB($name))) {
-			$options = 0;
-			$options |= $module->getDefaultAutoLoad() ? GWF_Module::AUTOLOAD : 0;
-//			$options |= $module->getDefaultEnabled() ? GWF_Module::ENABLED : 0;
+		
+		$options = 0;
+		$options |= $module->getDefaultAutoLoad() ? GWF_Module::AUTOLOAD : 0;
+		$options |= $module->getDefaultEnabled() ? GWF_Module::ENABLED : 0;
+			
+		if (false === ($module_db = GWF_Module::loadModuleDB($name)))
+		{
 			$data = array(
 				'module_id' => 0,
 				'module_name' => $name,
@@ -135,17 +137,15 @@ final class GWF_ModuleLoader
 				'module_options' => $options,
 			);
 		}
-		else {
+		else
+		{
 			$data = $module_db->getGDOData();
 		}
 
 		GWF_Module::$MODULES[$name] = $module;
-
 		$module->setGDOData($data);
-		$module->setOption(GWF_Module::AUTOLOAD, $module->getDefaultAutoLoad());
 		$module->loadVars();
-
-		if (true === $module->isEnabled())
+		if ($module->isEnabled())
 		{
 			$module->onStartup();
 		}
@@ -190,11 +190,6 @@ final class GWF_ModuleLoader
 	
 	private static function installModuleB(GWF_Module $module, $dropTables=false)
 	{
-
-		if (false === $module->saveOption(GWF_Module::AUTOLOAD, $module->getDefaultAutoLoad())) {
-			return GWF_HTML::err('ERR_DATABASE', array(__FILE__, __LINE__));
-		}
-
 		$vdb = $module->getVersionDB();
 		if ($vdb == 0)
 		{
@@ -209,13 +204,10 @@ final class GWF_ModuleLoader
 	private static function installModuleC(GWF_Module $module, $dropTables=false)
 	{
 		$module->setVar('module_version', $module->getVersionFS());
-//		$module->setOption(GWF_Module::ENABLED, $module->getDefaultEnabled());
-		if (false === $module->replace()) {
+		if (false === $module->replace())
+		{
 			return GWF_HTML::err('ERR_DATABASE', array(__FILE__, __LINE__));
 		}
-//		if (false === $module->saveOption(GWF_Module::ENABLED, true)) {
-//			return GWF_HTML::err('ERR_DATABASE', array(__FILE__, __LINE__));
-//		}
 		return '';
 	}
 
@@ -226,12 +218,14 @@ final class GWF_ModuleLoader
 		$vdb = round($module->getVersionDB(), 2);
 		$vfs = round($module->getVersionFS(), 2);
 
-		GWF_Log::logInstall(sprintf('Upgrading module %s from v%s to v%s.', $module->getName(), $vdb, $vfs));
-
-		while ($vdb < $vfs)
+		if ($vdb != $vfs)
 		{
-			$vdb = round($vdb+0.01, 2);
-			$back .= self::upgradeModuleStep($module, $vdb);
+			GWF_Log::logInstall(sprintf('Upgrading module %s from v%s to v%s.', $module->getName(), $vdb, $vfs));
+			while ($vdb < $vfs)
+			{
+				$vdb = round($vdb+0.01, 2);
+				$back .= self::upgradeModuleStep($module, $vdb);
+			}
 		}
 
 		return $back;

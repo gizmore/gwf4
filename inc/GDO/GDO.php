@@ -2,7 +2,9 @@
 /**
  * Get the main database object.
  * @return GDO_Database
- * @version 3.0
+ * @version 4.0
+ * @license MIT
+ * @author gizmore
  */
 
 global $SINGLE_GDO_DB;
@@ -141,8 +143,6 @@ abstract class GDO
 	const URL_LENGTH = 255;
 	
 	protected $gdo_data;
-// 	protected $auto_col;
-// 	protected $primary_keys;
 	
 	public function __construct($data=NULL) { $this->gdo_data = $data; }
 	public function getGDOData() { return $this->gdo_data; }
@@ -1129,4 +1129,3 @@ abstract class GDO
 		return $back;
 	}
 }
-?>

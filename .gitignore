@@ -4,6 +4,7 @@
 /dbimg/*
 /temp/*
 
+/protected/config.php
 /protected/logs
 /protected/installog
 /protected/db_backups

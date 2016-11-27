@@ -73,10 +73,10 @@ final class GWF_InstallFunctions
 	###############
 	public static function all_modules($dropTables=false)
 	{
-		if (false === ($modules = GWF_ModuleLoader::loadModulesFS())) {
+		if (false === ($modules = GWF_ModuleLoader::loadModulesFS()))
+		{
 			return GWF_HTML::err('ERR_GENERAL', array(__FILE__, __LINE__), true, true);
 		}
-		
 		return self::modules($modules, $dropTables);
 	}
 
@@ -90,7 +90,11 @@ final class GWF_InstallFunctions
 		{
 			$back .= sprintf('Installing %s...<br/>', $module->getName());
 			$back .= GWF_ModuleLoader::installModule($module, $dropTables);
-			$module->saveOption(GWF_Module::ENABLED, true); // TODO: gizmore.. check if bug
+			
+			if ($module->getName() === 'GWF')
+			{
+				var_dump($module);
+			}
 		}
 		
 		return $back;

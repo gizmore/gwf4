@@ -214,7 +214,7 @@ final class GWF_InstallConfig
 			array('int10',  'Main', 'GWF_LOG_BITS', 0xfff, 'bitmask for logging: NONE = 0; GWF_WARNING = 0x01; GWF_MESSAGE = 0x02; GWF_ERROR = 0x04; GWF_CRITICAL = 0x08; PHP_ERROR = 0x10; DB_ERROR = 0x20; SMARTY = 0x40; HTTP_ERROR = 0x80; HTTP_GET = 0x100; HTTP_POST = 0x200; IP = 0x400;'),
 
 			# Defaults
-			array('text', 'Defaults', 'GWF_SERVER_VERSION', 'APACHE2.2', 'Either APACHE2.2, APACHE2.4 or NGINX'),
+			array('text', 'Defaults', 'GWF_SERVER_VERSION', 'APACHE2.', 'Either APACHE2.2, APACHE2.4 or NGINX'),
 			array('text', 'Defaults', 'GWF_DEFAULT_LANG', 'en', 'Fallback language. Should be \'en\'.'),
 			array('text', 'Defaults', 'GWF_DEFAULT_MODULE', 'GWF', '1st visit module. Example: \'Wanda\'.'),
 			array('text', 'Defaults', 'GWF_DEFAULT_METHOD', 'About', '1st visit method. Example: \'Home\'.'),

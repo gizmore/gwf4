@@ -16,6 +16,7 @@ $lang = array(
 	'err_htaccess' => 'Could not write the root .htaccess file.',
 	'err_copy' => 'Cannot copy to file %s.',
 	'err_clear_smarty' => 'Could not clear smarty cache.',
+	'err_apache_version' => 'You have to select the webserver version. APACHE2.2, APACHE2.4 or NGINX.',
 		
 	'msg_copy' => 'Successfully made a copy of %s.',
 	'msg_copy_untouched' => 'Your copy of %s has not been touched.',
@@ -56,7 +57,8 @@ $lang = array(
 
 	'step_0'    => 'Check requirements',
 	'step_0_0'  => 'Welcome to the GWF install wizard.<br/>Please create a database for your installation first.<br/>MySQL commands to create a database:',
-	'step_0_0a' => 'First make sure all fields marked with (*) are green.',
+	'step_0_0a' => 'Also you need to install npm and bower:',
+	'step_0_0b' => 'Then make sure all fields marked with (*) are green.',
 	'step_0_1'  => 'Is directory &quot;protected/&quot; .htaccess protected?',
 	'step_0_2'  => 'Is the root .htaccess writable?(*)',
 	'step_0_3'  => 'Can write &quot;protected/config.php&quot;?(*)',
@@ -72,12 +74,16 @@ $lang = array(
 	'step_0_13' => 'Is PHP Fileinfo or mime_content_type available?',
 	'step_0_14' => 'Are dangerous functions (exec,system,passthru,pcntl_exec,proc_open,shell_exec,popen,link) disabled?',
 	'step_0_15' => 'Are GnuPG functions available?',
-
+	'step_0_16' => 'Is protected folder existing?',
+	'step_0_17' => 'Is bower installed?',
+	'step_0_18' => 'Is apache version selected?',
+		
 	'step_1' => 'Create &quot;protected/config.php&quot;',
 
 	'step_1a' => 'Test database connection',
 	'step_1a_0' => 'Looking for protected/config.php configuration file... %s.',
 	'step_1a_1' => 'Trying to connect to database... %s.',
+	'step_1a_2' => 'Checking validity of GWF_SERVER_VERSION... %s.',
 	'step_1b' => 'Write &quot;protected/config.php&quot;',
 	'step_1b_0' => 'Writing the configuration file... %s.',
 
@@ -108,7 +114,7 @@ $lang = array(
 	'step_9' => 'Create admin account(s)',
 
 	'step_10' => 'Create Backup Folders',
-	'step_10_0' => 'You should add the following to your crontab:<br/><br/>%s<br/>%s<br/><br/>You will find data here: %s.<br/><br/>Backup strategy is important!',
+	'step_10_0' => 'You should add the following to your crontab:<br/><br/><pre>%s</pre><br/>You will find data here: %s.<br/><br/>Backup strategy is important!',
 		
 	'step_11' => 'Clear Caches',
 	'step_11_0' => 'Install has been finished.<br/>All caches have been cleared.<br/>You can login now or enhance the protection of your install folder.',

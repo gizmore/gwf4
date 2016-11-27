@@ -40,7 +40,18 @@ final class GWF_InstallWizard
 		$back .= '</pre>'.PHP_EOL;
 
 		$back .= sprintf('<p>%s</p>', self::$gwfil->lang('step_0_0a')).PHP_EOL;
-
+		$back .= '<pre>'.PHP_EOL;
+		$back .= 'sudo apt-get install nodejs'.PHP_EOL;
+		$back .= 'sudo npm install -g bower'.PHP_EOL;
+		$back .= ''.PHP_EOL;
+		$back .= 'cd gwf4'.PHP_EOL;
+		$back .= 'bower install'.PHP_EOL;
+		$back .= '</pre>'.PHP_EOL;
+		
+		$back .= sprintf('<p>%s</p>', self::$gwfil->lang('step_0_0b')).PHP_EOL;
+		
+		
+		
 		$back .= '<table>'.PHP_EOL;
 		$back .= self::wizard_0_row('4', self::wizard_test_cfg_r());
 		$back .= self::wizard_0_row('1', self::wizard_test_hta_sec());
@@ -57,6 +68,9 @@ final class GWF_InstallWizard
 		$back .= self::wizard_0_row('13', self::wizard_test_mime());
 		$back .= self::wizard_0_row('15', self::wizard_test_gpg());
 		$back .= self::wizard_0_row('14', self::wizard_test_security1());
+		$back .= self::wizard_0_row('16', self::wizard_test_cfg_bower());
+		$back .= self::wizard_0_row('17', self::wizard_test_cfg_protected());
+		$back .= self::wizard_0_row('18', self::wizard_test_apache_version());
 		$back .= '</table>'.PHP_EOL;
 
 
@@ -222,7 +236,32 @@ final class GWF_InstallWizard
 	{
 		return is_file('protected/.htaccess') ? '<b style="color:#ff0000">Unknown</b>' : self::wizard_bool(false);
 	}
-
+	
+	public static function wizard_test_cfg_bower()
+	{
+		$success = GWF_File::isDir(GWF_PATH.'bower_components');
+		return self::wizard_bool($success);
+	}
+	
+	public static function wizard_test_cfg_protected()
+	{
+		GWF_File::createDir(GWF_PATH.'protected', false);
+		$success = GWF_File::isDir(GWF_PATH.'protected');
+		return self::wizard_bool($success);
+	}
+	
+	public static function wizard_test_apache_version()
+	{
+		$success = self::is_valid_apache_version();
+		return self::wizard_bool($success);
+	}
+	
+	public static function is_valid_apache_version()
+	{
+		$versions = array('APACHE2.2', 'APACHE2.4', 'NGINX');
+		return defined('GWF_SERVER_VERSION') && in_array(GWF_SERVER_VERSION, $versions, true);
+	}
+	
 	#########################
 	### --- Step 1 --- ######
 	### --- Create Config ###
@@ -273,15 +312,23 @@ final class GWF_InstallWizard
 		$back = self::wizard_h2('2');
 
 		$back .= sprintf('<p>%s</p>', self::$gwfil->lang('step_1a_0', array(self::wizard_test_cfg_r())));
-		if (!defined('GWF_WIZARD_HAS_CFG_FILE')) {
+		if (!defined('GWF_WIZARD_HAS_CFG_FILE'))
+		{
 			return $back.self::wizard_error('err_no_config').self::wizard_1();
 		}
 
 		$back .= sprintf('<p>%s</p>', self::$gwfil->lang('step_1a_1', array(self::wizard_test_db())));
-		if (!defined('GWF_WIZARD_HAS_DB')) {
+		if (!defined('GWF_WIZARD_HAS_DB'))
+		{
 			return $back.self::wizard_error('err_no_db').self::wizard_1();
 		}
 
+		$back .= sprintf('<p>%s</p>', self::$gwfil->lang('step_1a_2', array(self::wizard_test_apache_version())));
+		if (!self::is_valid_apache_version())
+		{
+			return $back.self::wizard_error('err_apache_version').self::wizard_1();
+		}
+		
 		return
 			$back.PHP_EOL.
 			sprintf('<p>%s</p>', self::$gwfil->lang('step_2_0')).PHP_EOL.
@@ -615,11 +662,14 @@ final class GWF_InstallWizard
 
 		$back = self::wizard_h2('10');
 
-		$backupScript = '20  4   *   *   *       '.GWF_PATH.'www/protected/db_backup.sh';
-		$cronjobScript = '*  *   *   *   *       '.GWF_PATH.'www/gwf_cronjob.sh';
+		$cronjobScript = '#MAILTHINGY'.PHP_EOL;
+		$cronjobScript .= '###'.PHP_EOL;
+		$cronjobScript .= '20  4   *   *   *       '.GWF_PATH.'www/protected/db_backup.sh > /dev/null'.PHP_EOL;
+		$cronjobScript .= ' *  *   *   *   *       '.GWF_PATH.'www/gwf_cronjob.sh > /dev/null'.PHP_EOL;
+		
 		$backupFolder = GWF_PATH.'www/protected';
 		
-		$back .= sprintf('<p>%s</p>', self::$gwfil->lang('step_10_0', array($backupScript, $cronjobScript, $backupFolder)));
+		$back .= sprintf('<p>%s</p>', self::$gwfil->lang('step_10_0', array($cronjobScript, $backupFolder)));
 		
 		$back .= self::wizard_btn('11');
 	

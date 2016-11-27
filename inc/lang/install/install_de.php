@@ -56,7 +56,7 @@ $lang = array(
 
 	'step_0'    => 'Prüfe Abhängigkeiten',
 	'step_0_0'  => 'Willkommen zum GWF Installations-Assistent.<br/>Bitte erstellen Sie zuerst eine Datenbank für Ihre installation.<br/>MySQL befehle um eine Datenbank zu erstellen:',
-	'step_0_0a' => 'Dann überprüfe, ob alle mit (*) markierten Felder grün sind.',
+	'step_0_0b' => 'Dann überprüfe, ob alle mit (*) markierten Felder grün sind.',
 	'step_0_1'  => 'Ist der Ordner &quot;protected/&quot; .htaccess geschützt?',
 	'step_0_2'  => 'Ist die root .htaccess schreibgeschützt?(*)',
 	'step_0_3'  => 'Kann &quot;protected/config.php&quot; schreiben?(*)',

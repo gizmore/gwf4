@@ -56,7 +56,7 @@ $lang = array(
 
 	'step_0'    => 'Controlla requisiti',
 	'step_0_0'  => 'Benventuto all\'installazione guidata di GWF.<br/>Ti preghiamo di creare un database prima di procedere con l\'installazione.<br/>Ecco i comandi MySQL per creare un database:',
-	'step_0_0a' => 'Prima di tutto, assicurati che i campi marcati con (*) siano tutti verdi.',
+	'step_0_0b' => 'Prima di tutto, assicurati che i campi marcati con (*) siano tutti verdi.',
 	'step_0_1'  => 'Hai protetto la cartella &quot;protected/&quot; tramite .htaccess?',
 	'step_0_2'  => 'Il server dispone dei permessi di scrittura per il file .htaccess alla radice?(*)',
 	'step_0_3'  => 'Il server può scrivere il file &quot;protected/config.php&quot;?(*)',

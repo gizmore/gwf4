@@ -35,7 +35,12 @@ final class GWF_File
 	{
 		return file_exists($filename) && (!is_dir($filename)) && is_readable($filename);
 	}
-
+	
+	public static function isDir($filename)
+	{
+		return file_exists($filename) && (is_dir($filename)) && is_readable($filename);
+	}
+	
 	public static function createDir($path)
 	{
 		if (true === Common::isDir($path))
