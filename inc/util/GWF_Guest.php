@@ -7,6 +7,11 @@
  */
 final class GWF_Guest extends GWF_User
 {
+	public function getGuestID()
+	{
+		return (string)(abs($this->getID()));
+	}
+	
 	public static function getGuest($sessid=true)
 	{
 		return new self(array(

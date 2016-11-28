@@ -24,8 +24,8 @@ final class GWF_Avatar extends GDO
 	{
 		return array(
 			'avatar_id' => array(GDO::AUTO_INCREMENT),
-			'avatar_user_id' => array(GDO::UINT|GDO::INDEX, '0'),
-			'avatar_sess_id' => array(GDO::UINT|GDO::INDEX, '0'),
+			'avatar_user_id' => array(GDO::INT|GDO::INDEX, '0'),
+			'avatar_sess_id' => array(GDO::INT|GDO::INDEX, '0'),
 			'avatar_mode' => array(GDO::ENUM, GWF_Avatar::NONE, array(GWF_Avatar::NONE, GWF_Avatar::DEFAULT, GWF_Avatar::CUSTOM)),
 			'avatar_file' => array(GDO::VARCHAR|GDO::ASCII|GDO::CASE_S, GDO::NULL, 128),
 			'avatar_version' => array(GDO::UINT, '0'),
@@ -72,7 +72,7 @@ final class GWF_Avatar extends GDO
 	##################
 	public static function isValidDefaultAvatar($arg)
 	{
-		foreach (self::defaultAvatars() as $key => $data)
+		foreach (self::defaultAvatars(GWF_User::getStaticOrGuest()) as $key => $data)
 		{
 			list($label, $wwwPath, $filePath, $fileName) = $data;
 			if ($arg === $fileName)
@@ -104,9 +104,9 @@ final class GWF_Avatar extends GDO
 		}
 		if ($flowFile['size'] > $maxSize)
 		{
-			return self::$LANGFILE->lang('err_filesize', array(GWF_File::humanFilesize($maxSize)));
+			return self::$LANGFILE->lang('err_filesize', array(GWF_Upload::humanFilesize($maxSize)));
 		}
-		$mime = mime_content_type(file_get_contents($flowFile['path']));
+		$mime = mime_content_type($flowFile['path']);
 		if (!Common::startsWith($mime, 'image'))
 		{
 			return self::$LANGFILE->lang('err_no_image', array(implode(', ', $formats)));
@@ -200,7 +200,7 @@ final class GWF_Avatar extends GDO
 	{
 		if ($user->isGuest())
 		{
-			$where = sprintf('avatar_sess_id = %d', $user->getName()); # name is sessid
+			$where = sprintf('avatar_sess_id = %d', $user->getGuestID());
 		}
 		else
 		{
@@ -215,12 +215,12 @@ final class GWF_Avatar extends GDO
 	
 	public static function none(GWF_User $user)
 	{
-		$userid = $user->isGuest() ? '0' : $user->getVar('user_id');
-		$sessid = $user->isGuest() ? $user->getVar('user_name') : '0';
+		$userid = $user->isGuest() ? '0' : $user->getID();
+		$sessid = $user->isGuest() ? $user->getGuestID() : '0';
 		return new self(array(
 			'avatar_id' => '0',
 			'avatar_user_id' => $userid,
-			'avatar_sess_id' => $sessid,
+			'avatar_sess_id' => (string) $sessid,
 			'avatar_mode' => GWF_Avatar::NONE,
 			'avatar_file' => null,
 			'avatar_version' => '0',
