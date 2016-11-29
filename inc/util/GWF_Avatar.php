@@ -25,7 +25,6 @@ final class GWF_Avatar extends GDO
 		return array(
 			'avatar_id' => array(GDO::AUTO_INCREMENT),
 			'avatar_user_id' => array(GDO::INT|GDO::INDEX, '0'),
-			'avatar_sess_id' => array(GDO::INT|GDO::INDEX, '0'),
 			'avatar_mode' => array(GDO::ENUM, GWF_Avatar::NONE, array(GWF_Avatar::NONE, GWF_Avatar::DEFAULT, GWF_Avatar::CUSTOM)),
 			'avatar_file' => array(GDO::VARCHAR|GDO::ASCII|GDO::CASE_S, GDO::NULL, 128),
 			'avatar_version' => array(GDO::UINT, '0'),
@@ -39,14 +38,11 @@ final class GWF_Avatar extends GDO
 	###############
 	public function getID() { return $this->getVar('avatar_id'); }
 	public function getUserID() { return $this->getVar('avatar_user_id'); }
-	public function getSessID() { return $this->getVar('avatar_sess_id'); }
 	public function getMode() { return $this->getVar('avatar_mode'); }
 	public function getFile() { return $this->getVar('avatar_file'); }
-	public function getDir() { return $this->getUserID() == '0' ? 'guest' : 'user'; }
+	public function getDir() { return 'user'; }
 	public function getVersion() { return $this->getVar('avatar_version'); }
 	public function getVersionInt() { return (int) $this->getVersion(); }
-	public function getDestinationID()  { return $this->isGuest() ? $this->getVar('avatar_sess_id') : $this->getVar('avatar_user_id'); }
-	public function isGuest() { return $this->getVar('avatar_sess_id') !== '0'; }
 	public function isCustomAvatar() { return $this->getMode() === self::CUSTOM; }
 	public function isDefaultAvatar() { return $this->getMode() === self::DEFAULT; }
 	public function getDefaultAvatarFilename() { return $this->isDefaultAvatar() ? $this->getFile() : ''; }
@@ -57,14 +53,20 @@ final class GWF_Avatar extends GDO
 	public static function userAvatar(GWF_User $user)
 	{
 		$href = htmlspecialchars(self::wwwPathForUser($user));
-		$alt = $user->getName();
-		return sprintf('<gwf-avatar><img src="%s" alt="%s" /></gwf-avatar>', $href, $alt);
+		$alt = self::$LANGFILE->lang('custom_avatar_alt', array($user->getName()));
+		$gender = $user->getVar('user_gender');
+		return self::avatarMarkup($href, $alt, $gender);
 	}
 	
 	public static function defaultAvatar(array $avatar)
 	{
-		list($label, $wwwPath, $filePath, $fileName) = $avatar;
-		return sprintf('<gwf-avatar><img src="%s" alt="%s" /></gwf-avatar>', $wwwPath, $label);
+		list($label, $wwwPath, $filePath, $fileName, $selected, $gender) = $avatar;
+		return self::avatarMarkup($wwwPath, $label, $gender);
+	}
+	
+	private static function avatarMarkup($href, $alt, $gender)
+	{
+		return sprintf('<gwf-avatar><%s><img src="%s" alt="%s" /></%1$s></gwf-avatar>', $gender, $href, $alt);
 	}
 	
 	##################
@@ -130,6 +132,11 @@ final class GWF_Avatar extends GDO
 			return false;
 		}
 		
+		if (!$user->persistentGuest())
+		{
+			return false;
+		}
+			
 		$avatar = self::avatarForUser($user);
 		$data = array(
 			'avatar_mode' => self::NONE,
@@ -144,7 +151,7 @@ final class GWF_Avatar extends GDO
 			$dir = $avatar->getDir();
 			if (GWF_File::isFile($flowFile['path']))
 			{
-				$destinationDir = sprintf('%sdbimg/avatar/%s/%s', GWF_PATH, $dir, $avatar->getDestinationID());
+				$destinationDir = sprintf('%sdbimg/avatar/%s/%s', GWF_PATH, $dir, $avatar->getUserID());
 				$destinationPath = $destinationDir.'/'.$flowFile['name'];
 				if (!GWF_File::createDir($destinationDir))
 				{
@@ -198,16 +205,9 @@ final class GWF_Avatar extends GDO
 	
 	public static function avatarForUser(GWF_User $user)
 	{
-		if ($user->isGuest())
+		$where = sprintf('avatar_user_id = %s', $user->getID());
+		if (false === ($avatar = self::table(__CLASS__)->selectFirstObject('*', $where)))
 		{
-			$where = sprintf('avatar_sess_id = %d', $user->getGuestID());
-		}
-		else
-		{
-			$where = sprintf('avatar_user_id = %s', $user->getID());
-		}
-		
-		if (false === ($avatar = self::table(__CLASS__)->selectFirstObject('*', $where))) {
 			$avatar = self::none($user);
 		}
 		return $avatar;
@@ -215,12 +215,9 @@ final class GWF_Avatar extends GDO
 	
 	public static function none(GWF_User $user)
 	{
-		$userid = $user->isGuest() ? '0' : $user->getID();
-		$sessid = $user->isGuest() ? $user->getGuestID() : '0';
 		return new self(array(
 			'avatar_id' => '0',
-			'avatar_user_id' => $userid,
-			'avatar_sess_id' => (string) $sessid,
+			'avatar_user_id' => $user->getID(),
 			'avatar_mode' => GWF_Avatar::NONE,
 			'avatar_file' => null,
 			'avatar_version' => '0',
@@ -283,7 +280,7 @@ final class GWF_Avatar extends GDO
 		
 		if ($mode === GWF_Avatar::CUSTOM)
 		{
-			return sprintf('%savatar/%s/%s/%s/%s?v=%s', GWF_WEB_ROOT, $mode, $dir, $this->getDestinationID(), $file, $this->getVersion());
+			return sprintf('%savatar/%s/%s/%s/%s?v=%s', GWF_WEB_ROOT, $mode, $dir, $this->getUserID(), $file, $this->getVersion());
 		}
 		else
 		{
@@ -325,7 +322,8 @@ final class GWF_Avatar extends GDO
 		$filePath = $fullpath;
 		$fileName = $entry;
 		$selected = $default === $entry;
-		self::$DEFAULT_AVATARS[$key] = array($label, $wwwPath, $filePath, $fileName, $selected);
+		$gender = $user ? $user->getGender() : 'no_gender';
+		self::$DEFAULT_AVATARS[$key] = array($label, $wwwPath, $filePath, $fileName, $selected, $gender);
 	}
 	
 }

@@ -7,15 +7,41 @@
  */
 final class GWF_Guest extends GWF_User
 {
-	public function getGuestID()
-	{
-		return (string)(abs($this->getID()));
-	}
-	
 	public static function getGuest($sessid=true)
 	{
+		$sessid = self::getGuestUserID($sessid);
+		if ($sessid === '0')
+		{
+			return self::newGuest($sessid); // no sess guest.
+		}
+		else
+		{
+			return self::getOrCreateGuest($sessid);
+		}
+	}
+	
+	private static function getOrCreateGuest($sessid)
+	{
+		if (false !== ($user = self::loadGuest($sessid)))
+		{
+			return $user;
+		}
+		else
+		{
+			return self::newGuest($sessid);
+		}
+	}
+	
+	private static function loadGuest($sessid)
+	{
+		return self::table('GWF_User')->selectFirstObject('*', "user_guest_id=$sessid");
+	}
+	
+	private static function newGuest($sessid)
+	{
 		return new self(array(
-			'user_id' => self::getGuestUserID($sessid),
+			'user_id' => '0',
+			'user_guest_id' => $sessid,
 			'user_options' => 0,
 			'user_name' => GWF_HTML::lang('guest'),
 			'user_password' => '',
@@ -45,8 +71,7 @@ final class GWF_Guest extends GWF_User
 		}
 		else if ($sessid === true)
 		{
-			$sessid = GWF_Session::getSessSID();
-			return "-{$sessid}";
+			return GWF_Session::getSessSID();
 		}
 		else
 		{

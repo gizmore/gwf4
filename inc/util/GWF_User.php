@@ -51,6 +51,7 @@ class GWF_User extends GDO
 	{
 		return array(
 			'user_id' => array(GDO::AUTO_INCREMENT),
+			'user_guest_id' => array(GDO::INT|GDO::INDEX, GDO::NULL),
 			'user_options' => array(GDO::UINT|GDO::INDEX, 0),
 			'user_name' => array(GDO::VARCHAR|GDO::UNIQUE|GDO::ASCII|GDO::CASE_I, GDO::NOT_NULL, self::USERNAME_LENGTH),
 			'user_password' => array(GDO::CHAR|GDO::ASCII|GDO::CASE_S, GDO::NOT_NULL, 44),
@@ -72,10 +73,33 @@ class GWF_User extends GDO
 		);
 	}
 	public function getID() { return $this->getVar('user_id'); }
+	public function getGuestID() { return $this->getVar('user_guest_id'); }
 	public function getName() { return $this->getVar('user_name'); }
 	public function getGender() { return $this->getVar('user_gender'); }
 	public function hasAvatar() { return $this->isOptionEnabled(self::HAS_AVATAR); }
 	public function hasCountry() { return $this->getVar('user_countryid') !== '0'; }
+	
+	/**
+	 * Ensure that the user can be saved, maybe as guest.
+	 */
+	public function persistentGuest()
+	{
+		if ($this->getID() == 0)
+		{
+			if ($this->getGuestID() == 0)
+			{
+				return false; # No session
+			}
+			else
+			{
+				return $this->insert(); # Persistent guest
+			}
+		}
+		else
+		{
+			return true; # Member
+		}
+	}
 
 	/**
 	 * Get a user by ID.
@@ -198,12 +222,13 @@ class GWF_User extends GDO
 	public static function isLoggedIn() { return GWF_Session::getUserID() !== '0'; }
 	public static function getByIDOrGuest($id) { return (false === ($u = self::getByID($id))) ? GWF_Guest::getGuest() : $u; }
 	public static function getStaticOrGuest() { return (false === ($user = GWF_Session::getUser())) ? GWF_Guest::getGuest() : $user; }
+	public static function isGuestS() { return self::getStaticOrGuest()->isGuest(); }
 	public static function isAdminS() { return self::getStaticOrGuest()->isAdmin(); }
 	public function isAdmin() { return $this->isInGroupName(GWF_Group::ADMIN); }
 	public static function isStaffS() { return self::getStaticOrGuest()->isStaff(); }
 	public function isStaff() { return $this->isInGroupName(GWF_Group::STAFF); }
 	public function isBot() { return $this->isOptionEnabled(self::BOT); }
-	public function isGuest() { return intval($this->getID()) <= 0; }
+	public function isGuest() { return $this->getGuestID() > 0; }
 	public function isWebspider() { return $this->isOptionEnabled(self::WEBSPIDER); }
 	public function isDeleted() { return $this->isOptionEnabled(self::DELETED); }
 	public function isUser() { return false === ($this->isGuest() || $this->isBot() || $this->isWebspider() || $this->isDeleted()); }
