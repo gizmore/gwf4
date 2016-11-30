@@ -10,14 +10,7 @@ final class GWF_Guest extends GWF_User
 	public static function getGuest($sessid=true)
 	{
 		$sessid = self::getGuestUserID($sessid);
-		if ($sessid === '0')
-		{
-			return self::newGuest($sessid); // no sess guest.
-		}
-		else
-		{
-			return self::getOrCreateGuest($sessid);
-		}
+		return $sessid <= 0 ? self::newGuest($sessid) : self::getOrCreateGuest($sessid);
 	}
 	
 	private static function getOrCreateGuest($sessid)
@@ -34,16 +27,17 @@ final class GWF_Guest extends GWF_User
 	
 	private static function loadGuest($sessid)
 	{
-		return self::table('GWF_User')->selectFirstObject('*', "user_guest_id=$sessid");
+		return self::table('GWF_User')->selectFirstObject('*', "user_guest_id=".intval($sessid));
 	}
 	
 	private static function newGuest($sessid)
 	{
 		return new GWF_User(array(
 			'user_id' => '0',
-			'user_guest_id' => $sessid,
 			'user_options' => 0,
-			'user_name' => $sessid,
+			'user_name' => (string)$sessid,
+			'user_guest_id' => (string)$sessid,
+			'user_guest_name' => null,
 			'user_password' => '',
 			'user_regdate' => '',
 			'user_regip' => GWF_IP6::getIP(GWF_IP_EXACT),
@@ -65,13 +59,13 @@ final class GWF_Guest extends GWF_User
 
 	private static function getGuestUserID($sessid)
 	{
-		if ((!$sessid) || (!GWF_Session::hasSession()))
+		if (($sessid <= 0) && (!GWF_Session::hasSession()))
 		{
 			return '0';
 		}
 		else if ($sessid === true)
 		{
-			return GWF_Session::getSessSID();
+			return (string)GWF_Session::getSessSID();
 		}
 		else
 		{

@@ -53,7 +53,7 @@ class GWF_User extends GDO
 			'user_id' => array(GDO::AUTO_INCREMENT),
 			'user_options' => array(GDO::UINT|GDO::INDEX, 0),
 			'user_name' => array(GDO::VARCHAR|GDO::UNIQUE|GDO::ASCII|GDO::CASE_I, GDO::NOT_NULL, self::USERNAME_LENGTH),
-			'user_guest_id' => array(GDO::INT|GDO::INDEX, GDO::NULL),
+			'user_guest_id' => array(GDO::UINT|GDO::INDEX, GDO::NULL),
 			'user_guest_name' => array(GDO::VARCHAR|GDO::ASCII|GDO::CASE_I, GDO::NULL, self::USERNAME_LENGTH),
 			'user_password' => array(GDO::CHAR|GDO::ASCII|GDO::CASE_S, GDO::NOT_NULL, 44),
 			'user_regdate' => array(GDO::CHAR|GDO::ASCII|GDO::CASE_S|GDO::INDEX, GDO::NOT_NULL, GWF_Date::LEN_SECOND),

@@ -99,6 +99,7 @@ final class Module_GWF extends GWF_Module
 			$this->addJavascript('gwf-error-service.js');
 			$this->addJavascript('gwf-request-service.js');
 			$this->addJavascript('gwf-ping-service.js');
+			$this->addJavascript('gwf-vibrator-service.js');
 			$this->addJavascript('gwf-request-interceptor.js');
 			$this->addJavascript('gwf-sidebar-service.js');
 		}
