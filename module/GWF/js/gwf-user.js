@@ -15,5 +15,5 @@ var GWF_User = function(json) {
 	this.hasGuestName = function() { return this.HAS_GUEST_NAME; };
 
 	this.displayName = function() { return this.guest() ? this.guestName() : this.name(); };
-
+	
 };

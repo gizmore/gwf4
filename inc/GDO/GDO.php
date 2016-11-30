@@ -99,7 +99,7 @@ abstract class GDO
 	const CASE_I         = 0x00001000;
 	const CASE_S         = 0x00002000;
 	const UNSIGNED       = 0x00004000;
-	const AUTO_INCREMENT = 0x0100C000;
+	const AUTO_INCREMENT = 0x0100C400;
 	
 	const INDEX       = 0x00000100;
 	const UNIQUE      = 0x00000200;
@@ -732,6 +732,9 @@ abstract class GDO
 				$con[] = sprintf("`%s`='%s'", $c, self::escape($this->getVar($c)));
 			}
 		}
+		if (empty(($con))){
+			die('PK WHERE IS EMPTY!');
+		}
 		return implode(' AND ', $con);
 	}
 	
@@ -1127,5 +1130,15 @@ abstract class GDO
 			}
 		}
 		return $back;
+	}
+
+	public function getGDODataFields(array $fields)
+	{
+		$result = array();
+		foreach ($fields as $key)
+		{
+			$result[$key] = $this->getVar($key);
+		}
+		return $result;
 	}
 }

@@ -1,6 +1,6 @@
 		</div>
 
-		<ui-view></ui-view>
+		<ui-view class="gwf-angular-main-view" layout="row" flex></ui-view>
 
 	</section>
 	

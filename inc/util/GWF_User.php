@@ -51,9 +51,10 @@ class GWF_User extends GDO
 	{
 		return array(
 			'user_id' => array(GDO::AUTO_INCREMENT),
-			'user_guest_id' => array(GDO::INT|GDO::INDEX, GDO::NULL),
 			'user_options' => array(GDO::UINT|GDO::INDEX, 0),
 			'user_name' => array(GDO::VARCHAR|GDO::UNIQUE|GDO::ASCII|GDO::CASE_I, GDO::NOT_NULL, self::USERNAME_LENGTH),
+			'user_guest_id' => array(GDO::INT|GDO::INDEX, GDO::NULL),
+			'user_guest_name' => array(GDO::VARCHAR|GDO::ASCII|GDO::CASE_I, GDO::NULL, self::USERNAME_LENGTH),
 			'user_password' => array(GDO::CHAR|GDO::ASCII|GDO::CASE_S, GDO::NOT_NULL, 44),
 			'user_regdate' => array(GDO::CHAR|GDO::ASCII|GDO::CASE_S|GDO::INDEX, GDO::NOT_NULL, GWF_Date::LEN_SECOND),
 			'user_regip' => GWF_IP6::gdoDefine(GWF_IP_EXACT, GDO::NOT_NULL),
@@ -78,6 +79,9 @@ class GWF_User extends GDO
 	public function getGender() { return $this->getVar('user_gender'); }
 	public function hasAvatar() { return $this->isOptionEnabled(self::HAS_AVATAR); }
 	public function hasCountry() { return $this->getVar('user_countryid') !== '0'; }
+	public function hasGuestName() { return !!$this->getVar('user_guest_name'); }
+	public function getGuestName() { return $this->getVar('user_guest_name'); }
+	public function displayName() { return $this->hasGuestName() ? $this->getGuestName() : $this->getName(); }
 	
 	/**
 	 * Ensure that the user can be saved, maybe as guest.

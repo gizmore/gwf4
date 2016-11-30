@@ -39,11 +39,11 @@ final class GWF_Guest extends GWF_User
 	
 	private static function newGuest($sessid)
 	{
-		return new self(array(
+		return new GWF_User(array(
 			'user_id' => '0',
 			'user_guest_id' => $sessid,
 			'user_options' => 0,
-			'user_name' => GWF_HTML::lang('guest'),
+			'user_name' => $sessid,
 			'user_password' => '',
 			'user_regdate' => '',
 			'user_regip' => GWF_IP6::getIP(GWF_IP_EXACT),

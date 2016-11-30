@@ -50,7 +50,7 @@
 				
 			case GWF_Form::CHECKBOX:
 				$checked = $data[1] ? ' class="md-checked"' : '';
-				$input = sprintf('<md-checkbox type="checkbox" name="%s"%s />', $key, $checked);
+				$input = sprintf('<md-checkbox type="checkbox" aria-label="%s" name="%s"%s />', $label, $key, $checked);
 				echo "<md-input-container class=\"gwf-checkbox\">$label $tt $input</md-input-container>";
 				$input = null;
 				break;
