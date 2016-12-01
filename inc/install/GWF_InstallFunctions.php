@@ -90,11 +90,6 @@ final class GWF_InstallFunctions
 		{
 			$back .= sprintf('Installing %s...<br/>', $module->getName());
 			$back .= GWF_ModuleLoader::installModule($module, $dropTables);
-			
-			if ($module->getName() === 'GWF')
-			{
-				var_dump($module);
-			}
 		}
 		
 		return $back;

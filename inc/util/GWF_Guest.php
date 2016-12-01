@@ -54,18 +54,19 @@ final class GWF_Guest extends GWF_User
 			'user_settings' => '',
 			'user_data' => '',
 			'user_credits' => '0.00',
+			'user_saved_at' => null,
 		));
 	}
 
 	private static function getGuestUserID($sessid)
 	{
-		if (($sessid <= 0) && (!GWF_Session::hasSession()))
+		if ($sessid === true)
+		{
+			return GWF_Session::hasSession() ? (string)GWF_Session::getSessSID() : '0';
+		}
+		else if ($sessid <= 0)
 		{
 			return '0';
-		}
-		else if ($sessid === true)
-		{
-			return (string)GWF_Session::getSessSID();
 		}
 		else
 		{
@@ -73,4 +74,3 @@ final class GWF_Guest extends GWF_User
 		}
 	}
 }
-

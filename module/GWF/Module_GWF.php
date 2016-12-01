@@ -60,7 +60,7 @@ final class Module_GWF extends GWF_Module
 
 	public function onStartup()
 	{
-		if (!Common::isCLI())
+		if ( (!Common::isCLI()) && (GWF_Session::hasSession()) )
 		{
 			$min = GWF_DEBUG_JS ? '' : '.min';
 			$v = $this->getVersionDB();

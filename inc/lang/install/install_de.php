@@ -16,7 +16,8 @@ $lang = array(
 	'err_htaccess' => 'Die Wurzel-&quot;.htaccess&quot; Datei konnte nicht beschrieben werden.',
 	'err_copy' => 'Cannot copy to file %s.',
 	'err_clear_smarty' => 'Der Smarty Template Cache konnte nicht geleert werden.',
-
+	'err_apache_version' => 'You have to select the webserver version. APACHE2.2, APACHE2.4 or NGINX.',
+		
 	'msg_copy' => 'Succesfully made a copy of %s.',
 	'msg_copy_untouched' => 'Ihre Kopie von %s wurde nicht verändert.',
 	'msg_htaccess' => 'Die Wurzel &quot;.htaccess&quot; Datei wurde erfolgreich beschrieben.',
@@ -72,12 +73,16 @@ $lang = array(
 	'step_0_13' => 'Ist PHP Fileinfo or mime_content_type verfügbar?',
 	'step_0_14' => 'Sind gefährliche Funktionen (exec,system,passthru,pcntl_exec,proc_open,shell_exec,popen,link) deaktiviert?',
 	'step_0_15' => 'Sind GnuPG Funktionen verfügbar?',
-
+	'step_0_16' => 'Is protected folder existing?',
+	'step_0_17' => 'Is bower installed?',
+	'step_0_18' => 'Is apache version selected?',
+	
 	'step_1' => 'Erstelle &quot;protected/config.php&quot;',
 
 	'step_1a' => 'Teste Datenbankverbindung',
 	'step_1a_0' => 'Suche nach protected/config.php Konfigurationsdatei... %s.',
 	'step_1a_1' => 'Versuche zur Datenbank zu verbinden... %s.',
+	'step_1a_2' => 'Checking validity of GWF_SERVER_VERSION... %s.',
 
 	'step_1b' => 'Schreibe &quot;protected/config.php&quot;',
 	'step_1b_0' => 'Konfigurationsdatei schreiben... %s.',
@@ -109,8 +114,8 @@ $lang = array(
 	'step_9' => 'Administratoren erzeugen',
 
 	'step_10' => 'Create Backup Folders',
-	'step_10_0' => 'You should add the following to your crontab:<br/><br/>%s<br/>%s<br/><br/>You will find data here: %s.<br/><br/>Backup strategy is important!',
-	
+	'step_10_0' => 'You should add the following to your crontab:<br/><br/><pre>%s</pre><br/>You will find data here: %s.<br/><br/>Backup strategy is important!',
+		
 	'step_11' => 'Clear Caches',
 	'step_11_0' => 'Install has been finished.<br/>All caches have been cleared.<br/>You can login now or enhance the protection of your install folder.',
 	
@@ -119,4 +124,3 @@ $lang = array(
 	
 	'msg_all_done' => 'Glückwunsch, Ihre Installation ist abgeschlossen!<br/>Vielen Dank das Sie sich für GWF4 entschieden haben.<br/>Wir wünschen viel Spass damit.<br/><br/>gizmore und spaceone',
 );
-?>

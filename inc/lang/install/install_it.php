@@ -16,6 +16,7 @@ $lang = array(
 	'err_htaccess' => 'Non è stato possibile scrivere il file .htaccess.',
 	'err_copy' => 'Non è stato possibile copiare %s.',
 	'err_clear_smarty' => 'Non è stato possibile ripulire la cache smarty.',
+	'err_apache_version' => 'You have to select the webserver version. APACHE2.2, APACHE2.4 or NGINX.',
 		
 	'msg_copy' => 'La copia di %s è avvenuta con successo.',
 	'msg_copy_untouched' => 'La tua copia di %s non è stato toccata.',
@@ -72,12 +73,17 @@ $lang = array(
 	'step_0_13' => 'E\' disponibile \'Fileinfo\' o \'mime_content_type\', per PHP, disponibile?',
 	'step_0_14' => 'Sono abilitate le seguenti funzioni potenzialmente nocive: exec,system,passthru,pcntl_exec,proc_open,shell_exec,popen,link? (Se sono abilitate e non vengono utilizzate si consiglia di disabilitarle)',
 	'step_0_15' => 'Sono disponibili le funzioni GnuPG?',
-
+	'step_0_16' => 'Is protected folder existing?',
+	'step_0_17' => 'Is bower installed?',
+	'step_0_18' => 'Is apache version selected?',
+		
 	'step_1' => 'Crea &quot;protected/config.php&quot;',
 
 	'step_1a' => 'Testa la connessione al database',
 	'step_1a_0' => 'Cerco il file di configurazione protected/config.php... %s.',
 	'step_1a_1' => 'Cerco di connettermi al database... %s.',
+	'step_1a_2' => 'Checking validity of GWF_SERVER_VERSION... %s.',
+		
 	'step_1b' => 'Scrivi &quot;protected/config.php&quot;',
 	'step_1b_0' => 'Scrivo il file di configurazione... %s.',
 
@@ -108,8 +114,8 @@ $lang = array(
 	'step_9' => 'Create account amministrativi',
 
 	'step_10' => 'Create Backup Folders',
-	'step_10_0' => 'You should add the following to your crontab:<br/><br/>%s<br/>%s<br/><br/>You will find data here: %s.<br/><br/>Backup strategy is important!',
-
+	'step_10_0' => 'You should add the following to your crontab:<br/><br/><pre>%s</pre><br/>You will find data here: %s.<br/><br/>Backup strategy is important!',
+		
 	'step_11' => 'Ripulisci la Cache',
 	'step_11_0' => 'L\'installazione è finita.<br/>Tutte le cache sono state ripulite.<br/>Puoi effettuare il login ora o migliorare la protezione della cartella di installazione.',
 

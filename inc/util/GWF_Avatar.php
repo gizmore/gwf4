@@ -28,7 +28,8 @@ final class GWF_Avatar extends GDO
 			'avatar_mode' => array(GDO::ENUM, GWF_Avatar::NONE, array(GWF_Avatar::NONE, GWF_Avatar::DEFAULT, GWF_Avatar::CUSTOM)),
 			'avatar_file' => array(GDO::VARCHAR|GDO::ASCII|GDO::CASE_S, GDO::NULL, 128),
 			'avatar_version' => array(GDO::UINT, '0'),
-			
+			'avatar_saved_at' => array(GDO::DATE, GDO::NULL, GWF_Date::LEN_SECOND),
+				
 			'user' => array(GDO::JOIN, GDO::NULL, array('GWF_User', 'user_id', 'avatar_user_id')),
 		);
 	}

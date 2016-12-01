@@ -71,6 +71,7 @@ class GWF_User extends GDO
 			'user_settings' => array(GDO::BLOB),
 			'user_data' => array(GDO::BLOB),
 			'user_credits' => array(GDO::DECIMAL, '0.00', array(9, 4)),
+			'user_saved_at' => array(GDO::DATE, GDO::NULL, GWF_Date::LEN_SECOND), 
 		);
 	}
 	public function getID() { return $this->getVar('user_id'); }

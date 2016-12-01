@@ -84,6 +84,7 @@ $lang = array(
 	'step_1a_0' => 'Looking for protected/config.php configuration file... %s.',
 	'step_1a_1' => 'Trying to connect to database... %s.',
 	'step_1a_2' => 'Checking validity of GWF_SERVER_VERSION... %s.',
+
 	'step_1b' => 'Write &quot;protected/config.php&quot;',
 	'step_1b_0' => 'Writing the configuration file... %s.',
 

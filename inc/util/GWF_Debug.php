@@ -273,7 +273,6 @@ final class GWF_Debug
 	public static function getDebugText($message)
 	{
 		try { $user = GWF_User::getStaticOrGuest()->displayUsername(); } catch (Exception $e) { $user = 'ERROR'; }
-
 		$args = array(
 			isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : 'NULL',
 			isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : self::getMoMe(),
@@ -286,9 +285,7 @@ final class GWF_Debug
 			print_r($_POST, true),
 			print_r($_COOKIE, true),
 		);
-
 		$args = array_map('htmlspecialchars', $args);
-
 		$pattern = "RequestMethod: %s\nRequestURI: %s\nReferer: %s\nIP: %s\nUserAgent: %s\nUser: %s\n\nMessage: %s\n\n_GET: %s\n\n_POST: %s\n\n_COOKIE: %s\n\n";
 		return vsprintf($pattern, $args);
 	}
