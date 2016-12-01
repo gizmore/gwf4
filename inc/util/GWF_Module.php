@@ -46,6 +46,7 @@ class GWF_Module extends GDO
 	public function getModuleVars() { return $this->module_vars; }
 	public function getModuleVar($var, $default=false) { return isset($this->module_vars[$var]) ? $this->module_vars[$var] : $default; }
 	public function getModuleVarInt($var, $default=0) { return (int)$this->getModuleVar($var, $default); }
+	public function getModuleVarFloat($var, $default=0) { return (float)$this->getModuleVar($var, $default); }
 	public function getModuleVarBool($var, $default='0') { return $this->getModuleVar($var, $default) === '1'; }
 	public function getModuleVarString($var, $default='') { return $this->getModuleVar($var, $default); }
 	public function getClasses() { return array(); }
