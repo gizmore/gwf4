@@ -9,6 +9,13 @@ config(function($urlRouterProvider, $stateProvider) {
 		templateUrl: GWF_CONFIG.WEB_ROOT+'module/GWF/js/tpl/loading.html',
 		pageTitle: 'Loading'
 	});
+	$stateProvider.state({
+		name: 'page',
+		url: '/page',
+		controller: 'LoadingCtrl',
+		templateUrl: GWF_CONFIG.WEB_ROOT+'module/GWF/js/tpl/page.html',
+		pageTitle: 'GWF4'
+	});
 	$urlRouterProvider.otherwise('/loading');
 }).
 run(function($injector) {
@@ -42,7 +49,9 @@ controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, 
 		console.log('GWFCtrl.requestPage()', url);
 		$scope.hideGWFContent();
 		$scope.closeSidenavs();
-		RequestSrvc.send(url).then($scope.pageRequested.bind($scope, 'main'));
+		$state.go('page').then(function(){
+			RequestSrvc.send(url).then($scope.pageRequested.bind($scope, 'main'));
+		});
 		return false;
 	};
 
