@@ -143,6 +143,7 @@ final class GWF_Avatar extends GDO
 			'avatar_mode' => self::NONE,
 			'avatar_file' => null,
 			'avatar_version' => ''.($avatar->getVersionInt() + 1), # inc version
+			'avatar_saved_at' => GWF_Time::getDate(),
 		);
 		
 		if ($flowFile)
