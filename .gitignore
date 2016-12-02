@@ -1,3 +1,5 @@
+/.well-known/
+
 /index.php
 /gwf_cronjob.php
 
