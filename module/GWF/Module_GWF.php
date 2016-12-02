@@ -72,6 +72,7 @@ final class Module_GWF extends GWF_Module
 			$this->addCSS("gwf-material.css"); # GWF4 css patches
 
 			# GWF Util
+			$this->addJavascript('bind-polyfill.js');
 			$this->addJavascript('gwf-string-util.js');
 			$this->addJavascript('gwf-user.js');
 			
