@@ -100,12 +100,16 @@ controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, 
 	
 	$scope.refreshedSidebar = function(bar, result) {
 		console.log('GWFCtrl.refreshedSidebar()', bar, result);
-		$scope.data[bar+'Content'] = result.data;
-		setTimeout(function() {
-			RequestSrvc.fixForms($scope, bar, '.gwf-'+bar+'-content FORM');
-			RequestSrvc.fixAnchors($scope, '.gwf-'+bar+'-content A');
-			RequestSrvc.fixSelects($scope, '.gwf-'+bar+'-content SELECT');
-		}, 1);
+		var bars = bar.split(',');
+		for (var i in bars) {
+			bar = bars[i];
+			$scope.data[bar+'Content'] = result.data[bar];
+			setTimeout(function() {
+				RequestSrvc.fixForms($scope, bar, '.gwf-'+bar+'-content FORM');
+				RequestSrvc.fixAnchors($scope, '.gwf-'+bar+'-content A');
+				RequestSrvc.fixSelects($scope, '.gwf-'+bar+'-content SELECT');
+			}, 1);
+		}
 	};
 
 	$scope.toggleLeftMenu = function() {

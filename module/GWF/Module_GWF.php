@@ -95,6 +95,7 @@ final class Module_GWF extends GWF_Module
 			$this->addJavascript('gwf-bb-editor.js');
 			$this->addJavascript('gwf-angular.js');
 			$this->addJavascript('ng-enter.js');
+			$this->addJavascript('ng-crsrup.js');
 			$this->addJavascript('ng-html.js');
 			$this->addJavascript('gwf-error-service.js');
 			$this->addJavascript('gwf-request-service.js');

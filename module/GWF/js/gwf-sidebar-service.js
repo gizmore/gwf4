@@ -11,10 +11,7 @@ service('SidebarSrvc', function($state, RequestSrvc) {
 		if (SidebarSrvc.LISTENERS.length == 0) {
 			SidebarSrvc.LISTENERS.push($scope);
 		}
-		SidebarSrvc.refreshSidebar('top');
-		SidebarSrvc.refreshSidebar('left');
-		SidebarSrvc.refreshSidebar('right');
-		SidebarSrvc.refreshSidebar('bottom');
+		SidebarSrvc.refreshSidebar('top,left,right,bottom');
 	};
 	
 	SidebarSrvc.refreshSidebar = function(sidebar) {
