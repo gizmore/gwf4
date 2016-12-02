@@ -92,8 +92,8 @@ controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, 
 			RequestSrvc.fixForms($scope, 'main', 'FORM');
 			RequestSrvc.fixAnchors($scope, 'A');
 			RequestSrvc.fixSelects($scope, 'SELECT');
-			PingSrvc.ping().then($scope.pageRequested.bind($scope, 'main'));
-			$scope.hideGWFContent();
+//			PingSrvc.ping().then($scope.pageRequested.bind($scope, 'main'));
+//			$scope.hideGWFContent();
 			SidebarSrvc.refreshSidebarsFor($scope);
 		}
 	});
@@ -104,14 +104,17 @@ controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, 
 		for (var i in bars) {
 			bar = bars[i];
 			$scope.data[bar+'Content'] = result.data[bar];
-			setTimeout(function() {
-				RequestSrvc.fixForms($scope, bar, '.gwf-'+bar+'-content FORM');
-				RequestSrvc.fixAnchors($scope, '.gwf-'+bar+'-content A');
-				RequestSrvc.fixSelects($scope, '.gwf-'+bar+'-content SELECT');
-			}, 1);
+			setTimeout($scope.afterRefreshedSidabar.bind($scope, bar), 1);
 		}
 	};
 
+	$scope.afterRefreshedSidabar = function(bar) {
+		console.log('GWFCtrl.afterRefreshedSidabar()', bar);
+		RequestSrvc.fixForms($scope, bar, '.gwf-'+bar+'-content FORM');
+		RequestSrvc.fixAnchors($scope, '.gwf-'+bar+'-content A');
+		RequestSrvc.fixSelects($scope, '.gwf-'+bar+'-content SELECT');
+	};
+	
 	$scope.toggleLeftMenu = function() {
 		$mdSidenav('left').toggle();
 	};

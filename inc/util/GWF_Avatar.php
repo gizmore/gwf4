@@ -282,7 +282,7 @@ final class GWF_Avatar extends GDO
 		
 		if ($mode === GWF_Avatar::CUSTOM)
 		{
-			return sprintf('%savatar/%s/%s/%s/%s?v=%s', GWF_WEB_ROOT, $mode, $dir, $this->getUserID(), $file, $this->getVersion());
+			return sprintf('%savatar/%s/%s/%s?v=%s', GWF_WEB_ROOT, $mode, $this->getUserID(), $file, $this->getVersion());
 		}
 		else
 		{
