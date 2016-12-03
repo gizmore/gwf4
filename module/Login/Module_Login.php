@@ -32,19 +32,19 @@ final class Module_Login extends GWF_Module
 	
 	public function sidebarContent($bar)
 	{
-		if ($bar === 'top') {
+		if ($bar === 'left') {
 			if ($user = GWF_Session::getUser()) {
-				return $this->topLogout($user);
+				return $this->sidebarLogout($user);
 			}
 		}
-		if ($bar === 'right') {
+		if ($bar === 'left') {
 			if (!($user = GWF_Session::getUser())) {
 				return $this->sidebarLogin();
 			}
 		}
 	}
 	
-	private function topLogout(GWF_User $user)
+	private function sidebarLogout(GWF_User $user)
 	{
 		return sprintf('<md-button href="%slogout"><i class="material-icons">lock_outline</i></md-button><span class="gwf-top-username">%s</span>', GWF_WEB_ROOT, $user->getName());
 	}

@@ -189,16 +189,19 @@ final class Module_Admin extends GWF_Module
 		);
 	}
 	
+	###############
+	### Sidebar ###
+	###############
 	public function sidebarContent($bar)
 	{
-		if ($bar === 'top') {
+		if ($bar === 'right') {
 			if (GWF_User::isAdminS()) {
-				return $this->topNanny();
+				return $this->sidebarNanny();
 			}
 		}
 	}
 	
-	private function topNanny()
+	private function sidebarNanny()
 	{
 		$this->onLoadLanguage();
 		return sprintf('<a href="%snanny">%s</a>', GWF_WEB_ROOT, $this->lang('btn_admin_section'));
