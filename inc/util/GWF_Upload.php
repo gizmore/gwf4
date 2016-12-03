@@ -12,19 +12,29 @@ final class GWF_Upload
 	 * @param $var is the name of the $_FILES[key]
 	 * @return array - the file from $_FILES or false.
 	 */
-	public static function getFile($key)
+// 	public static function getFile($key)
+// 	{
+// 		if (!isset($_FILES[$key])) {
+// 			return false;
+// 		}
+// 		$file = $_FILES[$key];
+// 		if (intval($file['error']) !== 0) {
+// 			return false;
+// 		}
+// 		if (intval($file['size']) === 0) {
+// 			return false;
+// 		}
+// 		return $file;
+// 	}
+
+	public static function moveFlowFile($file, $filename)
 	{
-		if (!isset($_FILES[$key])) {
+		if (!@copy($file['path'], $filename))
+		{
+			GWF_Log::logError('Cannot copy to dest: '.$filename);
 			return false;
 		}
-		$file = $_FILES[$key];
-		if (intval($file['error']) !== 0) {
-			return false;
-		}
-		if (intval($file['size']) === 0) {
-			return false;
-		}
-		return $file;
+		return true;
 	}
 
 	public static function getMaxUploadSize()

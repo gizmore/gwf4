@@ -17,6 +17,7 @@ final class GWF_Hook
 	const LOGIN_PRE = 'login_pre';        # args: Pass1, Pass2
 	const LOGIN_AFTER = 'login_after';    # args: none
 	const ACTIVATE = 'activate';          # args: Pass1, Pass2
+	const GUEST_PERSIST = 'guest_persist';# args: none
 	const CHANGE_MAIL = 'change_mail';    # args: oldmail, newmail
 	const CHANGE_UNAME = 'change_uname';  # args: oldname, newname
 	const CHANGE_PASSWD = 'change_pass';  # args: NewPass, NewPIN

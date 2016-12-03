@@ -129,7 +129,7 @@ class GWF_User extends GDO
 			}
 			else
 			{
-				return $this->insert(); # Persistent guest
+				return $this->insertPersistentGuest();
 			}
 		}
 		else
@@ -144,6 +144,18 @@ class GWF_User extends GDO
 	public function saveVars(array $data)
 	{
 		return $this->persistentGuest() ? parent::saveVars($data) : false;
+	}
+	private function insertPersistentGuest()
+	{
+		if (!$this->insert())
+		{
+			return false;
+		}
+		if (!GWF_Hook::call(GWF_Hook::GUEST_PERSIST, $this, array()))
+		{
+			GWF_Log::logError('Hook error');
+		}
+		return true;
 	}
 	
 	############

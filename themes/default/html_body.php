@@ -19,7 +19,7 @@
 
 		<!-- RIGHT -->
 
-		<md-sidenav class="md-sidenav-right" md-component-id="right"  md-whiteframe="4">
+		<md-sidenav class="md-sidenav-right" md-component-id="right" md-whiteframe="4">
 			<div class="tgc-sidebar-menu-toggles">
 				<md-button ng-click="toggleRightMenu()" class="md-raised" aria-label="Close Right Menu"><i class="material-icons">android</i></md-button>
 			</div>
