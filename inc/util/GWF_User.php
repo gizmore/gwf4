@@ -85,28 +85,6 @@ class GWF_User extends GDO
 	public function displayName() { return $this->hasGuestName() ? $this->getGuestName() : $this->getName(); }
 	
 	/**
-	 * Ensure that the user can be saved, maybe as guest.
-	 */
-	public function persistentGuest()
-	{
-		if ($this->getID() == 0)
-		{
-			if ($this->getGuestID() == 0)
-			{
-				return false; # No session
-			}
-			else
-			{
-				return $this->insert(); # Persistent guest
-			}
-		}
-		else
-		{
-			return true; # Member
-		}
-	}
-
-	/**
 	 * Get a user by ID.
 	 * @param int $userid
 	 * @return GWF_User
@@ -135,6 +113,39 @@ class GWF_User extends GDO
 	 */
 	public static function getAllInGroup($groupname) { return GWF_UserSelect::getUsers($groupname); }
 
+	########################
+	### Persistent Guest ###
+	########################
+	/**
+	 * Ensure that the user can be saved, maybe as guest.
+	 */
+	public function persistentGuest()
+	{
+		if ($this->getID() <= 0)
+		{
+			if ($this->getGuestID() <= 0)
+			{
+				return false; # No session
+			}
+			else
+			{
+				return $this->insert(); # Persistent guest
+			}
+		}
+		else
+		{
+			return true; # Member
+		}
+	}
+	public function saveVar($key, $value)
+	{
+		return $this->persistentGuest() ? parent::saveVar($key, $value) : false;
+	}
+	public function saveVars(array $data)
+	{
+		return $this->persistentGuest() ? parent::saveVars($data) : false;
+	}
+	
 	############
 	### Lang ###
 	############
