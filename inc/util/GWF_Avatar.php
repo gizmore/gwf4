@@ -223,6 +223,7 @@ final class GWF_Avatar extends GDO
 			'avatar_mode' => GWF_Avatar::NONE,
 			'avatar_file' => null,
 			'avatar_version' => '0',
+			'avatar_saved_at' => '20000101000000',
 		));
 	}
 	

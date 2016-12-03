@@ -42,7 +42,9 @@ controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, 
 		console.log('GWFCtrl.requestGWFPage()', module, method, data);
 		$scope.hideGWFContent();
 		$scope.closeSidenavs();
-		return RequestSrvc.requestPage(module, method, data).then($scope.pageRequested.bind($scope, 'main'));
+		$state.go('page').then(function(){
+			RequestSrvc.requestPage(module, method, data).then($scope.pageRequested.bind($scope, 'main'));
+		});
 	}
 
 	$scope.requestPage = function(url) {
