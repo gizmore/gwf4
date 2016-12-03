@@ -151,10 +151,10 @@ class GWF_User extends GDO
 		{
 			return false;
 		}
-		if (!GWF_Hook::call(GWF_Hook::GUEST_PERSIST, $this, array()))
-		{
-			GWF_Log::logError('Hook error');
-		}
+// 		if (!GWF_Hook::call(GWF_Hook::GUEST_PERSIST, $this, array()))
+// 		{
+// 			GWF_Log::logError('Hook error');
+// 		}
 		return true;
 	}
 	
