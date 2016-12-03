@@ -70,7 +70,7 @@ controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, 
 	$scope.closeSidenavs = function() {
 		console.log('GWFCtrl.closeSidenavs()');
 		$mdSidenav('left').close();
-		$mdSidenav('left').close();
+		$mdSidenav('right').close();
 	};
 	
 	$scope.hideGWFContent = function() {
