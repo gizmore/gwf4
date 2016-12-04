@@ -44,10 +44,11 @@ final class Register_Form extends GWF_Method
 		
 		if ($this->module->isTOSForced()) {
 			if ('' !== ($href_tos = $this->module->cfgHrefTos())) {
-				$data['tos'] = array(GWF_Form::CHECKBOX, false, $this->module->lang('th_tos2', array(htmlspecialchars($href_tos))));
+				$data['toslink'] = array(GWF_Form::SSTRING, $this->module->lang('th_tos2', array(htmlspecialchars($href_tos))));
 			} else {
-				$data['tos'] = array(GWF_Form::CHECKBOX, false, $this->module->lang('th_tos'));
+				$data['toslink'] = array(GWF_Form::SSTRING, $this->module->lang('th_tos1'));
 			}
+			$data['tos'] = array(GWF_Form::CHECKBOX, false, $this->module->lang('th_tos3'));
 			$data['eula'] = array(GWF_Form::VALIDATOR);
 		}
 

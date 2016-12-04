@@ -41,6 +41,8 @@ final class Register_Activate extends GWF_Method
 			'user_id' => 0,
 			'user_options' => $options,
 			'user_name' => $username,
+			'user_guest_id' => null,
+			'user_guest_name' => null,
 			'user_password' => $row->getVar('password'),
 			'user_regdate' => GWF_Time::getDate(GWF_Date::LEN_SECOND),
 			'user_regip' => $row->getVar('ip'),
@@ -49,7 +51,6 @@ final class Register_Activate extends GWF_Method
 			'user_lastlogin' => 0,
 			'user_lastactivity' => time(),
 			'user_birthdate' => $row->getVar('birthdate'),
-			'user_avatar_v' => 0,
 			'user_countryid' => $countryid,
 			'user_langid' => GWF_LangMap::getPrimaryLangID($countryid),
 			'user_langid2' => 0,
@@ -94,4 +95,3 @@ final class Register_Activate extends GWF_Method
 		}
 	}
 }
-?>
