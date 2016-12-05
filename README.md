@@ -2,6 +2,9 @@
 
 ## gwf4 is the successor of gwf3.
 
+## https://github.com/gizmore/gwf3
+
+
 ### What changed?
 
 1. Got rid of Smarty template engine. It was not fitting the gwf usecase.
@@ -39,6 +42,7 @@ It is important you change the repo name to the module name!
 - https://github.com/gizmore/gwf4-maps         Maps
 - https://github.com/gizmore/gwf4-websockets   Websockets
 - https://github.com/gizmore/gwf4-avatar       Avatar
+- https://github.com/gizmore/gwf4-friendlist   Friendlist
 
 
 ### Ported Modules
@@ -50,3 +54,4 @@ Core modules included in this repo are: GWF, Login, Register, Language, Password
 - https://github.com/gizmore/gwf4-votes            Votes
 - https://github.com/gizmore/gwf4-Payment          Payment
 - https://github.com/gizmore/gwf4-PaymentPaypal    PaymentPaypal
+
