@@ -1,5 +1,4 @@
 'use strict'
-var GWF_SIDEBAR_INITED = false;
 angular.module('gwf4', ['ngMaterial', 'ui.router', 'flow']).
 config(function($urlRouterProvider, $stateProvider) {
 	$stateProvider.state({
@@ -98,13 +97,11 @@ controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, 
 	};
 	
 	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-		if (!GWF_SIDEBAR_INITED) {
-			GWF_SIDEBAR_INITED = true;
-			RequestSrvc.fixForms($scope, 'main', 'FORM');
-			RequestSrvc.fixAnchors($scope, 'A');
-			RequestSrvc.fixSelects($scope, 'SELECT');
-//			PingSrvc.ping().then($scope.pageRequested.bind($scope, 'main'));
-//			$scope.hideGWFContent();
+		RequestSrvc.fixForms($scope, 'main', 'FORM');
+		RequestSrvc.fixAnchors($scope, 'A');
+		RequestSrvc.fixSelects($scope, 'SELECT');
+		if (!window.GWF_SIDEBAR_INITED) {
+			window.GWF_SIDEBAR_INITED = true;
 			SidebarSrvc.refreshSidebarsFor($scope);
 		}
 	});
