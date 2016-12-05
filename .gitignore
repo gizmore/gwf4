@@ -1,21 +1,15 @@
 /.well-known/
 
+.htaccess
 /index.php
 /gwf_cronjob.php
 
 /dbimg/*
 /temp/*
+/private/
+/bower_components/
+/protected/
 
-/protected/config.php
-/protected/logs
-/protected/installog
-/protected/db_backups
-/protected/db_backups_old
-/protected/zipped
-/protected/db_backup.sh
-
-.htaccess
-/bower_components
 /module/Websockets
 /module/LinkUUp
 /module/Download/
@@ -31,5 +25,3 @@
 /themes/classic/
 /themes/linkuup-app
 /themes/linkuup-web
-
-/design.php
