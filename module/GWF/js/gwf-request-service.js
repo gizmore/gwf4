@@ -4,6 +4,9 @@ service('RequestSrvc', function($http) {
 	
 	var RequestSrvc = this;
 
+	//////////////////
+	// Send request //
+	//////////////////
 	RequestSrvc.requestDefaultPage = function() {
 		console.log('RequestSrvc.requestDefaultPage()', window.GWF_CONFIG);
 		var config = window.GWF_CONFIG;
@@ -57,44 +60,9 @@ service('RequestSrvc', function($http) {
 		}
 	};
 
-	RequestSrvc.fixAnchors = function($scope, selector) {
-		console.log('RequestSrvc.fixAnchors()', selector);
-		jQuery(selector).each(function(index){
-			var a = $(this);
-			if (a.attr('href').startsWith(GWF_CONFIG.WEB_ROOT)) {
-				a.click($scope.requestPage.bind($scope, RequestSrvc.ajaxURL(a.attr('href'))));
-			}
-		});
-	};
-	
-	RequestSrvc.fixSelects = function($scope, selector) {
-		console.log('RequestSrvc.fixSelects()', selector);
-
-	};
-	
-	RequestSrvc.fixForms = function($scope, area, selector) {
-		console.log('RequestSrvc.fixForms()', area, selector);
-		jQuery(selector).each(function(index){
-			var form = $(this);
-			console.log(form);
-			jQuery(selector + " input[type=submit]").click(function() {
-				jQuery("input[type=submit][clicked=true]").removeAttr("clicked");
-				jQuery(this).attr("clicked", "true");
-		    });
-			form.submit(function(event) {
-				event.preventDefault();
-				var f = jQuery(this);
-				if (!f.attr('gwf-sent')) {
-					f.attr('gwf-sent', '1');
-					RequestSrvc.sendForm(event, jQuery(this)).then(function(result){
-						$scope.formRequested(area, result);
-					}); 
-				}
-				return false;
-			});
-		});
-	};
-
+	///////////////
+	// Send form //
+	///////////////
 	RequestSrvc.sendForm = function(event, form) {
 		console.log('RequestSrvc.sendForm()', event, form);
 		return RequestSrvc.send(RequestSrvc.formAction(form), RequestSrvc.formData(form), RequestSrvc.formEncoding(form));
@@ -127,4 +95,49 @@ service('RequestSrvc', function($http) {
         return data;
 	};
 
+	////////////////////////////
+	// Hook anchors and forms //
+	////////////////////////////
+	RequestSrvc.fixAnchors = function($scope, selector) {
+		console.log('RequestSrvc.fixAnchors()', selector);
+		jQuery(selector).each(function(index){
+			var a = $(this);
+			if (a.attr('href').startsWith(GWF_CONFIG.WEB_ROOT)) {
+				if (!a.attr('gwf-hooked')) {
+					a.attr('gwf-hooked', '1');
+					a.click($scope.requestPage.bind($scope, RequestSrvc.ajaxURL(a.attr('href'))));
+				}
+			}
+		});
+	};
+	
+	RequestSrvc.fixForms = function($scope, area, selector) {
+		console.log('RequestSrvc.fixForms()', area, selector);
+		jQuery(selector).each(function(index){
+			var form = $(this);
+			if (!form.attr('gwf-hooked')) {
+				form.attr('gwf-hooked', '1');
+				jQuery(selector + " input[type=submit]").click(function() {
+					jQuery("input[type=submit][clicked=true]").removeAttr("clicked");
+					jQuery(this).attr("clicked", "true");
+			    });
+				form.submit(function(event) {
+					event.preventDefault();
+					var f = jQuery(this);
+					if (!f.attr('gwf-sent')) {
+						f.attr('gwf-sent', '1');
+						RequestSrvc.sendForm(event, jQuery(this)).then(function(result){
+							$scope.formRequested(area, result);
+						}); 
+					}
+					return false;
+				});
+			};
+		});
+	};
+
+	RequestSrvc.fixSelects = function($scope, selector) {
+		console.log('RequestSrvc.fixSelects()', selector);
+	};
+	
 });

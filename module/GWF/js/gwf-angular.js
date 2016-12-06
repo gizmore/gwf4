@@ -11,7 +11,7 @@ config(function($urlRouterProvider, $stateProvider) {
 	$stateProvider.state({
 		name: 'page',
 		url: '/page',
-		controller: 'LoadingCtrl',
+		controller: 'PageCtrl',
 		templateUrl: GWF_CONFIG.WEB_ROOT+'module/GWF/js/tpl/page.html',
 		pageTitle: 'GWF4'
 	});
@@ -59,11 +59,7 @@ controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, 
 	$scope.pageRequested = function(bar, result) {
 		console.log('GWFCtrl.pageRequested()', bar, result);
 		$scope.data.mainContent = result.data;
-		setTimeout(function(){
-			RequestSrvc.fixForms($scope, bar, '.gwf-'+bar+'-content FORM');
-			RequestSrvc.fixAnchors($scope, '.gwf-'+bar+'-content A');
-			RequestSrvc.fixSelects($scope, '.gwf-'+bar+'-content SELECT');
-		}, 1);
+		setTimeout($scope.afterRefreshContent.bind($scope, bar), 1);
 	};
 	
 	$scope.closeSidenavs = function() {
@@ -82,26 +78,23 @@ controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, 
 		$scope.hideGWFContent();
 	};
 
-	$scope.formRequested = function(bar, result) {
+	$scope.formRequested = function(srcbar, result) {
 		console.log('GWFCtrl.formRequested()', bar, result);
+		var bar = 'main';
 		$scope.data[bar+'Content'] = result.data;
 		$scope.closeSidenavs();
-		setTimeout(function(){
-			RequestSrvc.fixForms($scope, bar, '.gwf-'+bar+'-content FORM');
-			RequestSrvc.fixAnchors($scope, '.gwf-'+bar+'-content A');
-			RequestSrvc.fixSelects($scope, '.gwf-'+bar+'-content SELECT');
-		}, 1);
+		setTimeout($scope.afterRefreshContent.bind($scope, bar), 1);
 		setTimeout(function(){
 			SidebarSrvc.refreshSidebarsFor($scope);
 		}, 3000);
 	};
 	
 	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-		RequestSrvc.fixForms($scope, 'main', 'FORM');
-		RequestSrvc.fixAnchors($scope, 'A');
-		RequestSrvc.fixSelects($scope, 'SELECT');
 		if (!window.GWF_SIDEBAR_INITED) {
 			window.GWF_SIDEBAR_INITED = true;
+			RequestSrvc.fixForms($scope, 'main', 'FORM');
+			RequestSrvc.fixAnchors($scope, 'A');
+			RequestSrvc.fixSelects($scope, 'SELECT');
 			SidebarSrvc.refreshSidebarsFor($scope);
 		}
 	});
@@ -112,11 +105,11 @@ controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, 
 		for (var i in bars) {
 			bar = bars[i];
 			$scope.data[bar+'Content'] = result.data[bar];
-			setTimeout($scope.afterRefreshedSidabar.bind($scope, bar), 1);
+			setTimeout($scope.afterRefreshContent.bind($scope, bar), 1);
 		}
 	};
 
-	$scope.afterRefreshedSidabar = function(bar) {
+	$scope.afterRefreshContent = function(bar) {
 		console.log('GWFCtrl.afterRefreshedSidabar()', bar);
 		RequestSrvc.fixForms($scope, bar, '.gwf-'+bar+'-content FORM');
 		RequestSrvc.fixAnchors($scope, '.gwf-'+bar+'-content A');
@@ -135,6 +128,11 @@ controller('SelectCtrl', function($scope) {
 	$scope.data = {
 		selected: '',
 	};
+}).
+controller('PageCtrl', function($scope) {
+	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+		console.log('PageCtrl.$on-$stateChangeSuccess()', toParams);
+	});
 }).
 controller('LoadingCtrl', function($scope) {
 });
