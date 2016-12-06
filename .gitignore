@@ -4,8 +4,8 @@
 /index.php
 /gwf_cronjob.php
 
-/dbimg/*
-/temp/*
+/dbimg/
+/temp/
 /private/
 /bower_components/
 /protected/
