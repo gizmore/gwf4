@@ -52,6 +52,12 @@ Core modules included in this repo are: GWF, Login, Register, Language, Password
 - https://github.com/gizmore/gwf4-pm               PM
 - https://github.com/gizmore/gwf4-downloads        Download
 - https://github.com/gizmore/gwf4-votes            Votes
-- https://github.com/gizmore/gwf4-Payment          Payment
-- https://github.com/gizmore/gwf4-PaymentPaypal    PaymentPaypal
+- https://github.com/gizmore/gwf4-payment          Payment
+- https://github.com/gizmore/gwf4-payment-paypal   PaymentPaypal
+
+
+### Infrastructure Tutorials
+
+#### TLS with acme.sh
+
 
