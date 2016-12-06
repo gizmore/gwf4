@@ -193,11 +193,7 @@ class GWF_User extends GDO
 	public function displayUsername() { return $this->display('user_name'); }
 	public function getGenderSelect($name='gender') { return GWF_Gender::select($name, Common::getPostString($name, $this->getVar('user_gender'))); }
 	public function getCountrySelect($name='country') { return GWF_CountrySelect::single($name, Common::getPostString($name, $this->getCountryID())); }
-	public function displayProfileLink()
-	{
-		return self::displayProfileLinkS($this->getVar('user_name'));
-//		return GWF_HTML::anchor($this->getProfileHREF(), $this->getVar('user_name'));
-	}
+	public function displayProfileLink() { return GWF_HTML::anchor($this->getProfileHREF(), $this->displayName()); }
 	public function displayProfileLink2()
 	{
 		return true === $this->isGuest()

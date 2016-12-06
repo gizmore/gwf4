@@ -89,7 +89,7 @@ final class Login_Form extends GWF_Method
 		elseif (true !== ($error = $this->checkBruteforce($user, false))) {
 			return $error.$this->form();
 		}
-		elseif (false === GWF_Hook::call(GWF_HOOK::LOGIN_PRE, $user, array($password, ''))) {
+		elseif (false === GWF_Hook::call(GWF_Hook::LOGIN_PRE, $user, array($password, ''))) {
 			return ''; #GWF_HTML::err('ERR_GENERAL', array( __FILE__, __LINE__));
 		}
 		elseif (false === (GWF_Password::checkPasswordS($password, $user->getVar('user_password')))) {
@@ -164,6 +164,10 @@ final class Login_Form extends GWF_Method
 			
 			if (0 < ($fails = GWF_LoginFailure::getFailCount($user, $this->module->cfgTryExceed()))) {
 				GWF_Session::set('GWF_LOGIN_FAILS', $fails);
+			}
+			
+			if (GWF_Website::isAjax()) {
+				die('OK');
 			}
 			
 			GWF_Website::redirect(GWF_WEB_ROOT.'welcome');
