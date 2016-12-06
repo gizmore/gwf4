@@ -59,6 +59,61 @@ Core modules included in this repo are: GWF, Login, Register, Language, Password
 
 ### Infrastructure Tutorials
 
-#### TLS with acme.sh
+
+### TLS with acme.sh
+
+##### Install acme.sh
+
+    https://github.com/Neilpang/acme.sh
 
 
+##### Issue a cert
+
+	sudo acme.sh --issue --domain gwf4.gizmore.org -w ~/gwf4/www/gwf4
+
+
+##### Convert to often used formats
+
+    sudo cd ~/.acme.sh/gwf4.gizmore.org
+	# Create PFX
+    openssl pkcs12 -export -out gwf4.gizmore.org.pfx -inkey gwf4.gizmore.org.key -in fullchain.cer -nodes
+	# Create chain PEM
+    openssl pkcs12 -in gwf4.gizmore.org.pfx -out gwf4.gizmore.org.public.pem -nodes -nokeys
+
+
+### Apache config
+
+	<VirtualHost *:80>
+	        ServerName gwf4.gizmore.org
+	        DocumentRoot /home/gwf4/www/gwf4
+	        <Directory "/home/gwf4/www/gwf4">
+	                Options +Indexes +FollowSymLinks -MultiViews
+	                AllowOverride All
+	                Require all granted
+	        </Directory>
+	        AssignUserID gwf4 gwf4
+	        ErrorLog /home/gwf4/www/apache.error.log
+	        CustomLog /home/gwf4/www/apache.access.log combined
+	</VirtualHost>
+	
+	<VirtualHost *:443>
+	        ServerName gwf4.gizmore.org
+	        DocumentRoot /home/gwf4/www/gwf4
+	        <Directory "/home/gwf4/www/gwf4">
+	                Options +Indexes +FollowSymLinks -MultiViews
+	                AllowOverride All
+	                Require all granted
+	        </Directory>
+	        AssignUserID gwf4 gwf4
+	        ErrorLog /home/gwf4/www/apache.error.log
+	        CustomLog /home/gwf4/www/apache.access.log combined
+	        SSLProtocol all -SSLv2
+	        SSLCipherSuite HIGH:!aNULL:!MD5
+	        SSLCertificateFile /root/.acme.sh/gwf4.gizmore.org/gwf4.gizmore.org.cer
+	        SSLCertificateKeyFile /root/.acme.sh/gwf4.gizmore.org/gwf4.gizmore.org.key
+	</VirtualHost>
+
+	
+### Nginx config
+
+	TODO
