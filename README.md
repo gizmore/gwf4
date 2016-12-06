@@ -39,21 +39,22 @@ It is important you change the repo name to the module name!
 
 ### New Modules
 
-- https://github.com/gizmore/gwf4-maps         Maps
-- https://github.com/gizmore/gwf4-websockets   Websockets
 - https://github.com/gizmore/gwf4-avatar       Avatar
 - https://github.com/gizmore/gwf4-friendlist   Friendlist
+- https://github.com/gizmore/gwf4-maps         Maps
+- https://github.com/gizmore/gwf4-websockets   Websockets
 
 
 ### Ported Modules
 
 Core modules included in this repo are: GWF, Login, Register, Language, PasswordForgot and Admin.
 
-- https://github.com/gizmore/gwf4-pm               PM
+- https://github.com/gizmore/gwf4-account          Account
 - https://github.com/gizmore/gwf4-downloads        Download
-- https://github.com/gizmore/gwf4-votes            Votes
 - https://github.com/gizmore/gwf4-payment          Payment
 - https://github.com/gizmore/gwf4-payment-paypal   PaymentPaypal
+- https://github.com/gizmore/gwf4-pm               PM
+- https://github.com/gizmore/gwf4-votes            Votes
 
 
 ### Infrastructure Tutorials

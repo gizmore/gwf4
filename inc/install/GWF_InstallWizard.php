@@ -662,12 +662,17 @@ final class GWF_InstallWizard
 
 		$back = self::wizard_h2('10');
 
-		$cronjobScript = '#MAILTHINGY'.PHP_EOL;
-		$cronjobScript .= '###'.PHP_EOL;
-		$cronjobScript .= '20  4   *   *   *       '.GWF_PATH.'www/protected/db_backup.sh > /dev/null'.PHP_EOL;
-		$cronjobScript .= ' *  *   *   *   *       '.GWF_PATH.'www/gwf_cronjob.sh > /dev/null'.PHP_EOL;
+		$cronjobScript = 'MAILTO="'.GWF_ADMIN_EMAIL.'"'.PHP_EOL;
+		$cronjobScript .= ''.PHP_EOL;
+		$cronjobScript .= '20  4   *   *   *     '.GWF_PATH.'protected/db_backup.sh > /dev/null'.PHP_EOL;
+		$cronjobScript .= ' *  *   *   *   *     '.GWF_PATH.'gwf_cronjob.sh > /dev/null'.PHP_EOL;
 		
 		$backupFolder = GWF_PATH.'www/protected';
+		
+		if (!GWF_HTAccess::protect($backupFolder))
+		{
+			$back .= GWF_HTML::err('ERR_GENERAL', array(__FILE__, __LINE__));
+		}
 		
 		$back .= sprintf('<p>%s</p>', self::$gwfil->lang('step_10_0', array($cronjobScript, $backupFolder)));
 		

@@ -12,7 +12,7 @@ $_GET['ajax'] = 1;
 require_once 'protected/config.php'; # <-- You may need to change this path.
 
 # Include core
-require_once '%%GWFPATH%%GWF4.class.php';
+require_once '%%GWFPATH%%gwf4.class.php';
 
 # Init
 $gwf = new GWF4(getcwd(), array(
@@ -33,4 +33,3 @@ $gwf = new GWF4(getcwd(), array(
 
 # Call cronjobs
 GWF_ModuleLoader::cronjobs();
-?>
