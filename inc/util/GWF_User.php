@@ -268,10 +268,13 @@ class GWF_User extends GDO
 	public function loadGroups()
 	{
 		if ($this->groups === true)
-		{ 
-			$this->groups = GDO::table('GWF_UserGroup')->selectArrayMap(
-				'group_name, t.*, group_founder, group_id, group_options', 'ug_userid='.$this->getID(), '', array('group'), self::ARRAY_O, -1, -1, 'group_name'
-			);
+		{
+			if ($this->persistentGuest())
+			{
+				$this->groups = GDO::table('GWF_UserGroup')->selectArrayMap(
+					'group_name, t.*, group_founder, group_id, group_options', 'ug_userid='.$this->getID(), '', array('group'), self::ARRAY_O, -1, -1, 'group_name'
+				);
+			}
 		}
 		return $this->groups;
 	}

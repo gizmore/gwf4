@@ -99,6 +99,11 @@ final class GWF_Hook
 // 			GWF_Log::logCritical('Unknown hook: '.$name);
 			return true;
 		}
+		
+		if (!$user->persistentGuest())
+		{
+			return true;
+		}
 
 		$output = '';
 

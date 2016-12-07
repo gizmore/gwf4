@@ -89,8 +89,18 @@ service('RequestSrvc', function($http) {
         // Submit button
         var input = jQuery("input[type=submit][clicked=true]");
         var key = input.attr('name');
-        var val = input.val();
-        data[key] = val;
+        if (key) {
+        	var val = input.val();
+        	data[key] = val;
+        }
+
+        // Image button
+        input = jQuery("input[type=image][clicked=true]");
+        key = input.attr('name');
+        if (key) {
+        	data[key] = key;
+        }
+
         // Done
         return data;
 	};
@@ -117,8 +127,9 @@ service('RequestSrvc', function($http) {
 			var form = $(this);
 			if (!form.attr('gwf-hooked')) {
 				form.attr('gwf-hooked', '1');
-				jQuery(selector + " input[type=submit]").click(function() {
-					jQuery("input[type=submit][clicked=true]").removeAttr("clicked");
+				selector = sprintf('%1$s input[type=submit], %1$s input[type=image]', selector);
+				jQuery(selector).click(function() {
+					jQuery("input[type=submit][clicked=true], input[type=image][clicked=true]").removeAttr("clicked");
 					jQuery(this).attr("clicked", "true");
 			    });
 				form.submit(function(event) {
@@ -126,6 +137,7 @@ service('RequestSrvc', function($http) {
 					var f = jQuery(this);
 					if (!f.attr('gwf-sent')) {
 						f.attr('gwf-sent', '1');
+						$scope.hideGWFContent();
 						RequestSrvc.sendForm(event, jQuery(this)).then(function(result){
 							$scope.formRequested(area, result);
 						}); 

@@ -1,30 +1,31 @@
-<div class="GWF4_form">
-<!-- <div class="gw3_form_title" ><?php echo $tVars['title']?></div>  -->
-	<form action="<?php echo $tVars['action']; ?>" method="<?php echo $tVars['method']; ?>" enctype="<?php echo $tVars['enctype']; ?>">
-	<table>
-		<thead>
-			<tr><th colspan="<?php echo $tVars['colspan']; ?>"><?php echo $tVars['title']?></th></tr>
-			<tr>
 <?php
+$required = " required";
+$input = null;
 $no_head = array(GWF_Form::HIDDEN, GWF_Form::SUBMIT);
+?>
+
+<section layout="column" flex>
+	<form class="gwf-form-x" action="<?php echo $action; ?>" method="<?php echo $method; ?>" enctype="<?php echo $enctype; ?>">
+		<h2><?php echo $title; ?></h2>
+
+<?php
 foreach ($tVars['data'] as $key => $data)
 {
 	$text = '';
 	if (!in_array($data[0], $no_head, true))
 	{
-		$text = isset($data[2]) ? $data[2] : '';
+		$label = isset($data[2]) ? $data[2] : '';
 	}
-	printf('<th>%s</th>', $text);
+	printf('<gwf-label>%s</gwf-label>', $label);
 }
 ?>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
+<br/>
+<hr/>
+<br/>
 <?php
 foreach ($tVars['data'] as $key => $data)
 {
-	echo '<td>';
+	echo '<span>';
 	switch ($data[0])
 	{
 		case GWF_Form::HIDDEN:
@@ -61,11 +62,8 @@ foreach ($tVars['data'] as $key => $data)
 			GWF4::logDie(sprintf('Your '.__FILE__.' is missing datatype %d', $data[0]));
 		
 	}
-	echo '</td>';
+	echo '</span>'.PHP_EOL;
 }
 ?>
-			</tr>
-		</tbody>
-	</table>
 	</form>
-</div>
+</section>
