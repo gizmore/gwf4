@@ -127,23 +127,25 @@ service('RequestSrvc', function($http) {
 			var form = $(this);
 			if (!form.attr('gwf-hooked')) {
 				form.attr('gwf-hooked', '1');
-				selector = sprintf('%1$s input[type=submit], %1$s input[type=image]', selector);
-				jQuery(selector).click(function() {
-					jQuery("input[type=submit][clicked=true], input[type=image][clicked=true]").removeAttr("clicked");
-					jQuery(this).attr("clicked", "true");
-			    });
-				form.submit(function(event) {
-					event.preventDefault();
-					var f = jQuery(this);
-					if (!f.attr('gwf-sent')) {
-						f.attr('gwf-sent', '1');
-						$scope.hideGWFContent();
-						RequestSrvc.sendForm(event, jQuery(this)).then(function(result){
-							$scope.formRequested(area, result);
-						}); 
-					}
-					return false;
-				});
+				if (form.attr('action').startsWith(GWF_WEB_ROOT)) {
+					selector = sprintf('%1$s input[type=submit], %1$s input[type=image]', selector);
+					jQuery(selector).click(function() {
+						jQuery("input[type=submit][clicked=true], input[type=image][clicked=true]").removeAttr("clicked");
+						jQuery(this).attr("clicked", "true");
+				    });
+					form.submit(function(event) {
+						event.preventDefault();
+						var f = jQuery(this);
+						if (!f.attr('gwf-sent')) {
+							f.attr('gwf-sent', '1');
+							$scope.hideGWFContent();
+							RequestSrvc.sendForm(event, jQuery(this)).then(function(result){
+								$scope.formRequested(area, result);
+							}); 
+						}
+						return false;
+					});
+				}
 			};
 		});
 	};

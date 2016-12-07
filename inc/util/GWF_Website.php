@@ -60,19 +60,25 @@ final class GWF_Website
 
 	public static function redirect($url)
 	{
-// 		if (!self::isAjax()) {
+		if (!self::isAjax())
+		{
 			header('Location: ' . $url);
-			return '';
-// 		}
-// 		else {
-// 			return self::ajaxRedirect($url);
-// 		}
+			echo "You should be redirected to: ".htmlspecialchars($url);
+			die();
+		}
+		else
+		{
+			return self::ajaxRedirect($url);
+		}
+	}
+	private static function ajaxRedirect($url)
+	{
+		# Don't do this at home kids!
+		return sprintf('<script type="text/javascript">setTimeout(function(){ window.location.href="%s" }, 1);</script>', $url);
 	}
 	public static function redirectMeta($url, $seconds)
 	{
-		if (!self::isAjax()) {
-			header(sprintf('refresh: %d; url=%s', $seconds, $url));
-		}
+		header(sprintf('refresh: %d; url=%s', $seconds, $url));
 	}
 	public static function redirectBack()
 	{
@@ -83,10 +89,6 @@ final class GWF_Website
 		}
 		self::redirect($url);
 	}
-// 	private static function ajaxRedirect($url)
-// 	{
-// 		return sprintf('<script>');
-// 	}
 
 	public static function addDefaultOutput($html) { self::$_output .= $html; }
 	public static function addJavascriptInline($script_html) { self::$_javascript_inline .= $script_html;} # Raw JavaScript
