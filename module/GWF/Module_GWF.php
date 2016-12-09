@@ -99,6 +99,7 @@ final class Module_GWF extends GWF_Module
 			$this->addJavascript('ng-crsrup.js');
 			$this->addJavascript('ng-html.js');
 			$this->addJavascript('gwf-error-service.js');
+			$this->addJavascript('gwf-auth-service.js');
 			$this->addJavascript('gwf-loading-service.js');
 			$this->addJavascript('gwf-request-service.js');
 			$this->addJavascript('gwf-ping-service.js');
@@ -112,10 +113,13 @@ final class Module_GWF extends GWF_Module
 	{
 		$json = json_encode(array(
 			'WEB_ROOT' => GWF_WEB_ROOT,
+			'SITENAME' => GWF_SITENAME,
 			'MO' => Common::getGetString('mo'),
 			'ME' => Common::getGetString('me'),
 			'DEFAULT_MO' => GWF_DEFAULT_MODULE,
 			'DEFAULT_ME' => GWF_DEFAULT_METHOD,
+			'HAS_COOKIES' => GWF_Session::haveCookies(),
+			'HAS_SESSION' => GWF_Session::hasSession(),
 		));
 		return "var GWF_CONFIG = $json;";
 	}

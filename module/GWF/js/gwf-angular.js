@@ -18,9 +18,9 @@ config(function($urlRouterProvider, $stateProvider) {
 	$urlRouterProvider.otherwise('/loading');
 }).
 run(function($injector) {
-	window.ANGULAR_INJECTOR = $injector; // Oops. Angular exposed to window.
+	window.INJECTOR = $injector; // Oops. Angular exposed to window.
 }).
-controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, RequestSrvc, SidebarSrvc, LoadingSrvc) {
+controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, AuthSrvc, RequestSrvc, SidebarSrvc, LoadingSrvc) {
 	
 	$scope.data = {
 		user: GWF_USER,
@@ -29,6 +29,26 @@ controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, 
 		leftContent: '',
 		rightContent: '',
 		bottomContent: '',
+	};
+	
+	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+		if (!window.GWF_SIDEBAR_INITED) {
+			window.GWF_SIDEBAR_INITED = true;
+			$scope.initGWF();
+		}
+	});
+	
+	$scope.initGWF = function() {
+		console.log('GWFCtrl.initGWF()');
+		AuthSrvc.withCookies().then($scope.initGWFSidebar);
+	};
+	
+	$scope.initGWFSidebar = function() {
+		console.log('GWFCtrl.initGWFSidebar()');
+		RequestSrvc.fixForms($scope, 'main', 'FORM');
+		RequestSrvc.fixAnchors($scope, 'A');
+		RequestSrvc.fixSelects($scope, 'SELECT');
+		SidebarSrvc.refreshSidebarsFor($scope);
 	};
 	
 	$scope.requestState = function(name, params) {
@@ -90,18 +110,8 @@ controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, 
 		setTimeout($scope.afterRefreshContent.bind($scope, bar), 1);
 		setTimeout(function(){
 			SidebarSrvc.refreshSidebarsFor($scope);
-		}, 3000);
+		}, 1000);
 	};
-	
-	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-		if (!window.GWF_SIDEBAR_INITED) {
-			window.GWF_SIDEBAR_INITED = true;
-			RequestSrvc.fixForms($scope, 'main', 'FORM');
-			RequestSrvc.fixAnchors($scope, 'A');
-			RequestSrvc.fixSelects($scope, 'SELECT');
-			SidebarSrvc.refreshSidebarsFor($scope);
-		}
-	});
 	
 	$scope.refreshedSidebar = function(bar, result) {
 		console.log('GWFCtrl.refreshedSidebar()', bar, result);
