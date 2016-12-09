@@ -279,6 +279,7 @@ class GWF_User extends GDO
 		return $this->groups;
 	}
 	public function getGroups() { return $this->loadGroups(); }
+	public function getGroupNames() { return array_keys($this->getGroups()); }
 	public function isInGroupID($gid) { return $gid === '0' ? true : $this->getGroupByID($gid) !== false; }
 	public function getGroupByName($groupname) { return isset($this->groups[$groupname]) ? $this->groups[$groupname] : false; }
 	public function getGroupByID($gid)

@@ -100,10 +100,10 @@ final class GWF_Hook
 			return true;
 		}
 		
-		if (!$user->persistentGuest())
-		{
-			return true;
-		}
+// 		if (!$user->persistentGuest())
+// 		{
+// 			return true;
+// 		}
 
 		$output = '';
 

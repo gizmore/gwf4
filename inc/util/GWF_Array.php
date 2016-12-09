@@ -126,5 +126,17 @@ final class GWF_Array
 		}
 		return false;
 	}
+	
+	/**
+	 * Empty array on explode empty string fix for crappy php.
+	 * @param string $string
+	 * @param string $delimiter
+	 * @return array
+	 */
+	public static function explodeCSV($string, $delimiter=',')
+	{
+		$string = trim($string);
+		return empty($string) ? array() : explode($delimiter, $string);
+	}
 }
 
