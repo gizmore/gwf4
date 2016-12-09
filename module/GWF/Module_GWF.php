@@ -99,6 +99,7 @@ final class Module_GWF extends GWF_Module
 			$this->addJavascript('ng-crsrup.js');
 			$this->addJavascript('ng-html.js');
 			$this->addJavascript('gwf-error-service.js');
+			$this->addJavascript('gwf-loading-service.js');
 			$this->addJavascript('gwf-request-service.js');
 			$this->addJavascript('gwf-ping-service.js');
 			$this->addJavascript('gwf-vibrator-service.js');
@@ -123,7 +124,9 @@ final class Module_GWF extends GWF_Module
 	{
 		$user = GWF_User::getStaticOrGuest();
 		$json = json_encode(array(
-			'user_id' => (int)$user->getVar('user_id'),
+			'user_id' => $user->getVar('user_id'),
+			'user_guest_id' => $user->getVar('user_guest_name'),
+			'user_guest_name' => $user->getVar('user_guest_name'),
 			'user_options' => (int)$user->getVar('user_options'),
 			'user_name' => $user->getVar('user_name'),
 			'user_password' => $user->getVar('user_password'),
@@ -131,10 +134,10 @@ final class Module_GWF extends GWF_Module
 			'user_email' => $user->getVar('user_email'),
 			'user_gender' => $user->getVar('user_gender'),
 			'user_birthdate' => $user->getVar('user_birthdate'),
-			'user_countryid' => (int)$user->getVar('user_countryid'),
-			'user_langid' => (int)$user->getVar('user_langid'),
-			'user_langid2' => (int)$user->getVar('user_langid2'),
-			'user_level' => (int)$user->getVar('user_level'),
+			'user_countryid' => $user->getVar('user_countryid'),
+			'user_langid' => $user->getVar('user_langid'),
+			'user_langid2' => $user->getVar('user_langid2'),
+			'user_level' => $user->getVar('user_level'),
 			'user_title' => $user->getVar('user_title'),
 			'user_credits' => round($user->getVar('user_credits'), 2),
 		));

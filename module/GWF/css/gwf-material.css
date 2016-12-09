@@ -8,3 +8,22 @@
 .gwf-checkbox md-checkbox {
 	top: 0.35em;
 }
+
+/** Loading Backdrop **/
+gwf-loading-pane {
+	position: absolute;
+	background: #000;
+	opacity: 0.3;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+}
+
+gwf-loading-pane md-progress-circular {
+	top: 50%;
+	width: 3em;
+	height: 3em;
+	margin: auto;
+}

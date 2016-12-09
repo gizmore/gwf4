@@ -20,7 +20,7 @@ config(function($urlRouterProvider, $stateProvider) {
 run(function($injector) {
 	window.ANGULAR_INJECTOR = $injector; // Oops. Angular exposed to window.
 }).
-controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, RequestSrvc, SidebarSrvc) {
+controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, RequestSrvc, SidebarSrvc, LoadingSrvc) {
 	
 	$scope.data = {
 		user: GWF_USER,
@@ -44,7 +44,11 @@ controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, 
 		$state.go('page').then(function(){
 			RequestSrvc.requestPage(module, method, data).then($scope.pageRequested.bind($scope, 'main'));
 		});
-	}
+	};
+	
+	$scope.showLoadingBackdrop = function() {
+		return LoadingSrvc.isLoading();
+	};
 
 	$scope.requestPage = function(url) {
 		console.log('GWFCtrl.requestPage()', url);
@@ -110,7 +114,7 @@ controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, PingSrvc, 
 	};
 
 	$scope.afterRefreshContent = function(bar) {
-		console.log('GWFCtrl.afterRefreshedSidabar()', bar);
+//		console.log('GWFCtrl.afterRefreshedSidabar()', bar);
 		RequestSrvc.fixForms($scope, bar, '.gwf-'+bar+'-content FORM');
 		RequestSrvc.fixAnchors($scope, '.gwf-'+bar+'-content A');
 		RequestSrvc.fixSelects($scope, '.gwf-'+bar+'-content SELECT');

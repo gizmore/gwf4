@@ -1,6 +1,6 @@
 'use strict';
 angular.module('gwf4').
-service('RequestSrvc', function($http) {
+service('RequestSrvc', function($http, LoadingSrvc) {
 	
 	var RequestSrvc = this;
 
@@ -31,6 +31,9 @@ service('RequestSrvc', function($http) {
 		var headers = {
 			'Content-Type': contentType	
 		};
+		
+		LoadingSrvc.addTask('http');
+		
 //		var transform = isFile ? angular.identity : RequestSrvc.transformPostData;
 		return $http({
 			method: 'POST',
@@ -39,6 +42,8 @@ service('RequestSrvc', function($http) {
 			withCredentials: true,
 			headers: headers,
 			transformRequest: RequestSrvc.transformPostData
+		})['finally'](function() {
+			LoadingSrvc.removeTask('http');
 		});
 	};
 	
@@ -109,7 +114,7 @@ service('RequestSrvc', function($http) {
 	// Hook anchors and forms //
 	////////////////////////////
 	RequestSrvc.fixAnchors = function($scope, selector) {
-		console.log('RequestSrvc.fixAnchors()', selector);
+//		console.log('RequestSrvc.fixAnchors()', selector);
 		jQuery(selector).each(function(index){
 			var a = $(this);
 			if (a.attr('href').startsWith(GWF_CONFIG.WEB_ROOT)) {
@@ -122,7 +127,7 @@ service('RequestSrvc', function($http) {
 	};
 	
 	RequestSrvc.fixForms = function($scope, area, selector) {
-		console.log('RequestSrvc.fixForms()', area, selector);
+//		console.log('RequestSrvc.fixForms()', area, selector);
 		jQuery(selector).each(function(index){
 			var form = $(this);
 			if (!form.attr('gwf-hooked')) {
@@ -151,7 +156,7 @@ service('RequestSrvc', function($http) {
 	};
 
 	RequestSrvc.fixSelects = function($scope, selector) {
-		console.log('RequestSrvc.fixSelects()', selector);
+//		console.log('RequestSrvc.fixSelects()', selector);
 	};
 	
 });
