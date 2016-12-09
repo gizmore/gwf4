@@ -12,7 +12,11 @@ final class GWF_AngularSidebar extends GWF_Method
 			$content = '';
 			foreach ($modules as $moduleName => $module)
 			{
-				$content .= $module->sidebarContent($bar);
+				$module instanceof GWF_Module;
+				if ($module->isEnabled())
+				{
+					$content .= $module->sidebarContent($bar);
+				}
 			}
 			$result[$bar] = $content;
 		}
