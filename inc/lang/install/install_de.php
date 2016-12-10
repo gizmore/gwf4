@@ -27,7 +27,7 @@ $lang = array(
 	'md_wizard' => 'GWFv3  Installations-Assistent. You should not see me ;)',
 
 	'foot_progress' => 'Installationsfortschritt: %0.02f%%',
-	'license' => 'GWF4 is &copy; by gizmore.<br/>GWF4 ist zur Zeit unlizensiert. Eine MIT-Kompatible Lizenz ist geplant.<br/>GWF4 soll Frei sein!',
+	'license' => 'GWF4 is &copy; by gizmore.<br/>GWF4 wird mit der MIT Lizenz vertrieben und soll frei sein.',
 	'pagegen' => 'Seite erzeugt in in %.03fs.',
 
 	'menu_0' => 'Status',

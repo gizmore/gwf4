@@ -9,7 +9,7 @@
 
 ### What changed?
 
-1. Got rid of Smarty template engine. It was not fitting the gwf usecase.
+1. Got rid of "Smarty", a template engine which is not fitting the gwf usecase.
 2. Apply a default angular material template.
 3. Cleanup the folder structure to make one folder per module.
 4. Being way more ajax and modular now.
@@ -52,6 +52,7 @@ It is important you change the repo name to the module name!
 Core modules included in this repo are: GWF, Login, Register, Language, PasswordForgot and Admin.
 
 - https://github.com/gizmore/gwf4-account          Account
+- https://github.com/gizmore/gwf4-contact          Contact
 - https://github.com/gizmore/gwf4-downloads        Download
 - https://github.com/gizmore/gwf4-payment          Payment
 - https://github.com/gizmore/gwf4-payment-paypal   PaymentPaypal

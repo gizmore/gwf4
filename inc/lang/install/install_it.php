@@ -27,7 +27,7 @@ $lang = array(
 	'md_wizard' => 'Installazione guidata di GWFv4. Non dovresti vedermi ;)',
 
 	'foot_progress' => 'Percentuale installazione: %0.02f%%',
-	'license' => 'GWF4 è &copy; di gizmore.<br/>GWF4 è correntemente senza licenza. Una licenza compitibile con la licenza MIT è in programma.<br/>GWF4 shall be free as in beer.',
+	'license' => 'GWF4 è &copy; di gizmore.<br/>GWF4 è disponibile sotto la licenza MIT. GWF4 rimarrà gratuito.',
 	'pagegen' => 'Pagina generata in %.03fs.',
 
 	'menu_0' => 'Stato',
