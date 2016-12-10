@@ -5,8 +5,9 @@ final class GWF_InstallGWF
 	{
 		return GWF_ModuleLoader::installVars($module, array(
 //			'Design' => array(GWF_Template::getDesign(), 'text'),
+			'MaterialApp' => array('1', 'bool'),
 			# Fancy Config
-			'FancyIndex' => array(false, 'bool'),
+			'FancyIndex' => array('0', 'bool'),
 			'NameWidth' => array('25', 'int'),
 			'DescrWidth' => array('80', 'int'),
 			'IconWidth' => array('16', 'int'),
@@ -33,4 +34,3 @@ final class GWF_InstallGWF
 		));
 	}
 }
-?>

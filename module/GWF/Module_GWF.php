@@ -7,12 +7,20 @@
  */
 final class Module_GWF extends GWF_Module
 {
+	##############
+	### Module ###
+	##############
 	public function getVersion() { return 4.01; }
 	public function getDefaultPriority() { return 1; }
 	public function getDefaultAutoLoad() { return true; }
 	public function onInstall($dropTable) { require_once GWF_PATH.'module/GWF/GWF_InstallGWF.php'; return GWF_InstallGWF::onInstall($this, $dropTable); }
 	public function onLoadLanguage() { return $this->loadLanguage('lang/gwf'); }
 	public function isCoreModule() { return true; }
+	
+	##############
+	### Config ###
+	##############
+	public function cfgMaterialApp() { return $this->getModuleVarBool('MaterialApp', '1'); }
 	
 	# Fancy Config
 	public function cfgFancyIndex() { return $this->getModuleVarBool('FancyIndex', '0'); }
@@ -64,12 +72,13 @@ final class Module_GWF extends GWF_Module
 		{
 			$min = GWF_DEBUG_JS ? '' : '.min';
 			$v = $this->getVersionDB();
+			$md = $this->cfgMaterialApp();
 			
 			# CSS
 			$this->addCSS("gwf4.css"); # Own core is great
-			GWF_Website::addBowerCSS("angular-material/angular-material$min.css?v=$v"); # Angular material
-			GWF_Website::addCSS("https://fonts.googleapis.com/icon?family=Material+Icons"); # Icons
-			$this->addCSS("gwf-material.css"); # GWF4 css patches
+			if ($md) GWF_Website::addBowerCSS("angular-material/angular-material$min.css?v=$v"); # Angular material
+			if ($md) GWF_Website::addCSS("https://fonts.googleapis.com/icon?family=Material+Icons"); # Icons
+			if ($md) $this->addCSS("gwf-material.css"); # GWF4 css patches
 
 			# GWF Util
 			$this->addJavascript('bind-polyfill.js');
@@ -84,28 +93,29 @@ final class Module_GWF extends GWF_Module
 			GWF_Website::addBowerJavascript("jquery/dist/jquery$min.js?v=$v");
 			$this->addJavascript('jq-serialize-object.js');
 			GWF_Website::addBowerJavascript("angular/angular$min.js?v=$v");
-			GWF_Website::addBowerJavascript("angular-animate/angular-animate$min.js?v=$v");
-			GWF_Website::addBowerJavascript("angular-aria/angular-aria$min.js?v=$v");
-			GWF_Website::addBowerJavascript("angular-material/angular-material$min.js?v=$v");
-			GWF_Website::addBowerJavascript("angular-messages/angular-messages$min.js?v=$v");
-			GWF_Website::addBowerJavascript("angular-ui-router/release/angular-ui-router$min.js?v=$v");
+			if ($md) GWF_Website::addBowerJavascript("angular-animate/angular-animate$min.js?v=$v");
+			if ($md) GWF_Website::addBowerJavascript("angular-aria/angular-aria$min.js?v=$v");
+			if ($md) GWF_Website::addBowerJavascript("angular-material/angular-material$min.js?v=$v");
+			if ($md) GWF_Website::addBowerJavascript("angular-messages/angular-messages$min.js?v=$v");
+			if ($md) GWF_Website::addBowerJavascript("angular-ui-router/release/angular-ui-router$min.js?v=$v");
 			GWF_Website::addBowerJavascript("ng-flow/dist/ng-flow-standalone$min.js?v=$v");
 
 			# GWF below here
 			$this->addJavascript('gwf-ajax-sync.js');
 			$this->addJavascript('gwf-bb-editor.js');
-			$this->addJavascript('gwf-angular.js');
+			if ($md) $this->addJavascript('gwf-angular.js');
+			else $this->addJavascript('gwf-angular-minimal.js');
 			$this->addJavascript('ng-enter.js');
 			$this->addJavascript('ng-crsrup.js');
 			$this->addJavascript('ng-html.js');
-			$this->addJavascript('gwf-error-service.js');
-			$this->addJavascript('gwf-auth-service.js');
-			$this->addJavascript('gwf-loading-service.js');
-			$this->addJavascript('gwf-request-service.js');
-			$this->addJavascript('gwf-ping-service.js');
-			$this->addJavascript('gwf-vibrator-service.js');
-			$this->addJavascript('gwf-request-interceptor.js');
-			$this->addJavascript('gwf-sidebar-service.js');
+			if ($md) $this->addJavascript('gwf-error-service.js');
+			if ($md) $this->addJavascript('gwf-auth-service.js');
+			if ($md) $this->addJavascript('gwf-loading-service.js');
+			if ($md) $this->addJavascript('gwf-request-service.js');
+			if ($md) $this->addJavascript('gwf-ping-service.js');
+			if ($md) $this->addJavascript('gwf-vibrator-service.js');
+			if ($md) $this->addJavascript('gwf-request-interceptor.js');
+			if ($md) $this->addJavascript('gwf-sidebar-service.js');
 		}
 	}
 	
