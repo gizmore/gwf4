@@ -10,12 +10,12 @@ service('AuthSrvc', function($q, ErrorSrvc) {
 		
 		if (GWF_CONFIG.HAS_COOKIES)
 		{
-			$q.resolve(GWF_CONFIG);
+			defer.resolve(GWF_CONFIG);
 		}
 		else
 		{
 			ErrorSrvc.showError('You have no cookies', GWF_CONFIG.SITENAME).then(AuthSrvc.refreshHotfix());
-			$q.reject();
+			defer.reject();
 		}
 		
 		return defer.promise;
