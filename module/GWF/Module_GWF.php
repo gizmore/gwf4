@@ -108,6 +108,7 @@ final class Module_GWF extends GWF_Module
 			$this->addJavascript('ng-enter.js');
 			$this->addJavascript('ng-crsrup.js');
 			$this->addJavascript('ng-html.js');
+			$this->addJavascript('gwf-upload-controller.js');
 			if ($md) $this->addJavascript('gwf-error-service.js');
 			if ($md) $this->addJavascript('gwf-auth-service.js');
 			if ($md) $this->addJavascript('gwf-loading-service.js');

@@ -54,6 +54,7 @@ class GWF_Form
 	const ENUM = 28; # array(array(key,value),array(key,value),...)
 // 	const ENUM_ASSOC = 29;
 	const FILE_IMAGE = 30;
+	const FILE_IMAGES = 31;
 	
 
 	# CSRF protection levels.
@@ -104,7 +105,7 @@ class GWF_Form
 			case self::VALIDATOR:
 				return false;
 				
-			case self::FILE: case self::FILE_OPT: case self::FILE_IMAGE:
+			case self::FILE: case self::FILE_OPT: case self::FILE_IMAGE: case self::FILE_IMAGES:
 				return $this->getFile($key, $default);
 	
 			case self::DATE: case self::DATE_FUTURE:
@@ -134,7 +135,7 @@ class GWF_Form
 			case self::VALIDATOR:
 				return false;
 				
-			case self::FILE: case self::FILE_OPT: case self::FILE_IMAGE:
+			case self::FILE: case self::FILE_OPT: case self::FILE_IMAGE: case self::FILE_IMAGES:
 				return $default;
 	
 			case self::DATE: case self::DATE_FUTURE:
@@ -303,7 +304,7 @@ class GWF_Form
 		
 				case self::FILE:
 				case self::FILE_OPT:
-				case self::FILE_IMAGE:
+				case self::FILE_IMAGE: case self::FILE_IMAGES:
 				case self::HTML:
 					break;
 		
