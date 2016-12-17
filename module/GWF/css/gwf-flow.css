@@ -1,0 +1,20 @@
+.gwf4-form .gwf4-form-images gwf4-flow-drop,
+.gwf4-form .gwf4-form-images gwf4-flow-preview {
+	display: block;
+	float: left;
+	text-align: center;
+	border: 2px dotted #612;
+	width: 8em;
+	height: 8em;
+}
+
+.gwf4-form .gwf4-form-images gwf4-flow-preview img {
+	display: inline-block;
+	width: 8em;
+	height: 8em;
+}
+
+gwf4-progress-indicator {
+	display: block;
+	margin: 0.5em;
+}

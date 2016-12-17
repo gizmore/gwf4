@@ -79,7 +79,8 @@ final class Module_GWF extends GWF_Module
 			if ($md) GWF_Website::addBowerCSS("angular-material/angular-material$min.css?v=$v"); # Angular material
 			if ($md) GWF_Website::addCSS("https://fonts.googleapis.com/icon?family=Material+Icons"); # Icons
 			if ($md) $this->addCSS("gwf-material.css"); # GWF4 css patches
-
+			$this->addCSS("gwf-flow.css"); # GWF4 css patches
+					
 			# GWF Util
 			$this->addJavascript('bind-polyfill.js');
 			$this->addJavascript('gwf-string-util.js');
@@ -109,6 +110,7 @@ final class Module_GWF extends GWF_Module
 			$this->addJavascript('ng-crsrup.js');
 			$this->addJavascript('ng-html.js');
 			$this->addJavascript('gwf-upload-controller.js');
+			$this->addJavascript('gwf-transfer-speed-filter.js');
 			if ($md) $this->addJavascript('gwf-error-service.js');
 			if ($md) $this->addJavascript('gwf-auth-service.js');
 			if ($md) $this->addJavascript('gwf-loading-service.js');

@@ -1,6 +1,6 @@
-'use strict'
-angular.module('gwf4-upload', ['flow']);
-angular.module('gwf4', ['ngMaterial', 'ui.router']).
+'use strict';
+//angular.module('gwf4-upload', ['flow']);
+angular.module('gwf4', ['ngMaterial', 'ui.router', 'flow']).
 config(function($urlRouterProvider, $stateProvider) {
 	$stateProvider.state({
 		name: 'loading',

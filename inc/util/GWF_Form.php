@@ -105,8 +105,11 @@ class GWF_Form
 			case self::VALIDATOR:
 				return false;
 				
-			case self::FILE: case self::FILE_OPT: case self::FILE_IMAGE: case self::FILE_IMAGES:
+			case self::FILE: case self::FILE_OPT: case self::FILE_IMAGE:
 				return $this->getFile($key, $default);
+				
+			case self::FILE_IMAGES:
+				return $this->getFiles($key, $default);
 	
 			case self::DATE: case self::DATE_FUTURE:
 				return $this->getDate($key, $this->form_data[$key][4], $_POST);
@@ -477,6 +480,11 @@ class GWF_Form
 		);
 	}
 	
+	private function getFiles($key, $default)
+	{
+		
+	}
+	
 	private function getFlowFilename($key)
 	{
 		$nameFile = $this->getFlowFiledir($key).'/name';
@@ -511,6 +519,7 @@ class GWF_Form
 		{
 			return false;
 		}
+// 		$this->onFlowClearNameFile();
 		foreach ($_FILES as $key => $file)
 		{
 			$this->onFlowUploadFile($key, $file);
@@ -519,10 +528,18 @@ class GWF_Form
 		return true;
 	}
 	
+// 	private function onFlowClearNameFile()
+// 	{
+// 		$chunkDir = GWF_PATH.'temp/'.$sessid.'/'.$key;
+// 		$nameFile = $chunkDir.'/name';
+// 		return file_put_contents($nameFile, '');
+// 	}
+	
 	private function onFlowUploadFile($key, $file)
 	{
 		$sessid = GWF_Session::getSessSID();
-		$chunkDir = GWF_PATH.'temp/'.$sessid.'/'.$key;
+		$chunkId = preg_replace('#[\\/]#', '', $_REQUEST['flowFilename']);
+		$chunkDir = GWF_PATH.'temp/'.$sessid.'/'.$key.'/'.$chunkId;
 		if (!GWF_File::createDir($chunkDir))
 		{
 			header("HTTP/1.0 500 Create temp dir");
@@ -546,17 +563,17 @@ class GWF_Form
 				return false;
 			}
 		}
+		
+		$progress = array(
+			'bytes' => 10,
+			'total' => 100,
+		);
 	
 		$result = json_encode([
 				'success' => true,
+				'progress' => $progress,
 				'files' => $_FILES,
 				'request' => $_REQUEST,
-				// 				//optional
-				// 				'flowTotalSize' => isset($_FILES['file']) ? $_FILES['file']['size'] : $_REQUEST['flowTotalSize'],
-				// 				'flowIdentifier' => isset($_FILES['file']) ? $_FILES['file']['name'] . '-' . $_FILES['file']['size']
-				// 				: $_REQUEST['flowIdentifier'],
-				// 				'flowFilename' => isset($_FILES['file']) ? $_FILES['file']['name'] : $_REQUEST['flowFilename'],
-				// 				'flowRelativePath' => isset($_FILES['file']) ? $_FILES['file']['tmp_name'] : $_REQUEST['flowRelativePath'],
 		]);
 	
 		echo $result;
@@ -566,8 +583,9 @@ class GWF_Form
 	private function onFlowCopyChunk($key, $file)
 	{
 		$sessid = GWF_Session::getSessSID();
-		$chunkDir = GWF_PATH.'temp/'.$sessid.'/'.$key;
-		$chunkNumber = $_REQUEST['flowChunkNumber'];
+		$chunkId = preg_replace('#[\\/]#', '', $_REQUEST['flowFilename']);
+		$chunkDir = GWF_PATH.'temp/'.$sessid.'/'.$key.'/'.$chunkId;
+		$chunkNumber = (int) $_REQUEST['flowChunkNumber'];
 		$chunkFile = $chunkDir.'/'.$chunkNumber;
 		return copy($file['tmp_name'], $chunkFile);
 	}
@@ -575,7 +593,8 @@ class GWF_Form
 	private function onFlowFinishFile($key, $file)
 	{
 		$sessid = GWF_Session::getSessSID();
-		$chunkDir = GWF_PATH.'temp/'.$sessid.'/'.$key;
+		$chunkId = preg_replace('#[\\/]#', '', $_REQUEST['flowFilename']);
+		$chunkDir = GWF_PATH.'temp/'.$sessid.'/'.$key.'/'.$chunkId;
 		GWF_File::filewalker($chunkDir, array($this, 'onMergeFile'), false, true, array($chunkDir, $key, $file));
 		if (!$this->onFlowChecksum($key, $file, $chunkDir))
 		{
@@ -585,13 +604,14 @@ class GWF_Form
 		GWF_Log::logCron('Test');
 		$nameFile = $chunkDir.'/name';
 		file_put_contents($nameFile, $file['name']);
+// 		file_put_contents($nameFile, $file['name']."\n", FILE_APPEND);
 		return true;
 	}
 	
 	public function onMergeFile($entry, $fullpath, $args)
 	{
 		list($chunkDir, $key, $file) = $args;
-		$finalFile = $chunkDir.'/'.$key;
+		$finalFile = $chunkDir.'/0';
 		return file_put_contents($finalFile, file_get_contents($fullpath), FILE_APPEND);
 	}
 	

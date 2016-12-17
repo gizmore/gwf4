@@ -1,4 +1,4 @@
-<body ng-controller="GWFCtrl">
+<body ng-controller="GWFCtrl"  flow-prevent-drop>
 
 	<header id="gwf4-header"><?php include 'html_header.php';?></header>
 
