@@ -49,6 +49,21 @@ final class GWF_File
 		}
 		return @mkdir($path, GWF_CHMOD, true);
 	}
+	
+	public static function dirsize($path)
+	{
+		$bytes = 0;
+		$path = realpath($path);
+		if (self::isDir($path))
+		{
+			foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($path, FilesystemIterator::SKIP_DOTS)) as $file)
+			{
+				$bytes += $file->getSize();
+			}
+		}
+		return $bytes;
+		
+	}
 
 	/**
 	 * Write file contents to a file.

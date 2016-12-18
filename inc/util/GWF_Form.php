@@ -466,51 +466,69 @@ class GWF_Form
 	###################
 	### Flow upload ###
 	###################
+	private function getTempDir($key='')
+	{
+		return GWF_PATH.'temp/flow/'.GWF_Session::getSessSID().'/'.$key;
+	}
+	
+	private function getChunkDir($key)
+	{
+		$chunkFilename = preg_replace('#[\\/]#', '', $_REQUEST['flowFilename']);
+		return $this->getTempDir($key).'/'.$chunkFilename;
+	}
+	
+	private function denyFlowFile($key, $file, $reason)
+	{
+		return @file_put_contents($this->getChunkDir($key).'/denied', $reason);
+	}
+	
+	private function deniedFlowFile($key, $file)
+	{
+		$file = $this->getChunkDir($key).'/denied';
+		return GWF_File::isFile($file) ? file_get_contents($file) : false;
+	}
+	
 	private function getFile($key, $default)
 	{
-		if (!($name = $this->getFlowFilename($key)))
-		{
-			return null;
-		}
-		return array(
-			'name' => $name,
-			'dir' => $this->getFlowFiledir($key),
-			'path' => $this->getFlowFilepath($key),
-			'size' => $this->getFlowFilesize($key),
-		);
+		return array_unshift($this->getFiles($key, $default));
 	}
 	
 	private function getFiles($key, $default)
 	{
-		
+		$path = $this->getTempDir($key);
+		if (false === ($dir = @dir($path)))
+		{
+			return false;
+		}
+		$files = array();
+		while (false !== ($entry = $dir->read()))
+		{
+			if (($entry !== '.') && ($entry !== '..'))
+			{
+				if ($flowFile = $this->getFileFromDir($path.'/'.$entry))
+				{
+					$files[] = $flowFile;
+				}
+			}
+		}
+		return $files;
 	}
 	
-	private function getFlowFilename($key)
+	private function getFileFromDir($dir)
 	{
-		$nameFile = $this->getFlowFiledir($key).'/name';
-		return @file_get_contents($nameFile);
-	}
-	
-	private function getFlowFiledir($key)
-	{
-		$sessid = GWF_Session::getSessSID();
-		return GWF_PATH.'temp/'.$sessid.'/'.$key;
-	}
-	
-	private function getFlowFilepath($key)
-	{
-		return $this->getFlowFiledir($key).'/'.$key;
-	}
-	
-	private function getFlowFilesize($key)
-	{
-		return filesize($this->getFlowFilepath($key));
+		return GWF_File::isFile($dir.'/0') ?
+			array(
+				'name' => @file_get_contents($dir.'/name'),
+				'mime' => @file_get_contents($dir.'/mime'),
+				'size' => filesize($dir.'/0'),
+				'dir' => $dir,
+				'path' => $dir.'/0',
+			) : false;
 	}
 	
 	public function cleanup()
 	{
-		$tempDir = GWF_PATH.'temp/'.GWF_Session::getSessSID();
-		GWF_File::removeDir($tempDir, false);
+		GWF_File::removeDir($this->getTempDir(), false);
 	}
 	
 	public function onFlowUpload()
@@ -519,106 +537,164 @@ class GWF_Form
 		{
 			return false;
 		}
-// 		$this->onFlowClearNameFile();
 		foreach ($_FILES as $key => $file)
 		{
 			$this->onFlowUploadFile($key, $file);
 		}
 		die();
-		return true;
 	}
-	
-// 	private function onFlowClearNameFile()
-// 	{
-// 		$chunkDir = GWF_PATH.'temp/'.$sessid.'/'.$key;
-// 		$nameFile = $chunkDir.'/name';
-// 		return file_put_contents($nameFile, '');
-// 	}
 	
 	private function onFlowUploadFile($key, $file)
 	{
-		$sessid = GWF_Session::getSessSID();
-		$chunkId = preg_replace('#[\\/]#', '', $_REQUEST['flowFilename']);
-		$chunkDir = GWF_PATH.'temp/'.$sessid.'/'.$key.'/'.$chunkId;
+		$chunkDir = $this->getChunkDir($key);
 		if (!GWF_File::createDir($chunkDir))
 		{
 			header("HTTP/1.0 500 Create temp dir");
 			GWF_Log::logError('Cannot create temp dir.');
 			return false;
 		}
-	
-		if (!self::onFlowCopyChunk($key, $file))
+		
+		if (false !== ($error = $this->deniedFlowFile($key, $file)))
 		{
-			header("HTTP/1.0 500 Copy chunk");
-			GWF_Log::logError('Cannot create temp dir.');
+			header("HTTP/1.0 413 DENY: $error");
+			GWF_Log::logError('flow upload denied: '.$error);
 			return false;
 		}
 	
+		if (!$this->onFlowCopyChunk($key, $file))
+		{
+			header("HTTP/1.0 413 Copy chunk");
+			GWF_Log::logError('Cannot create temp dir.');
+			return false;
+		}
+		
 		if ($_REQUEST['flowChunkNumber'] === $_REQUEST['flowTotalChunks'])
 		{
-			if (!self::onFlowFinishFile($key, $file))
+			if (false !== ($error = $this->onFlowFinishFile($key, $file)))
 			{
-				header("HTTP/1.0 500 Merge final file");
-				GWF_Log::logError('Cannot finish file.');
+				header("HTTP/1.0 413 Merge error: $error");
+				GWF_Log::logError("Cannot finish file: $error");
 				return false;
 			}
 		}
 		
-		$progress = array(
-			'bytes' => 10,
-			'total' => 100,
-		);
-	
-		$result = json_encode([
-				'success' => true,
-				'progress' => $progress,
-				'files' => $_FILES,
-				'request' => $_REQUEST,
-		]);
-	
+		$result = json_encode(array(
+			'success' => true,
+		));
+
 		echo $result;
-		GWF_Log::logCron($result);
+// 		GWF_Log::logCron($result);
 		return true;
 	}
+
 	private function onFlowCopyChunk($key, $file)
 	{
-		$sessid = GWF_Session::getSessSID();
-		$chunkId = preg_replace('#[\\/]#', '', $_REQUEST['flowFilename']);
-		$chunkDir = GWF_PATH.'temp/'.$sessid.'/'.$key.'/'.$chunkId;
+		if (!$this->onFlowCheckSizeBeforeCopy($key, $file))
+		{
+			return false;
+		}
+		$chunkDir = $this->getChunkDir($key);
 		$chunkNumber = (int) $_REQUEST['flowChunkNumber'];
 		$chunkFile = $chunkDir.'/'.$chunkNumber;
-		return copy($file['tmp_name'], $chunkFile);
+		return @copy($file['tmp_name'], $chunkFile);
+	}
+	
+	private function onFlowCheckSizeBeforeCopy($key, $file)
+	{
+		$chunkDir = $this->getChunkDir($key);
+		$already = GWF_File::dirsize($chunkDir);
+		$additive = filesize($file['tmp_name']);
+		$sumSize = $already + $additive;
+		$maxSize = $this->form_data[$key][self::LENGTH]['maxSize'];
+		if ($sumSize > $maxSize)
+		{
+			$this->denyFlowFile($key, $file, "exceed size of $maxSize");
+			return false;
+		}
+		return true;
 	}
 	
 	private function onFlowFinishFile($key, $file)
 	{
-		$sessid = GWF_Session::getSessSID();
-		$chunkId = preg_replace('#[\\/]#', '', $_REQUEST['flowFilename']);
-		$chunkDir = GWF_PATH.'temp/'.$sessid.'/'.$key.'/'.$chunkId;
-		GWF_File::filewalker($chunkDir, array($this, 'onMergeFile'), false, true, array($chunkDir, $key, $file));
-		if (!$this->onFlowChecksum($key, $file, $chunkDir))
-		{
-			return false;
-		}
-		# Write user chosen name to a file for later :(
-		GWF_Log::logCron('Test');
+		$chunkDir = $this->getChunkDir($key);
+		
+		# Merge chunks to single temp file
+		$finalFile = $chunkDir.'/temp';
+		GWF_File::filewalker($chunkDir, array($this, 'onMergeFile'), false, true, array($finalFile));
+		
+		# Write user chosen name to a file for later
 		$nameFile = $chunkDir.'/name';
-		file_put_contents($nameFile, $file['name']);
-// 		file_put_contents($nameFile, $file['name']."\n", FILE_APPEND);
-		return true;
+		@file_put_contents($nameFile, $file['name']);
+		
+		# Write mime type for later use
+		$mimeFile = $chunkDir.'/mime';
+		@file_put_contents($mimeFile, mime_content_type($chunkDir.'/temp'));
+		
+		# Run finishing tests to deny.
+		if (false !== ($error = $this->onFlowFinishTests($key, $file)))
+		{
+			$this->denyFlowFile($key, $file, $error);
+			return $error;
+		}
+		
+		# Move single temp to chunk 0
+		if (!@rename($finalFile, $chunkDir.'/0'))
+		{
+			return "Cannot move temp file.";
+		}
+		
+		return false;
 	}
 	
 	public function onMergeFile($entry, $fullpath, $args)
 	{
-		list($chunkDir, $key, $file) = $args;
-		$finalFile = $chunkDir.'/0';
-		return file_put_contents($finalFile, file_get_contents($fullpath), FILE_APPEND);
+		list($finalFile) = $args;
+		@file_put_contents($finalFile, file_get_contents($fullpath), FILE_APPEND);
 	}
 	
-	private function onFlowChecksum($key, $file, $chunkDir)
+	private function onFlowFinishTests($key, $file)
 	{
-		# TODO: Checksum generation and validation. 
-		return true;
+		if (false !== ($error = $this->onFlowTestChecksum($key, $file)))
+		{
+			return $error;
+		}
+		if (false !== ($error = $this->onFlowTestMime($key, $file)))
+		{
+			return $error;
+		}
+		if (false !== ($error = $this->onFlowTestImageDimension($key, $file)))
+		{
+			return $error;
+		}
+		return false;
+	}
+	
+	private function onFlowTestChecksum($key, $file)
+	{
+		return false;
+	}
+	
+	private function onFlowTestMime($key, $file)
+	{
+		if (!isset($this->form_data[$key][self::LENGTH])) {
+			return 'NO 4th form param for mime test';
+		}
+		if (!isset($this->form_data[$key][self::LENGTH]['mimeTypes'])) {
+			return 'NO 4th form param mimeTypes for mime test';
+		}
+		$mimes = $this->form_data[$key][self::LENGTH]['mimeTypes'];
+		if (!($mime = @file_get_contents($this->getChunkDir($key).'/mime'))) {
+			return "No mime found for file";
+		}
+		if (!in_array($mime, $mimes, true)) {
+			return "Unsupported MIME TYPE.";
+		}
+		return false;
+	}
+	
+	private function onFlowTestImageDimension($key, $file)
+	{
+		return false;
 	}
 	
 }

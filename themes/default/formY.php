@@ -116,7 +116,7 @@
 			case GWF_Form::FILE_IMAGES:
 				?>
 <!-- 				<div ng-app="gwf4-upload"> -->
-					<div ng-controller="UploadCtrl" class="gwf4-form-images">
+					<div ng-controller="UploadCtrl" class="gwf4-form-images" ng-init="data.gwfUploadParams='<?php echo json_encode($data[4]);?>';">
 						<input type="hidden" name="<?php echo $key; ?>" value="{{$flow.files.length ? '1' : '' }}" />
 						<div flow-init="{target: '<?php echo $action?>', singleFile: false, fileParameterName: '<?php echo $key; ?>', testChunks: false}"
 							 flow-file-progress="onFlowProgress($file, $flow);"
