@@ -99,6 +99,15 @@ final class GWF_Javascript
 		}
 		return sprintf('new Array(%s)', $back);
 	}
+	
+	/**
+	 * ng-init="data.foo='{\"bla\":"\""}';"
+	 * @param unknown $object
+	 */
+	public static function htmlAttributeEscapedJSON(array $object)
+	{
+		return str_replace('"', "'", json_encode($object));
+	}
 
 	#############
 	### Focus ###

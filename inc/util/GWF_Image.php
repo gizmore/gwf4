@@ -1,6 +1,38 @@
 <?php
 final class GWF_Image
 {
+	public static function stream($path)
+	{
+		if (!GWF_File::isFile($path))
+		{
+			GWF_Log::logError("No file at $path");
+			return false;
+		}
+		if (!($mime = @mime_content_type($path)))
+		{
+			GWF_Log::logError("No mime for $path");
+			return false;
+		}
+		header("Content-Type: $mime");
+		return GWF_Upload::stream($path);
+	}
+	
+	public static function fromPath($path)
+	{
+		if (!GWF_File::isFile($path))
+		{
+			return false;
+		}
+		
+		switch (@mime_content_type($path))
+		{
+			case 'image/jpeg': return imagecreatefromjpeg($path);
+			case 'image/png': return imagecreatefrompng($path);
+			case 'image/gif': return imagecreatefromgif($path);
+			default: return false;
+		}
+	}
+	
 	/**
 	 * Resize an image and keep aspect ratio.
 	 * @param GDImage $image
@@ -115,4 +147,3 @@ final class GWF_Image
 	}
 	
 }
-?>

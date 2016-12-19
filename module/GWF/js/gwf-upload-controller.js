@@ -14,13 +14,51 @@ controller('UploadCtrl', function($scope, ErrorSrvc) {
 		},
 	};
 	
-	$scope.onFlowError = function($file, $flow) {
-		ErrorSrvc.showError('Flow Error', 'Flow Error');
+	$scope.initGWFFormConfig = function(config) {
+		console.log('UploadCtrl.initGWFFormConfig()', config);
+		$scope.data.config = config;
+	};
+	
+	$scope.onFlowSubmitted = function($flow) {
+		console.log('UploadCtrl.onFlowSubmitted()', $flow);
+		var acceptedFiles = [];
+		for (var i in $flow.files) {
+			if ($scope.isValidFile($flow.files[i])) {
+				acceptedFiles.push($flow.files[i]);
+			}
+		}
+		$flow.files = acceptedFiles;
+		$flow.upload();
+	};
+	
+	$scope.isValidFile = function($file) {
+		console.log('UploadCtrl.isValidFile()', $file, $scope.data.config);
+		var maxSize = $scope.data.config.maxSize;
+		var mimeTypes = $scope.data.config.mimeTypes;
+		if ($file.size > maxSize) {
+			$scope.denyFile($file, 'Max size exceeded.');
+		}
+		else if (mimeTypes.indexOf($file.file.type) < 0) {
+			$scope.denyFile($file, 'Invalid mime type.');
+		}
+		else {
+			return true;
+		}
+	};
+	
+	$scope.denyFile = function($file, error) {
+		console.log('UploadCtrl.denyFile()', $file, error);
+		ErrorSrvc.showError(error, 'Upload');
 	};
 
 	
-	$scope.onFlowProgress = function($file, $flow) {
-//		console.log('$scope.onFlowProgress()', $file, $flow);
+	$scope.onFlowError = function($file, $flow, $msg) {
+		console.log('UploadCtrl.onFlowSuccess()', $file, $flow, $msg);
+		ErrorSrvc.showError($msg, 'Flow Error');
+	};
+	
+	$scope.onFlowProgress = function($file, $flow, $msg) {
+//		console.log('UploadCtrl.onFlowProgress()', $file, $flow, $msg);
 		var transfer = $scope.data.transfer;
 		var j = 0, index = 0;
 		transfer.bytesTotal = 0;
@@ -43,8 +81,10 @@ controller('UploadCtrl', function($scope, ErrorSrvc) {
 		transfer.inProgress = true;
 	};
 
-	$scope.onFlowSuccess = function($file, $flow) {
-		console.log('$scope.onFlowSuccess()', $file, $flow);
+	$scope.onFlowSuccess = function($file, $flow, $msg) {
+		console.log('UploadCtrl.onFlowSuccess()', $file, $flow, $msg);
+		$scope.data.transfer.speed = $scope.data.transfer.bytesTotal;
+		$scope.data.transfer.bytesTransferred = $scope.data.transfer.bytesTotal;
 		$scope.data.transfer.inProgress = false;
 	};
 	

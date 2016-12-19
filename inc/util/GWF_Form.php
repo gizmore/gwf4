@@ -677,17 +677,17 @@ class GWF_Form
 	private function onFlowTestMime($key, $file)
 	{
 		if (!isset($this->form_data[$key][self::LENGTH])) {
-			return 'NO 4th form param for mime test';
+			return "$key has no fourth form param for mimetest";
 		}
 		if (!isset($this->form_data[$key][self::LENGTH]['mimeTypes'])) {
-			return 'NO 4th form param mimeTypes for mime test';
+			return "$key has no fourth form param named 'mimeTypes' for mimetest";
 		}
 		$mimes = $this->form_data[$key][self::LENGTH]['mimeTypes'];
 		if (!($mime = @file_get_contents($this->getChunkDir($key).'/mime'))) {
-			return "No mime found for file";
+			return "$key: No mime found for file";
 		}
 		if (!in_array($mime, $mimes, true)) {
-			return "Unsupported MIME TYPE.";
+			return "$key: Unsupported MIME TYPE: $mime";
 		}
 		return false;
 	}

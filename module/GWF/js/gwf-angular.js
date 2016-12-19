@@ -1,5 +1,4 @@
 'use strict';
-//angular.module('gwf4-upload', ['flow']);
 angular.module('gwf4', ['ngMaterial', 'ui.router', 'flow']).
 config(function($urlRouterProvider, $stateProvider) {
 	$stateProvider.state({
@@ -137,11 +136,6 @@ controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, AuthSrvc, 
 
 	$scope.toggleRightMenu = function() {
 		$mdSidenav('right').toggle();
-	};
-}).
-controller('SelectCtrl', function($scope) {
-	$scope.data = {
-		selected: '',
 	};
 }).
 controller('PageCtrl', function($scope) {

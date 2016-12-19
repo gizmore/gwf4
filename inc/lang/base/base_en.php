@@ -195,5 +195,7 @@ $lang = array(
 	# 3.00 Filesize
 	'filesize' => array('B','KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'YB', 'ZB'),
 	'err_bb_level' => 'You need a userlevel of %s to see this content.',
+		
+	# 4.00 ACL
+	'' => '',
 );
-?>

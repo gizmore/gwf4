@@ -1,17 +1,23 @@
 <?php
 final class GWF_Select
 {
-	public static function display($name, $data, $selected='0', $onchange='')
+	public static function display($name, $data, $selected='0', $onchange='', $label='')
 	{
-		$onchange = $onchange === '' ? '' : " onchange=\"{$onchange}\"";
-		$back = '<select name="'.$name.'"'.$onchange.'>'.PHP_EOL;
-		foreach ($data as $d)
+		$angularOptions = array();
+		foreach ($data as $entry)
 		{
-			$sel = $d[0] == $selected ? ' selected="selected"' : '';
-			$back .= sprintf('<option value="%s"%s>%s</option>', htmlspecialchars($d[0]), $sel, htmlspecialchars($d[1])).PHP_EOL;
+			$angularOptions[$entry[0]] = $entry[1];
 		}
-		$back .= '</select>'.PHP_EOL;
-		return $back;
+		$tVars = array(
+			'name' => $name,
+			'data' => $data,
+			'selected' => $selected,
+			'onchange' => $onchange,
+			'selectedValue' => $selected,
+			'label' => $label,
+			'angularOptions' => GWF_Javascript::htmlAttributeEscapedJSON($angularOptions),
+		);
+		return GWF_Template::templatePHPMain('form_select.php', $tVars);
 	}
 
 	public static function multi($name, $data, $selected=array(), $onchange='')

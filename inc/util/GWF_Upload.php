@@ -1,12 +1,25 @@
 <?php
 /**
- * Check if uploaded files are there.
- * Shrink images.
  * @author gizmore
- * @version 1.0
  */
 final class GWF_Upload
 {
+	public static function stream($path)
+	{
+		if ($fh = fopen($realpath, 'rb'))
+		{
+			while (!feof($handle))
+			{
+				echo fread($fh, 1024*1024);
+				ob_flush();
+				flush();
+			}
+			fclose($fh);
+			return true;
+		}
+		return false;
+	}
+	
 	/**
 	 * Get a file from a post request, if successfully submitted. Return the file array from $_FILES on success. The returned array contains: error, size, type, name, tmp_name.
 	 * @param $var is the name of the $_FILES[key]
@@ -27,15 +40,15 @@ final class GWF_Upload
 // 		return $file;
 // 	}
 
-	public static function moveFlowFile($file, $filename)
-	{
-		if (!@copy($file['path'], $filename))
-		{
-			GWF_Log::logError('Cannot copy to dest: '.$filename);
-			return false;
-		}
-		return true;
-	}
+// 	public static function moveFlowFile($file, $filename)
+// 	{
+// 		if (!@copy($file['path'], $filename))
+// 		{
+// 			GWF_Log::logError('Cannot copy to dest: '.$filename);
+// 			return false;
+// 		}
+// 		return true;
+// 	}
 
 	public static function getMaxUploadSize()
 	{
@@ -128,70 +141,70 @@ final class GWF_Upload
 		return Common::substrUntil($mime, ';');
 	}
 
-	/**
-	 * Move file to a public accesible dir.
-	 * On error return false. On success return the same file structure with an altered tmp_name
-	 * @param $file array - structure from $_FILES.
-	 * @param $pubtemp - path to public readable dir on server, defaults to "temp"
-	 * @return mixed - false or array.
-	 * */
-	public static function moveToPublicTemp($file, $pubtemp='extra/temp/upload')
-	{
-		$newtmp = self::getFileName($file['tmp_name']);
-		$newtmp = $pubtemp.'/'.$newtmp;
-		return self::moveTo($file, $newtmp);
-	}
+// 	/**
+// 	 * Move file to a public accesible dir.
+// 	 * On error return false. On success return the same file structure with an altered tmp_name
+// 	 * @param $file array - structure from $_FILES.
+// 	 * @param $pubtemp - path to public readable dir on server, defaults to "temp"
+// 	 * @return mixed - false or array.
+// 	 * */
+// 	public static function moveToPublicTemp($file, $pubtemp='extra/temp/upload')
+// 	{
+// 		$newtmp = self::getFileName($file['tmp_name']);
+// 		$newtmp = $pubtemp.'/'.$newtmp;
+// 		return self::moveTo($file, $newtmp);
+// 	}
 
-	/**
-	 * Actually this is "copy to"!
-	 * @param array $file
-	 * @param unknown_type $target
-	 * @return unknown_type
-	 */
-	public static function moveTo(array $file, $target)
-	{
-		if (false === copy($file['tmp_name'], $target)) {
-//			die('CANT COPY FILE IN '.__CLASS__.' '.__FUNCTION__);
-			return false;
-		}
-		$file['tmp_name'] = $target;
-		return $file;
-	}
+// 	/**
+// 	 * Actually this is "copy to"!
+// 	 * @param array $file
+// 	 * @param unknown_type $target
+// 	 * @return unknown_type
+// 	 */
+// 	public static function moveTo(array $file, $target)
+// 	{
+// 		if (false === copy($file['tmp_name'], $target)) {
+// //			die('CANT COPY FILE IN '.__CLASS__.' '.__FUNCTION__);
+// 			return false;
+// 		}
+// 		$file['tmp_name'] = $target;
+// 		return $file;
+// 	}
 
-	/**
-	 * Get the filename from a path / full name.
-	 * eg: /foo/bar will become bar.
-	 * @param $filename string full path
-	 * @return string filename.
-	 * */
-	public static function getFileName($filename)
-	{
-		$filename = Common::getUnixPath($filename);
-		if (false === ($pos = strrpos($filename, '/'))) {
-			return $filename;
-		}
-		return substr($filename, $pos+1);
-	}
+// 	/**
+// 	 * Get the filename from a path / full name.
+// 	 * eg: /foo/bar will become bar.
+// 	 * @param $filename string full path
+// 	 * @return string filename.
+// 	 * */
+// 	public static function getFileName($filename)
+// 	{
+// 		$filename = Common::getUnixPath($filename);
+// 		if (false === ($pos = strrpos($filename, '/'))) {
+// 			return $filename;
+// 		}
+// 		return substr($filename, $pos+1);
+// 	}
 
-	/**
-	 * Check MIME Type of $_FILES[file]['type]. Return true or false.
-	 * @param array $file from $_FILES[$file]
-	 * @return boolean
-	 * */
-	public static function isImageFile(array $file)
-	{
-		return self::isImageMime($file['type']);
-	}
+// 	/**
+// 	 * Check MIME Type of $_FILES[file]['type]. Return true or false.
+// 	 * @param array $file from $_FILES[$file]
+// 	 * @return boolean
+// 	 * */
+// 	public static function isImageFile(array $file)
+// 	{
+// 		return self::isImageMime($file['type']);
+// 	}
 
-	/**
-	 * Check if mimetype is image
-	 * @param unknown_type $mime
-	 * @return unknown_type
-	 */
-	public static function isImageMime($mime)
-	{
-		return Common::startsWith($mime, 'image/');
-	}
+// 	/**
+// 	 * Check if mimetype is image
+// 	 * @param unknown_type $mime
+// 	 * @return unknown_type
+// 	 */
+// 	public static function isImageMime($mime)
+// 	{
+// 		return Common::startsWith($mime, 'image/');
+// 	}
 
 	/**
 	 * Resize an image and replace it with a scaled jpg image.
@@ -282,30 +295,30 @@ final class GWF_Upload
 		return $back;
 	}
 
-	/**
-	 * Output a file.
-	 * @param string $fullpath
-	 * @param boolean $as_attach
-	 * @param string $mime
-	 * @param mixed $filename
-	 * @return unknown_type
-	 */
-	public static function outputFile($fullpath, $as_attach=true, $mime='application/octet-stream', $filename=true)
-	{
-		header("Content-type: $mime");
+// 	/**
+// 	 * Output a file.
+// 	 * @param string $fullpath
+// 	 * @param boolean $as_attach
+// 	 * @param string $mime
+// 	 * @param mixed $filename
+// 	 * @return unknown_type
+// 	 */
+// 	public static function outputFile($fullpath, $as_attach=true, $mime='application/octet-stream', $filename=true)
+// 	{
+// 		header("Content-type: $mime");
 
-		if ($as_attach)
-		{
-			if (!is_string($filename))
-			{
-				$filename = basename($fullpath);
-			}
-			header("Content-disposition: attachment; filename=$filename");
-		}
+// 		if ($as_attach)
+// 		{
+// 			if (!is_string($filename))
+// 			{
+// 				$filename = basename($fullpath);
+// 			}
+// 			header("Content-disposition: attachment; filename=$filename");
+// 		}
 
-		readfile($fullpath);
-// 		echo file_get_contents($fullpath);
-	}
+// 		readfile($fullpath);
+// // 		echo file_get_contents($fullpath);
+// 	}
 
 	public static function humanFilesize($bytes, $factor='1024', $digits='2')
 	{
