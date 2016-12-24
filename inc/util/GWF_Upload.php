@@ -6,9 +6,9 @@ final class GWF_Upload
 {
 	public static function stream($path)
 	{
-		if ($fh = fopen($realpath, 'rb'))
+		if ($fh = fopen($path, 'rb'))
 		{
-			while (!feof($handle))
+			while (!feof($fh))
 			{
 				echo fread($fh, 1024*1024);
 				ob_flush();

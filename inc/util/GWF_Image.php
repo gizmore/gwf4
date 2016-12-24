@@ -1,7 +1,7 @@
 <?php
 final class GWF_Image
 {
-	public static function stream($path)
+	public static function render($path)
 	{
 		if (!GWF_File::isFile($path))
 		{
@@ -17,6 +17,11 @@ final class GWF_Image
 		return GWF_Upload::stream($path);
 	}
 	
+	/**
+	 * Create a GD image from file path.
+	 * @param string $path
+	 * @return gd_image
+	 */
 	public static function fromPath($path)
 	{
 		if (!GWF_File::isFile($path))
