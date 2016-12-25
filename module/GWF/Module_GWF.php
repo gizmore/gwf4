@@ -98,6 +98,7 @@ final class Module_GWF extends GWF_Module
 			if ($md) GWF_Website::addBowerJavascript("angular-aria/angular-aria$min.js?v=$v");
 			if ($md) GWF_Website::addBowerJavascript("angular-material/angular-material$min.js?v=$v");
 			if ($md) GWF_Website::addBowerJavascript("angular-messages/angular-messages$min.js?v=$v");
+			if ($md) GWF_Website::addBowerJavascript("angular-sanitize/angular-sanitize$min.js?v=$v");
 			if ($md) GWF_Website::addBowerJavascript("angular-ui-router/release/angular-ui-router$min.js?v=$v");
 			GWF_Website::addBowerJavascript("ng-flow/dist/ng-flow-standalone$min.js?v=$v");
 

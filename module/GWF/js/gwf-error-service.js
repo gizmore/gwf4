@@ -2,11 +2,10 @@
 angular.module('gwf4')
 .factory('$exceptionHandler', function($injector) {
 	return function(exception) {
-		var ErrorSrvc = $injector.get('ErrorSrvc');
-		ErrorSrvc.showException(exception);
+		$injector.get('ErrorSrvc').handleException(exception);
 	};
 })
-.service('ErrorSrvc', function($q, $mdDialog, ExceptionSrvc) {
+.service('ErrorSrvc', function($q, $mdDialog, ExceptionSrvc, LoadingSrvc) {
 	
 	var ErrorSrvc = this;
 
@@ -38,7 +37,7 @@ angular.module('gwf4')
 //					.parent(angular.element(document.querySelector('#popupContainer')))
 					.clickOutsideToClose(false)
 					.title(title)
-					.textContent(text)
+					.htmlContent(text)
 					.ariaLabel(title)
 					.ok("Aww")
 					);
@@ -59,20 +58,11 @@ angular.module('gwf4')
 	}
 	
 	// --- Exceptions --- //
-
-	ErrorSrvc.showException = function(exception) {
+	window.onerror = function(message, filename, lineno, colno, error) { ErrorSrvc.handleException(new Error(message)); };
+	ErrorSrvc.handleException = function(exception) {
 		console.error(exception);
-		ErrorSrvc.showError(ErrorSrvc.exceptionMessage(exception), 'Javascript error');
-		ExceptionSrvc.sendReport(exception);
-	};
-	ErrorSrvc.exceptionMessage = function(exception) {
-		return '<pre>' + exception.stack + '</pre>';
-	};
-		
-	// --- Handler --- //
-	window.onerror = function(message, filename, lineno, colno, error) {
-		console.error(message, filename, lineno, colno, error);
-		ErrorSrvc.showError(message, 'Javascript error');
+		ErrorSrvc.showError('<pre>'+exception.stack+'</pre>', 'Javascript error');
+		ExceptionSrvc.sendReport(exception).then(LoadingSrvc.stopTasks);
 	};
 
 	return ErrorSrvc;
