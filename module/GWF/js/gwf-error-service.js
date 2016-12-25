@@ -9,15 +9,6 @@ angular.module('gwf4')
 	
 	var ErrorSrvc = this;
 
-//	ErrorSrvc.showGWFMessage = function(message) {
-//		console.log(title, text);
-//		console.error(text);
-//		if (message.success()) {
-//		}
-//		else {
-//		}
-//	};
-
 	// --- Dialogs --- //
 	ErrorSrvc.showMessage = function(text, title) {
 		return $mdDialog.show(

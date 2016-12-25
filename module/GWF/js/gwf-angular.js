@@ -52,7 +52,7 @@ controller('GWFCtrl', function($scope, $q, $state, $mdSidenav, ErrorSrvc, AuthSr
 	};
 	
 	$scope.refreshSidebar = function() {
-		SidebarSrvc.refreshSidebar();
+		return SidebarSrvc.refreshSidebar();
 	};
 	
 //	$scope.requestState = function(name, params) {
