@@ -113,6 +113,7 @@ final class Module_GWF extends GWF_Module
 			$this->addJavascript('gwf-upload-controller.js');
 			$this->addJavascript('gwf-transfer-speed-filter.js');
 			if ($md) $this->addJavascript('gwf-error-service.js');
+			if ($md) $this->addJavascript('gwf-exception-service.js');
 			if ($md) $this->addJavascript('gwf-auth-service.js');
 			if ($md) $this->addJavascript('gwf-loading-service.js');
 			if ($md) $this->addJavascript('gwf-request-service.js');
@@ -120,6 +121,7 @@ final class Module_GWF extends GWF_Module
 			if ($md) $this->addJavascript('gwf-vibrator-service.js');
 			if ($md) $this->addJavascript('gwf-request-interceptor.js');
 			if ($md) $this->addJavascript('gwf-sidebar-service.js');
+			if ($md) $this->addJavascript('gwf-login-dialog.js');
 		}
 	}
 	
@@ -128,6 +130,7 @@ final class Module_GWF extends GWF_Module
 		$json = json_encode(array(
 			'WEB_ROOT' => GWF_WEB_ROOT,
 			'SITENAME' => GWF_SITENAME,
+			'DOMAIN' => Common::getHost(),
 			'MO' => Common::getGetString('mo'),
 			'ME' => Common::getGetString('me'),
 			'DEFAULT_MO' => GWF_DEFAULT_MODULE,

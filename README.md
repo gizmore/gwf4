@@ -42,7 +42,7 @@ It is important you change the repo name to the module name!
 ### New Modules
 
 - https://github.com/gizmore/gwf4-avatar       Avatar
-- https://github.com/gizmore/gwf4-friendlist   Friendlist
+- https://github.com/gizmore/gwf4-gallery      Gallery
 - https://github.com/gizmore/gwf4-maps         Maps
 - https://github.com/gizmore/gwf4-websockets   Websockets
 

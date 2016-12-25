@@ -7,13 +7,13 @@ service('LoadingSrvc', function($q, $mdDialog) {
 	LoadingSrvc.TASKS = {};
 	
 	LoadingSrvc.addTask = function(task) {
-		console.log('LoadingSrvc.addTask()', task);
+//		console.log('LoadingSrvc.addTask()', task);
 		LoadingSrvc.TASKS[task] = LoadingSrvc.TASKS[task] || 0;
 		LoadingSrvc.TASKS[task] += 1;
 	};
 	
 	LoadingSrvc.removeTask = function(task) {
-		console.log('LoadingSrvc.removeTask()', task);
+//		console.log('LoadingSrvc.removeTask()', task);
 		LoadingSrvc.TASKS[task] = LoadingSrvc.TASKS[task] || 0;
 		LoadingSrvc.TASKS[task] -= 1;
 		if (LoadingSrvc.TASKS[task] < 0) {
@@ -22,13 +22,13 @@ service('LoadingSrvc', function($q, $mdDialog) {
 	};
 	
 	LoadingSrvc.stopTask = function(task) {
-		console.log('LoadingSrvc.stopTask()', task);
+//		console.log('LoadingSrvc.stopTask()', task);
 		LoadingSrvc.TASKS[task] = LoadingSrvc.TASKS[task] || 0;
 		LoadingSrvc.TASKS[task] = 0;
 	};
 	
 	LoadingSrvc.stopTasks = function() {
-		console.log('LoadingSrvc.stopTasks()');
+//		console.log('LoadingSrvc.stopTasks()');
 		LoadingSrvc.TASKS = {};
 	};
 	

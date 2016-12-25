@@ -1,9 +1,12 @@
 'use strict';
 angular.module('gwf4').
-service('AuthSrvc', function($q, ErrorSrvc) {
+service('AuthSrvc', function($q, ErrorSrvc, LoginDlg) {
 	
 	var AuthSrvc = this;
 	
+	//////////////////
+	// Cookie Check //
+	//////////////////
 	AuthSrvc.withCookies = function() {
 		console.log('AuthSrvc.withCookies()');
 		var defer = $q.defer();
@@ -23,6 +26,33 @@ service('AuthSrvc', function($q, ErrorSrvc) {
 	
 	AuthSrvc.refreshHotfix = function() {
 		console.log('AuthSrvc.refreshHotfix()');
+	};
+	
+	////////////////////
+	// Nickname Check //
+	////////////////////
+	AuthSrvc.withNickname = function(allowGuest) {
+		console.log('AuthSrvc.withNickname()');
+		allowGuest = allowGuest !== false; // default true
+		var user = GWF_USER; // Own GWF User
+		var defer = $q.defer(); // promise
+		if (user.authenticated()) {
+			defer.resolve(user.name());
+		}
+		else if (!allowGuest) {
+			defer.reject('NO GUESTS');
+		}
+		else if (user.hasGuestName()) {
+			defer.resolve();
+		}
+		else { // Let user auth first
+			LoginDlg.open().then(function(nickname){
+				defer.resolve(nickname);
+			}, function(error) {
+				defer.reject(error);
+			});
+		}
+		return defer.promise;
 	};
 
 	return AuthSrvc;

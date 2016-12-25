@@ -7,20 +7,19 @@ service('RequestSrvc', function($http, LoadingSrvc) {
 	//////////////////
 	// Send request //
 	//////////////////
-	RequestSrvc.requestDefaultPage = function() {
-		console.log('RequestSrvc.requestDefaultPage()', window.GWF_CONFIG);
-		var config = window.GWF_CONFIG;
-		return RequestSrvc.requestPage(config.DEFAULT_MO, config.DEFAULT_ME);
-	};
-
-	RequestSrvc.requestPage = function(module, method, data) {
-		console.log('RequestSrvc.requestPage()', module, method, data);
-		return RequestSrvc.send(RequestSrvc.requestURL(module, method), data);
-	};
-	
-	RequestSrvc.requestURL = function(module, method) {
-		return sprintf('%sindex.php?mo=%s&me=%s&ajax=1&gwf4am=1', GWF_CONFIG.WEB_ROOT, module, method);
-	};
+//	RequestSrvc.requestDefaultPage = function() {
+//		console.log('RequestSrvc.requestDefaultPage()', window.GWF_CONFIG);
+//		var config = window.GWF_CONFIG;
+//		return RequestSrvc.requestPage(config.DEFAULT_MO, config.DEFAULT_ME);
+//	};
+//	RequestSrvc.requestPage = function(module, method, data) {
+//		console.log('RequestSrvc.requestPage()', module, method, data);
+//		return RequestSrvc.send(RequestSrvc.requestURL(module, method), data);
+//	};
+//	
+//	RequestSrvc.requestURL = function(module, method) {
+//		return sprintf('%sindex.php?mo=%s&me=%s&ajax=1&gwf4am=1', GWF_CONFIG.WEB_ROOT, module, method);
+//	};
 
 	RequestSrvc.send = function(url, data, contentType) {
 		console.log('RequestSrvc.send()', url, data, contentType);
@@ -31,9 +30,7 @@ service('RequestSrvc', function($http, LoadingSrvc) {
 		var headers = {
 			'Content-Type': contentType	
 		};
-		
 		LoadingSrvc.addTask('http');
-		
 //		var transform = isFile ? angular.identity : RequestSrvc.transformPostData;
 		return $http({
 			method: 'POST',
@@ -117,10 +114,11 @@ service('RequestSrvc', function($http, LoadingSrvc) {
 //		console.log('RequestSrvc.fixAnchors()', selector);
 		jQuery(selector).each(function(index){
 			var a = $(this);
-			if (a.attr('href').startsWith(GWF_CONFIG.WEB_ROOT)) {
+			var href = a.attr('href');
+			if (href && href.startsWith(GWF_CONFIG.WEB_ROOT)) {
 				if (!a.attr('gwf-hooked')) {
 					a.attr('gwf-hooked', '1');
-					a.click($scope.requestPage.bind($scope, RequestSrvc.ajaxURL(a.attr('href'))));
+					a.click($scope.requestPage.bind($scope, RequestSrvc.ajaxURL(href)));
 				}
 			}
 		});

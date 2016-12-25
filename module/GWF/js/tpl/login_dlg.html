@@ -1,0 +1,45 @@
+<md-dialog aria-label="Login dialog">
+
+	<md-dialog-content layout-padding>
+	
+		<div ng-hide="data.scheme>0">
+			<div><md-button ng-click="data.scheme=1">Trial</md-button></div>
+			<div><md-button ng-click="data.scheme=2">Login</md-button></div>
+			<div><md-button ng-click="data.scheme=3">Omniauth</md-button></div>
+		</div>
+		
+		<div ng-hide="data.scheme!==1">
+			<md-input-container>
+				<label>Nickname</label>
+				<input type="text" ng-model="data.username"></input>
+			</md-input-container>
+			<div><md-button ng-click="trialNickname()">Authenticate</md-button></div>
+			<div><md-button ng-click="data.scheme=0">Back</md-button></div>
+		</div>
+
+		<div ng-hide="data.scheme!==2">
+			<md-input-container>
+				<label>Nickname</label>
+				<md-input type="text" ng-model="data.username"></md-input>
+			</md-input-container>
+			<md-input-container>
+				<label>Password</label>
+				<md-input type="password" ng-model="data.password"></md-input>
+			</md-input-container>
+		
+			<div><md-button ng-click="gwfLogin()">Authenticate</md-button></div>
+			<div><md-button ng-click="data.scheme=0">Back</md-button></div>
+		</div>
+
+		<div ng-hide="data.scheme!==3">
+		
+			<div><md-button ng-click="data.scheme=0">Back</md-button></div>
+		</div>
+
+	</md-dialog-content>
+	
+	<md-dialog-actions>
+		<md-button ng-click="closeDialog()" class="md-primary" aria-label="Close dialog">Close Dialog</md-button>
+	</md-dialog-actions>
+
+</md-dialog>

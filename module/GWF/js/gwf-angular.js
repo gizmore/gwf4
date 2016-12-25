@@ -20,7 +20,7 @@ config(function($urlRouterProvider, $stateProvider) {
 run(function($injector) {
 	window.INJECTOR = $injector; // Oops. Angular exposed to window.
 }).
-controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, AuthSrvc, RequestSrvc, SidebarSrvc, LoadingSrvc) {
+controller('GWFCtrl', function($scope, $q, $state, $mdSidenav, ErrorSrvc, AuthSrvc, RequestSrvc, SidebarSrvc, LoadingSrvc) {
 	
 	$scope.data = {
 		user: GWF_USER,
@@ -39,31 +39,32 @@ controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, AuthSrvc, 
 	});
 	
 	$scope.initGWF = function() {
-		console.log('GWFCtrl.initGWF()');
+//		console.log('GWFCtrl.initGWF()');
 		AuthSrvc.withCookies().then($scope.initGWFSidebar);
 	};
 	
 	$scope.initGWFSidebar = function() {
-		console.log('GWFCtrl.initGWFSidebar()');
+//		console.log('GWFCtrl.initGWFSidebar()');
 		RequestSrvc.fixForms($scope, 'main', 'FORM');
 		RequestSrvc.fixAnchors($scope, 'A');
 		RequestSrvc.fixSelects($scope, 'SELECT');
 		SidebarSrvc.refreshSidebarsFor($scope);
 	};
 	
-	$scope.requestState = function(name, params) {
-		console.log('GWFCtrl.requestState()', name, params);
-		$scope.hideGWFContent();
-		return $state.go(name, params);
+	$scope.refreshSidebar = function() {
+		SidebarSrvc.refreshSidebar();
 	};
+	
+//	$scope.requestState = function(name, params) {
+//		console.log('GWFCtrl.requestState()', name, params);
+//		$scope.hideGWFContent();
+//		return $state.go(name, params);
+//	};
 	
 	$scope.requestGWFPage = function(module, method, data) {
 		console.log('GWFCtrl.requestGWFPage()', module, method, data);
-		$scope.hideGWFContent();
-		$scope.closeSidenavs();
-		$state.go('page').then(function(){
-			RequestSrvc.requestPage(module, method, data).then($scope.pageRequested.bind($scope, 'main'));
-		});
+		var url = GWF_WEB_ROOT + sprintf('index.php?mo=%s&me=%s&ajax=1');
+		return $scope.requestPage(url);
 	};
 	
 	$scope.showLoadingBackdrop = function() {
@@ -74,16 +75,20 @@ controller('GWFCtrl', function($scope, $state, $mdSidenav, ErrorSrvc, AuthSrvc, 
 		console.log('GWFCtrl.requestPage()', url);
 		$scope.hideGWFContent();
 		$scope.closeSidenavs();
+		var defer = $q.defer();
 		$state.go('page').then(function(){
-			RequestSrvc.send(url).then($scope.pageRequested.bind($scope, 'main'));
+			RequestSrvc.send(url).then(function(result){
+				$scope.pageRequested(result);
+				setTimeout(defer.resolve, 1);
+			});
 		});
-		return false;
+		return defer.promise;
 	};
 
-	$scope.pageRequested = function(bar, result) {
-		console.log('GWFCtrl.pageRequested()', bar, result);
+	$scope.pageRequested = function(result) {
+		console.log('GWFCtrl.pageRequested()', result);
 		$scope.data.mainContent = result.data;
-		setTimeout($scope.afterRefreshContent.bind($scope, bar), 1);
+		setTimeout($scope.afterRefreshContent.bind($scope, 'main'), 1);
 	};
 	
 	$scope.closeSidenavs = function() {

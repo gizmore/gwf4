@@ -1,15 +1,31 @@
 'use strict';
-angular.module('gwf4').
-service('ErrorSrvc', function($q, $mdDialog) {
+angular.module('gwf4')
+.factory('$exceptionHandler', function($injector) {
+	return function(exception) {
+		var ErrorSrvc = $injector.get('ErrorSrvc');
+		ErrorSrvc.showException(exception);
+	};
+})
+.service('ErrorSrvc', function($q, $mdDialog, ExceptionSrvc) {
 	
 	var ErrorSrvc = this;
 
+//	ErrorSrvc.showGWFMessage = function(message) {
+//		console.log(title, text);
+//		console.error(text);
+//		if (message.success()) {
+//		}
+//		else {
+//		}
+//	};
+
+	// --- Dialogs --- //
 	ErrorSrvc.showMessage = function(text, title) {
 		return $mdDialog.show(
 				$mdDialog.alert()
 				.clickOutsideToClose(true)
 				.title(title)
-				.textContent(text)
+				.htmlContent(text)
 				.ariaLabel(title)
 				.ok("OK")
 				);
@@ -28,34 +44,36 @@ service('ErrorSrvc', function($q, $mdDialog) {
 					);
 	};
 	
-	ErrorSrvc.showGWFMessage = function(message) {
-		console.log(title, text);
-		console.error(text);
-		if (message.success()) {
-		}
-		else {
-		}
-	};
-	
-	ErrorSrvc.showNetworkError = function(error) {
-		return ErrorSrvc.showError(error, 'Netz doof');
-	};
-
+	// --- Titles --- //
 	ErrorSrvc.show404Error = function(error) {
 		return ErrorSrvc.showError(error.statusText, 'Server Error');
 	};
-
+	ErrorSrvc.showNetworkError = function(error) {
+		return ErrorSrvc.showError(error, 'Netz doof');
+	};
 	ErrorSrvc.showServerError = function(error) {
 		return ErrorSrvc.showError(error, 'Server Error');
 	};
-	
 	ErrorSrvc.showUserError = function(error) {
 		ErrorSrvc.showError(error, "User error");
 	}
+	
+	// --- Exceptions --- //
 
+	ErrorSrvc.showException = function(exception) {
+		console.error(exception);
+		ErrorSrvc.showError(ErrorSrvc.exceptionMessage(exception), 'Javascript error');
+		ExceptionSrvc.sendReport(exception);
+	};
+	ErrorSrvc.exceptionMessage = function(exception) {
+		return '<pre>' + exception.stack + '</pre>';
+	};
+		
+	// --- Handler --- //
 	window.onerror = function(message, filename, lineno, colno, error) {
 		console.error(message, filename, lineno, colno, error);
 		ErrorSrvc.showError(message, 'Javascript error');
 	};
 
+	return ErrorSrvc;
 });
