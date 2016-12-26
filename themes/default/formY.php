@@ -32,8 +32,10 @@
 				break;
 				
 			case GWF_Form::STRING:
+			case GWF_Form::SSTRING:
 			case GWF_Form::STRING_NO_CHECK:
-				$input = sprintf('<input%s name="%s" value="%s" />', $req, $key, $value);
+				$disabled = $type === GWF_Form::SSTRING ? ' disabled="disabled"' : '';
+				$input = sprintf('<input name="%s" value="%s"%s />', $key, $value, $disabled);
 				break;
 				
 			case GWF_Form::INT:
@@ -77,7 +79,6 @@
 			case GWF_Form::DATE_FUTURE:
 			case GWF_Form::SELECT:
 			case GWF_Form::SELECT_A:
-			case GWF_Form::SSTRING:
 				$input = $value;
 				break;
 				

@@ -997,13 +997,17 @@ abstract class GDO
 	################
 	public function increase($var, $inc=1)
 	{
-		$o = $inc >= 0 ? '+' : '';
-		if (false === $this->update("`{$var}`=`{$var}`{$o}{$inc}", $this->getPKWhere(), NULL))
+		return $this->increaseVars(array($var => $inc));
+	}
+	
+	public function increaseVars(array $vars)
+	{
+		$updated = array();
+		foreach ($vars as $key => $inc)
 		{
-			return false;
+			$updated[$key] = $this->getVar($key) + $inc;
 		}
-		$this->setVar($var, $this->getVar($var)+$inc);
-		return true;
+		return $this->saveVars($updated);
 	}
 	
 	#################
