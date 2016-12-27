@@ -13,4 +13,14 @@ var GWF_User = function(json) {
 	this.hasGuestName = function() { return !!this.JSON.user_guest_name; };
 
 	this.displayName = function() { return this.hasGuestName() ? this.guestName() : this.name(); };
+	
+	this.update = function(json)
+	{
+		for (var i in json) {
+			if (this.JSON.hasOwnProperty(i)) {
+				this.JSON[i] = json[i];
+			}
+		}
+			
+	};
 };
