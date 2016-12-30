@@ -10,6 +10,13 @@ String.prototype.substrUntil = function(s, d) { var i = this.indexOf(s); return 
 //String.prototype.nibbleUntil = function(s) { var r = this.substrUntil(s); this.replace(this.substrFrom(s)); return r; };
 // -----------------------------------------------------------------------------
 
+function clamp(num, min, max)
+{
+	if ((min !== undefined) && (num < min)) return min;
+	if ((max !== undefined) && (num > max)) return max;
+	return num;
+}
+
 /** PHP.JS BELOW HERE **/
 
 /*

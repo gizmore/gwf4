@@ -16,7 +16,7 @@ gwf.service('LoginDlg', function($q, $mdDialog, ErrorSrvc, CommandSrvc) {
 			$scope.data = {
 				user: user,
 				allowGuests: allowGuests,
-				username: '',
+				username: user.JSON.user_guest_name || '',
 				password: '',
 			};
 			$scope.closeDialog = function() {

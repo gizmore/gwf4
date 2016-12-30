@@ -10,7 +10,7 @@ final class Module_GWF extends GWF_Module
 	##############
 	### Module ###
 	##############
-	public function getVersion() { return 4.01; }
+	public function getVersion() { return 4.02; }
 	public function getDefaultPriority() { return 1; }
 	public function getDefaultAutoLoad() { return true; }
 	public function onInstall($dropTable) { require_once GWF_PATH.'module/GWF/GWF_InstallGWF.php'; return GWF_InstallGWF::onInstall($this, $dropTable); }

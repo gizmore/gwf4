@@ -1,10 +1,10 @@
 'use strict';
 angular.module('gwf4')
-.factory('$exceptionHandler', function($injector) {
-	return function(exception) {
-		$injector.get('ErrorSrvc').handleException(exception);
-	};
-})
+//.factory('$exceptionHandler', function($injector) {
+//	return function(exception) {
+//		$injector.get('ErrorSrvc').handleException(exception);
+//	};
+//})
 .service('ErrorSrvc', function($q, $mdDialog, ExceptionSrvc, LoadingSrvc) {
 	
 	var ErrorSrvc = this;
@@ -49,12 +49,12 @@ angular.module('gwf4')
 	}
 	
 	// --- Exceptions --- //
-	window.onerror = function(message, filename, lineno, colno, error) { ErrorSrvc.handleException(new Error(message)); };
-	ErrorSrvc.handleException = function(exception) {
-		console.error(exception);
-		ErrorSrvc.showError('<pre>'+exception.stack+'</pre>', 'Javascript error');
-		ExceptionSrvc.sendReport(exception).then(LoadingSrvc.stopTasks);
-	};
+//	window.onerror = function(message, filename, lineno, colno, error) { ErrorSrvc.handleException(message); };
+//	ErrorSrvc.handleException = function(exception) {
+//		console.error(exception);
+//		ErrorSrvc.showError('<pre>'+exception.stack+'</pre>', 'Javascript error');
+//		ExceptionSrvc.sendReport(exception).then(LoadingSrvc.stopTasks);
+//	};
 
 	return ErrorSrvc;
 });

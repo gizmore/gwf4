@@ -13,6 +13,7 @@ var GWF_User = function(json) {
 	this.hasGuestName = function() { return !!this.JSON.user_guest_name; };
 
 	this.displayName = function() { return this.hasGuestName() ? this.guestName() : this.name(); };
+	this.displayGender = function() { return this.gender() === 'no_gender' ? '' : this.gender(); };
 	
 	this.update = function(json)
 	{
@@ -21,6 +22,6 @@ var GWF_User = function(json) {
 				this.JSON[i] = json[i];
 			}
 		}
-			
 	};
+
 };
