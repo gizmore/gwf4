@@ -34,8 +34,6 @@ gwf.service('LoginDlg', function($q, $mdDialog, ErrorSrvc, CommandSrvc) {
 		}
 		var parentEl = angular.element(document.body);
 		$mdDialog.show({
-//			parent: document.getElementById('TGCMAP'),
-//			targetEvent: $event,
 			templateUrl: GWF_WEB_ROOT+'module/GWF/js/tpl/login_dlg.html',
 			locals: {
 				user: GWF_USER,
