@@ -95,18 +95,11 @@ final class GWF_DateSelect
 
 	private static function getDateCmpInput($key, $selected)
 	{
-		$valid = array(
+		$data = array(
 			'older' => GWF_HTML::lang('sel_older'),
 			'younger' => GWF_HTML::lang('sel_younger'),
 		);
-		$back = sprintf('<select name="%s">', $key);
-		foreach ($valid as $key => $text)
-		{
-			$sel = GWF_HTML::selected($selected === $key);
-			$back .= sprintf('<option value="%s"%s>%s</option>', $key, $sel, $text);
-		}
-		$back .= '</select>';
-		return $back;
+		return GWF_Select::display($key, $data, $selected);
 	}
 
 	private static function getSecondInput($key, $selected) { return self::getRangeInput($key, $selected, 0, 59); }
@@ -114,64 +107,49 @@ final class GWF_DateSelect
 	private static function getHourInput($key, $selected) { return self::getRangeInput($key, $selected, 0, 23); }
 	private static function getRangeInput($key, $selected, $min, $max)
 	{
-		$back = sprintf('<select name="%s">', $key);
-		$selected = (int) $selected;
+		$data = array();
 		while ($min <= $max)
 		{
-			$sel = GWF_HTML::selected($selected === $min);
-			$back .= sprintf('<option value="%02d"%s>%d</option>', $min, $sel, $min);
-			$min++;
+			$s = sprintf('%02d', $min++);
+			$data[$s] = $s;
 		}
-		$back .= '</select>';
-		return $back;
+		return GWF_Select::display($key, $data, $selected);
 	}
 
 	private static function getDayInput($key, $selected=false)
 	{
-		$back = sprintf('<select name="%s">', $key);
-		$sel = $selected < 1 || $selected > 31 ? ' selected="selected"' : '';
-		$back .= sprintf('<option value="00"%s>%s</option>', $sel, GWF_HTML::lang('sel_day'));
-		$selected = $sel === '' ? (int) $selected : $selected;
+		$data = array('00' => GWF_HTML::lang('sel_day'));
 		for ($i = 1; $i <= 31; $i++)
 		{
-			$sel = $selected === $i ? ' selected="selected"' : '';
-			$back .= sprintf('<option value="%02d"%s>%d</option>', $i, $sel, $i);
+			$s = sprintf('%02d', $i);
+			$data[$s] = $s;
 		}
-		$back .= '</select>';
-		return $back;
+		return GWF_Select::display($key, $data, $selected);
 	}
 
 	private static function getMonthInput($key, $selected=false)
 	{
-		$back = sprintf('<select name="%s">', $key);
-		$sel = $selected < 1 || $selected > 12 ? ' selected="selected"' : '';
-		$back .= sprintf('<option value="00"%s>%s</option>', $sel, GWF_HTML::lang('sel_month'));
-		$selected = $sel === '' ? (int) $selected : $selected;
+		$data = array('00' => GWF_HTML::lang('sel_month'));
 		for ($i = 1; $i <= 12; $i++)
 		{
-			$sel = $selected === $i ? ' selected="selected"' : '';
-			$back .= sprintf('<option value="%02d"%s>%s</option>', $i, $sel, GWF_HTML::lang('M'.$i));
+			$s = sprintf('%02d', $i);
+			$data[$s] = GWF_HTML::lang('M'.$i);
 		}
-		$back .= '</select>';
-		return $back;
+		return GWF_Select::display($key, $data, $selected);
 	}
 
 	private static function getYearInput($key, $selected=false, $min=1900, $max=NULL)
 	{
-		if (!is_numeric($selected)) { $selected = 0; }
 		$min = (int) $min;
+		if (!is_numeric($selected)) { $selected = 0; }
 		if (!is_numeric($max)) { $max = date('Y'); }
-
-		$back = sprintf('<select name="%s">', $key);
-		$sel = $selected < $min || $selected > $max ? ' selected="selected"' : '';
-		$selected = $sel === '' ? (int) $selected : $selected;
-		$back .= sprintf('<option value="0000"%s>%s</option>', $sel, GWF_HTML::lang('sel_year'));
+		
+		$data = array('0000' => GWF_HTML::lang('sel_year'));
 		for ($i = $max; $i >= $min; $i--)
 		{
-			$sel = $selected === $i ? ' selected="selected"' : '';
-			$back .= sprintf('<option value="%04d"%s>%d</option>', $i, $sel, $i);
+			$s = sprintf('%04d', $i);
+			$data[$s] = $i;
 		}
-		$back .= '</select>';
-		return $back;
+		return GWF_Select::display($key, $data, $selected);
 	}	
 }

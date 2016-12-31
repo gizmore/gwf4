@@ -28,5 +28,7 @@
 			</md-toolbar>
 		</md-sidenav>
 
+		<ui-view class="gwf-angular-main-view" layout="row" flex></ui-view>
+
 		<!-- CONTENT -->
 		<div id="gwf-page-content" class="gwf-dynamic-content gwf-main-content">

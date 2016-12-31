@@ -3,11 +3,6 @@ final class GWF_Select
 {
 	public static function display($name, $data, $selected='0', $onchange='', $label='')
 	{
-		$angularOptions = array();
-		foreach ($data as $entry)
-		{
-			$angularOptions[$entry[0]] = $entry[1];
-		}
 		$tVars = array(
 			'name' => $name,
 			'data' => $data,
@@ -15,7 +10,7 @@ final class GWF_Select
 			'onchange' => $onchange,
 			'selectedValue' => $selected,
 			'label' => $label,
-			'angularOptions' => GWF_Javascript::htmlAttributeEscapedJSON($angularOptions),
+			'angularOptions' => GWF_Javascript::htmlAttributeEscapedJSON($data),
 		);
 		return GWF_Template::templatePHPMain('form_select.php', $tVars);
 	}

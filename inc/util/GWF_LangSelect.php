@@ -41,11 +41,11 @@ final class GWF_LangSelect
 			$text = GWF_HTML::lang('sel_language');
 		}
 
-		$data = array(array('0', $text));
+		$data = array('0' => $text);
 
 		while (false !== ($row = $db->fetchRow($result)))
 		{
-			$data[] = $row;
+			$data[$row[0]] = $row[1];
 		}
 
 		$db->free($result);

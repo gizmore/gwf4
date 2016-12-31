@@ -4,14 +4,14 @@ config(function($urlRouterProvider, $stateProvider) {
 	$stateProvider.state({
 		name: 'loading',
 		url: '/loading',
-		controller: 'LoadingCtrl',
+		controller: 'GWFCtrl',
 		templateUrl: GWF_CONFIG.WEB_ROOT+'module/GWF/js/tpl/loading.html',
 		pageTitle: 'Loading'
 	});
 	$stateProvider.state({
 		name: 'page',
-		url: '/page',
-		controller: 'PageCtrl',
+		url: '/page/:url',
+		controller: 'GWFCtrl',
 		templateUrl: GWF_CONFIG.WEB_ROOT+'module/GWF/js/tpl/page.html',
 		pageTitle: 'GWF4'
 	});
@@ -35,6 +35,9 @@ controller('GWFCtrl', function($scope, $q, $state, $mdSidenav, ErrorSrvc, AuthSr
 		if (!window.GWF_SIDEBAR_INITED) {
 			window.GWF_SIDEBAR_INITED = true;
 			$scope.initGWF();
+		}
+		if (toParams.url) {
+			RequestSrvc.send(toParams.url).then($scope.pageRequested);
 		}
 	});
 	
@@ -75,18 +78,12 @@ controller('GWFCtrl', function($scope, $q, $state, $mdSidenav, ErrorSrvc, AuthSr
 		console.log('GWFCtrl.requestPage()', url);
 		$scope.hideGWFContent();
 		$scope.closeSidenavs();
-		var defer = $q.defer();
-		$state.go('page').then(function(){
-			RequestSrvc.send(url).then(function(result){
-				$scope.pageRequested(result);
-				setTimeout(defer.resolve, 1);
-			});
-		});
-		return defer.promise;
+		return $state.go('page', {url:url});
 	};
 
 	$scope.pageRequested = function(result) {
 		console.log('GWFCtrl.pageRequested()', result);
+		$scope.hideGWFContent();
 		$scope.data.mainContent = result.data;
 		setTimeout($scope.afterRefreshContent.bind($scope, 'main'), 1);
 	};
@@ -142,11 +139,4 @@ controller('GWFCtrl', function($scope, $q, $state, $mdSidenav, ErrorSrvc, AuthSr
 	$scope.toggleRightMenu = function() {
 		$mdSidenav('right').toggle();
 	};
-}).
-controller('PageCtrl', function($scope) {
-	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-		console.log('PageCtrl.$on-$stateChangeSuccess()', toParams);
-	});
-}).
-controller('LoadingCtrl', function($scope) {
 });

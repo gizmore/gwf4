@@ -1,7 +1,6 @@
 /** Fullscreen **/
 ui-view.gwf-angular-main-view {
 	position: absolute;
-	height: 100%;
 	width: 100%;
 	overflow: hidden;
 	top: 0;
@@ -12,6 +11,7 @@ ui-view.gwf-angular-main-view .gwf-main-content {
 	width: 100%;
 	padding-top: 4em;
 }
+
 
 .gwf-checkbox {
 	width: 100%;

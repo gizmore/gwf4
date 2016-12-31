@@ -106,7 +106,21 @@ final class GWF_Javascript
 	 */
 	public static function htmlAttributeEscapedJSON(array $object)
 	{
+		self::escapeQuoteRec($object);
 		return str_replace('"', "'", json_encode($object));
+	}
+	
+	public static function escapeQuoteRec(array &$object)
+	{
+		foreach ($object as $key => $child)
+		{
+			if (is_string($child)) {
+				$object[$key] = str_replace("'", "´", $child);
+			}
+			else if (is_array($child)) {
+				self::escapeQuoteRec($child);
+			}
+		}
 	}
 
 	#############

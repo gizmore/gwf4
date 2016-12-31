@@ -8,7 +8,7 @@ controller('SelectCtrl', function($scope) {
 	};
 	
 	$scope.initSelectData = function(items, selected) {
-		console.log('SelectCtrl.initSelectData()', items, selected);
+//		console.log('SelectCtrl.initSelectData()', items, selected);
 		$scope.data.items = items;
 		$scope.data.selected = selected;
 	};

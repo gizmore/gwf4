@@ -34,14 +34,15 @@ final class GWF_ACL
 	##############
 	### Select ###
 	##############
-	public static function select($key, $selected)
+	public static function select($key, $selected='0')
 	{
-		$data = array();
-		$data[] = array('', GWF_HTML::lang('acl_choose'));
-		$data[] = array(self::PUBLIC, GWF_HTML::lang('acl_public'));
-		$data[] = array(self::MEMBERS, GWF_HTML::lang('acl_members'));
-		$data[] = array(self::FRIENDS, GWF_HTML::lang('acl_friends'));
-		$data[] = array(self::PRIVATE, GWF_HTML::lang('acl_private'));
+		$data = array(
+			'0' => GWF_HTML::lang('acl_choose'),
+			self::PUBLIC => GWF_HTML::lang('acl_public'),
+			self::MEMBERS => GWF_HTML::lang('acl_members'),
+			self::FRIENDS => GWF_HTML::lang('acl_friends'),
+			self::PRIVATE => GWF_HTML::lang('acl_private'),
+		);
 		return GWF_Select::display($key, $data, $selected, '', GWF_HTML::lang('th_acl'));
 	}
 	

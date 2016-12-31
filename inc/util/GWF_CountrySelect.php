@@ -9,10 +9,10 @@ final class GWF_CountrySelect
 		{
 			return GWF_HTML::err('ERR_DATABASE', array(__FILE__, __LINE__));
 		}
-		$data = array(array('0', GWF_HTML::lang('sel_country')));
+		$data = array('0' => GWF_HTML::lang('sel_country'));
 		while (false !== ($row = $db->fetchRow($result)))
 		{
-			$data[] = $row;
+			$data[$row[0]] = $row[1];
 		}
 		$db->free($result);
 		return GWF_Select::display($name, $data, $selected);
