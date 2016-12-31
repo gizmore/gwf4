@@ -19,7 +19,7 @@ final class GWF_GroupSelect
 
 		if ($allow_empty)
 		{
-			$data[] = array('0', GWF_HTML::lang('sel_group'));
+			$data['0'] = GWF_HTML::lang('sel_group');
 		}
 
 		while (false !== ($group = GDO::table('GWF_Group')->fetch($groups, GDO::ARRAY_N)))
@@ -28,7 +28,7 @@ final class GWF_GroupSelect
 			{
 				continue;
 			}
-			$data[] = $group;
+			$data[$group[0]] = $group[1];
 		}
 
 		return GWF_Select::display($name, $data, $selected);
@@ -51,7 +51,7 @@ final class GWF_GroupSelect
 		$data = array();
 		if ($allow_empty)
 		{
-			$data[] = array('0', GWF_HTML::lang('sel_group'));
+			$data['0'] = GWF_HTML::lang('sel_group');
 		}
 		while (false !== ($group = GDO::table('GWF_Group')->fetch($groups, GDO::ARRAY_N)))
 		{
@@ -59,7 +59,7 @@ final class GWF_GroupSelect
 			{
 				continue;
 			}
-			$data[] = $group;
+			$data[$group[0]] = $group[1];
 		}
 		return GWF_Select::multi($name, $data, $selected);
 	}

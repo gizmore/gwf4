@@ -1,12 +1,12 @@
-<?php echo GWF_Button::generic($tLang->lang('btn_checker'), $tVars['href_checker']); ?>
-<?php echo GWF_Button::generic($tLang->lang('btn_bundle'), $tVars['href_bundle']); ?>
+<?php echo GWF_Button::generic($lang->lang('btn_checker'), $tVars['href_checker']); ?>
+<?php echo GWF_Button::generic($lang->lang('btn_bundle'), $tVars['href_bundle']); ?>
 
 <?php
 $headers = array(
-	array($tLang->lang('th_filename')),
-	array($tLang->lang('th_count')),
-	array($tLang->lang('th_branched')),
-	array($tLang->lang('th_filesize')),
+	array($lang->lang('th_filename')),
+	array($lang->lang('th_count')),
+	array($lang->lang('th_branched')),
+	array($lang->lang('th_filesize')),
 );
 
 $counter = array();
@@ -22,8 +22,8 @@ foreach ($files as $file)
 	}
 }
 
-$yes = $tLang->lang('yes');
-$no = $tLang->lang('no');
+$yes = $lang->lang('yes');
+$no = $lang->lang('no');
 
 echo '<table>';
 echo GWF_Table::displayHeaders1($headers, '');

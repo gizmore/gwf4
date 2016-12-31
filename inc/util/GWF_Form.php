@@ -490,7 +490,10 @@ class GWF_Form
 	
 	private function getFile($key, $default)
 	{
-		return array_unshift($this->getFiles($key, $default));
+		if ($files = $this->getFiles($key, $default))
+		{
+			return $files[0];
+		}
 	}
 	
 	private function getFiles($key, $default)
