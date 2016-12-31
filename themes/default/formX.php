@@ -11,12 +11,11 @@ $no_head = array(GWF_Form::HIDDEN, GWF_Form::SUBMIT);
 <?php
 foreach ($tVars['data'] as $key => $data)
 {
-	$text = '';
 	if (!in_array($data[0], $no_head, true))
 	{
 		$label = isset($data[2]) ? $data[2] : '';
+		printf('<gwf-label>%s</gwf-label>', $label);
 	}
-	printf('<gwf-label>%s</gwf-label>', $label);
 }
 ?>
 <br/>

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('gwf4').
-controller('UploadCtrl', function($scope, ErrorSrvc) {
+controller('UploadCtrl', function($scope) {
 	
 	$scope.data = {
 		transfer: {
@@ -48,13 +48,14 @@ controller('UploadCtrl', function($scope, ErrorSrvc) {
 	
 	$scope.denyFile = function($file, error) {
 		console.log('UploadCtrl.denyFile()', $file, error);
-		ErrorSrvc.showError(error, 'Upload');
+		alert(error);
+//		ErrorSrvc.showError(error, 'Upload');
 	};
 
 	
 	$scope.onFlowError = function($file, $flow, $msg) {
 		console.log('UploadCtrl.onFlowSuccess()', $file, $flow, $msg);
-		ErrorSrvc.showError($msg, 'Flow Error');
+//		ErrorSrvc.showError($msg, 'Flow Error');
 	};
 	
 	$scope.onFlowProgress = function($file, $flow, $msg) {

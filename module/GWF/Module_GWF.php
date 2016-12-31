@@ -2,11 +2,14 @@
 /**
  * Error pages, and Fancy indexing.
  * @author spaceone
- * @version 4.06
+ * @version 4.07
  * @license MIT
  */
 final class Module_GWF extends GWF_Module
 {
+	private static $INSTANCE;
+	public static function instance() { return self::$INSTANCE; }
+	
 	##############
 	### Module ###
 	##############
@@ -65,9 +68,10 @@ final class Module_GWF extends GWF_Module
 				return false;
 		return $paths;
 	}
-
+	
 	public function onStartup()
 	{
+		self::$INSTANCE = $this;
 		if ( (!Common::isCLI()) && (GWF_Session::hasSession()) )
 		{
 			$min = GWF_DEBUG_JS ? '' : '.min';
@@ -98,8 +102,10 @@ final class Module_GWF extends GWF_Module
 			if ($md) GWF_Website::addBowerJavascript("angular-aria/angular-aria$min.js?v=$v");
 			if ($md) GWF_Website::addBowerJavascript("angular-material/angular-material$min.js?v=$v");
 			if ($md) GWF_Website::addBowerJavascript("angular-messages/angular-messages$min.js?v=$v");
-			if ($md) GWF_Website::addBowerJavascript("angular-sanitize/angular-sanitize$min.js?v=$v");
-			if ($md) GWF_Website::addBowerJavascript("angular-ui-router/release/angular-ui-router$min.js?v=$v");
+// 			if ($md) 
+				GWF_Website::addBowerJavascript("angular-sanitize/angular-sanitize$min.js?v=$v");
+// 			if ($md) 
+				GWF_Website::addBowerJavascript("angular-ui-router/release/angular-ui-router$min.js?v=$v");
 			GWF_Website::addBowerJavascript("ng-flow/dist/ng-flow-standalone$min.js?v=$v");
 
 			# GWF below here
@@ -165,4 +171,18 @@ final class Module_GWF extends GWF_Module
 		));
 		return "var GWF_USER = new GWF_User($json);";
 	}
+
+	###############
+	### Sidebar ###
+	###############
+	public function sidebarContents($bars='top,left,right,bottom')
+	{
+		return $this->getMethod('AngularSidebar')->sidebarContents($bars);
+	}
+	
+	public function sidebarContent($bar)
+	{
+		return '';
+	}
+	
 }

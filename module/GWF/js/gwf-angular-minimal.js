@@ -1,2 +1,2 @@
 'use strict'
-angular.module('gwf4', ['flow']);
+angular.module('gwf4', ['ngSanitize', 'ui.router', 'flow']);

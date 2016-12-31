@@ -1,12 +1,11 @@
 <?php
 final class GWF_AngularSidebar extends GWF_Method
 {
-	public function execute()
+	public function sidebarContents($bars)
 	{
+		$result = array();
 		$modules = GWF_ModuleLoader::loadModulesFS();
 		$modules = GWF_ModuleLoader::sortModules($modules, 'module_priority', 'DESC');
-		$bars = Common::getGetString('bar', Common::getPostString('bar'));
-		$result = array();
 		foreach (explode(',', $bars) as $bar)
 		{
 			$content = '';
@@ -20,6 +19,12 @@ final class GWF_AngularSidebar extends GWF_Method
 			}
 			$result[$bar] = $content;
 		}
-		return json_encode($result);
+		return $result;
+	}
+	
+	public function execute()
+	{
+		$bars = Common::getRequestString('bar');
+		return json_encode($this->sidebarContents($bars));
 	}
 }

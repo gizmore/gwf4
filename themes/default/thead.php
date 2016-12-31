@@ -1,18 +1,25 @@
 <thead>
 <?php echo $raw; ?>
 <tr>
-<?php echo foreach $headers as $head; ?>
+<?php foreach ($headers as $head) { ?>
 	<th class="nowrap">
-	<?php echo if $head[1] !== false; ?>
-		<a rel="nofollow" class="gwf_th_asc<?php echo if $head[3]===true; ?>_sel<?php echo /if; ?>" href="<?php echo $head[1]; ?>"></a>
-		<a rel="nofollow" class="gwf_th_desc<?php echo if $head[4]===true; ?>_sel<?php echo /if; ?>" href="<?php echo $head[2]; ?>"></a>
-	<?php echo /if; ?>
+	<?php
+	if ($head[1] !== false)
+	{
+		printf('<a rel="nofollow" class="gwf_th_asc%s" href="%s"></a>', $head[3]===true ? '_sel' : '', $head[1]);
+		printf('<a rel="nofollow" class="gwf_th_desc%s" href="%s"></a>', $head[4]===true ? '_sel' : '', $head[2]);
+	}
+	?>
 	</th>
-<?php echo /foreach; ?>
+<?php } ?>
 </tr>
 <tr>
-<?php echo foreach $headers as $head; ?>
-	<th class="gwf_th<?php echo if isset($head[5]) && $head[5] === true; ?>_sel<?php echo /if; ?>"><?php echo $head[0]; ?></th>
-<?php echo /foreach; ?>
+<?php
+foreach ($headers as $head)
+{
+	$sel = isset($head[5]) && ($head[5] === true) ? '_sel' : '';
+	printf('<th class="gwf_th%s">%s</th>', $sel, $head[0]);
+}
+?>
 </tr>
 </thead>
