@@ -547,46 +547,45 @@ class GWF_Form
 		die();
 	}
 	
+	private function onFlowError($error)
+	{
+		header("HTTP/1.0 413 $error");
+		GWF_Log::logError("FLOW: $error");
+		echo $error;
+		return false;
+	}
+	
 	private function onFlowUploadFile($key, $file)
 	{
 		$chunkDir = $this->getChunkDir($key);
 		if (!GWF_File::createDir($chunkDir))
 		{
-			header("HTTP/1.0 500 Create temp dir");
-			GWF_Log::logError('Cannot create temp dir.');
-			return false;
+			return $this->onFlowError('Create temp dir');
 		}
 		
 		if (false !== ($error = $this->deniedFlowFile($key, $file)))
 		{
-			header("HTTP/1.0 413 DENY: $error");
-			GWF_Log::logError('flow upload denied: '.$error);
-			return false;
+			return $this->onFlowError("Denied: $error");
 		}
 	
 		if (!$this->onFlowCopyChunk($key, $file))
 		{
-			header("HTTP/1.0 413 Copy chunk");
-			GWF_Log::logError('Cannot create temp dir.');
-			return false;
+			return $this->onFlowError("Copy chunk failed.");
 		}
 		
 		if ($_REQUEST['flowChunkNumber'] === $_REQUEST['flowTotalChunks'])
 		{
 			if (false !== ($error = $this->onFlowFinishFile($key, $file)))
 			{
-				header("HTTP/1.0 413 Merge error: $error");
-				GWF_Log::logError("Cannot finish file: $error");
-				return false;
+				return $this->onFlowError($error);
 			}
 		}
 		
+		# Announce result
 		$result = json_encode(array(
 			'success' => true,
 		));
-
 		echo $result;
-// 		GWF_Log::logCron($result);
 		return true;
 	}
 
@@ -689,7 +688,7 @@ class GWF_Form
 		if (!($mime = @file_get_contents($this->getChunkDir($key).'/mime'))) {
 			return "$key: No mime found for file";
 		}
-		if (!in_array($mime, $mimes, true)) {
+		if ((!in_array($mime, $mimes, true)) && (count($mimes)>0)) {
 			return "$key: Unsupported MIME TYPE: $mime";
 		}
 		return false;

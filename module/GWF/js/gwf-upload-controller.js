@@ -38,7 +38,7 @@ controller('UploadCtrl', function($scope) {
 		if ($file.size > maxSize) {
 			$scope.denyFile($file, 'Max size exceeded.');
 		}
-		else if (mimeTypes.indexOf($file.file.type) < 0) {
+		else if ((mimeTypes.indexOf($file.file.type) < 0) && (mimeTypes.length > 0)) {
 			$scope.denyFile($file, 'Invalid mime type.');
 		}
 		else {
@@ -53,9 +53,9 @@ controller('UploadCtrl', function($scope) {
 	};
 
 	
-	$scope.onFlowError = function($file, $flow, $msg) {
-		console.log('UploadCtrl.onFlowSuccess()', $file, $flow, $msg);
-//		ErrorSrvc.showError($msg, 'Flow Error');
+	$scope.onFlowError = function($file, $flow, $message) {
+		console.log('UploadCtrl.onFlowError()', $file, $flow, $message);
+		$scope.denyFile($file, $message);
 	};
 	
 	$scope.onFlowProgress = function($file, $flow, $msg) {

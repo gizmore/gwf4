@@ -113,22 +113,32 @@
 				
 			case GWF_Form::VALIDATOR:
 				break;
+				
+			case GWF_Form::HTML:
+				echo $data[1].PHP_EOL;
+				break;
 
+			case GWF_Form::FILE_IMAGE:
+			case GWF_Form::FILE:
+			case GWF_Form::FILE_OPT:
 			case GWF_Form::FILE_IMAGES:
-				?>
-<!-- 				<div ng-app="gwf4-upload"> -->
+				$single = $type !== GWF_Form::FILE_IMAGES;
+				$imagePreview = ($type === GWF_Form::FILE_IMAGE) || ($type === GWF_Form::FILE_IMAGES); ?>
+				<div ng-app="gwf4">
 					<div ng-controller="UploadCtrl" class="gwf4-form-images" ng-init="initGWFFormConfig(<?php echo GWF_Javascript::htmlAttributeEscapedJSON($data[4]); ?>);">
 						<input type="hidden" name="<?php echo $key; ?>" value="{{$flow.files.length ? '1' : '' }}" />
-						<div flow-init="{target: '<?php echo $action?>', singleFile: false, fileParameterName: '<?php echo $key; ?>', testChunks: false}"
-							 flow-file-progress="onFlowProgress($file, $flow, $msg);"
-							 flow-file-success="onFlowSuccess($file, $flow, $msg);"
-							 flow-file-error="onFlowError($file, $flow, $msg);"
+						<div flow-init="{target: '<?php echo $action?>', singleFile: <?php echo $single ? 'true' : 'false'; ?>, fileParameterName: '<?php echo $key; ?>', testChunks: false}"
+							 flow-file-progress="onFlowProgress($file, $flow, $message);"
+							 flow-file-success="onFlowSuccess($file, $flow, $message);"
+							 flow-file-error="onFlowError($file, $flow, $message);"
 							 flow-files-submitted="onFlowSubmitted($flow);"
 							 ng-init="$flow.files.length = 0;">
 							<div><label><?php echo $label; ?></label></div>
+							<?php if ($imagePreview) { ?>
 							<gwf4-flow-preview ng-repeat="$flowfile in $flow.files">
 								<img flow-img="$flowfile" />
 							</gwf4-flow-preview>
+							<?php } ?>
 							<gwf4-flow-drop flow-drop flow-btn>Drag Files</gwf4-flow-drop>
 							<div class="cb"></div>
 							<gwf4-progress-indicator ng-disabled="progressIndicatorDisabled();">
@@ -137,31 +147,7 @@
 							</gwf4-progress-indicator>
 						</div>
 					</div>
-<!-- 				</div> -->
-				<?php				
-				break;
-				
-			case GWF_Form::FILE_IMAGE:
-			case GWF_Form::FILE:
-			case GWF_Form::FILE_OPT:
-				?>
-				<div ng-app="gwf4-upload" ng-controller="UploadCtrl">
-					<input type="hidden" name="<?php echo $key; ?>" value="{{$flow.files.length ? '1' : '' }}" />
-					<div flow-init="{target: '<?php echo $action?>', singleFile: true, fileParameterName: '<?php echo $key; ?>', testChunks: false}"
-						 flow-file-success="$file.msg = $message; $flow.files.length = 0;"
-						 flow-file-error="$flow.files.length = 0;"
-						 flow-files-submitted="$flow.upload()"
-						 ng-init="$flow.files.length = 0;">
-						<label><?php echo $label; ?></label><span flow-btn>Upload File</span>
-						<?php if ($type === GWF_Form::FILE_IMAGE) { 
-							printf('<div class="gwf-flow-upload-image"><img flow-img="$flow.files[0]" /></div>');
-						} ?>
-					</div>
-				</div>
-				<?php 
-				break;
-			case GWF_Form::HTML:
-				echo $data[1].PHP_EOL;
+				</div> <?php				
 				break;
 			default:
 				var_dump($data);
