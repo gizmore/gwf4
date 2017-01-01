@@ -29,6 +29,7 @@ final class Common
 	public static function getRequest($var, $default=false) { return true === isset($_REQUEST[$var]) ? ($_REQUEST[$var]) : $default; }
 	public static function cmpRequest($var, $cmp, $default=false) { return $cmp === self::getRequest($var, $default) ? true : $default; }
 	public static function getRequestInt($var, $default=0) { return true === isset($_REQUEST[$var]) ? ((int)$_REQUEST[$var]) : $default; }
+	public static function getRequestFloat($var, $default=0.0) { return true === isset($_REQUEST[$var]) ? ((float)$_REQUEST[$var]) : $default; }
 	public static function getRequestString($var, $default='') { return true === isset($_REQUEST[$var]) ? (string)$_REQUEST[$var] : $default; }
 	public static function getRequestArray($var, $default=false) { return (true === isset($_REQUEST[$var]) && is_array($_REQUEST[$var])) ? $_REQUEST[$var] : $default; }
 

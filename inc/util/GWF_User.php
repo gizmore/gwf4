@@ -68,7 +68,7 @@ class GWF_User extends GDO
 			'user_langid2' => array(GDO::UINT, 0),
 			'user_level' => array(GDO::UINT|GDO::INDEX, 0),
 			'user_title' => array(GDO::VARCHAR|GDO::UTF8|GDO::CASE_I, GDO::NULL, 63),
-			'user_credits' => array(GDO::DECIMAL, '0.00', array(9, 4)),
+			'user_credits' => array(GDO::UINT, '0'),
 			'user_saved_at' => array(GDO::DATE, GDO::NULL, GWF_Date::LEN_SECOND), 
 		);
 	}
@@ -76,6 +76,7 @@ class GWF_User extends GDO
 	public function getGuestID() { return $this->getVar('user_guest_id'); }
 	public function getName() { return $this->getVar('user_name'); }
 	public function getGender() { return $this->getVar('user_gender'); }
+	public function getCredits() { return $this->getVar('user_credits'); }
 	public function hasAvatar() { return $this->isOptionEnabled(self::HAS_AVATAR); }
 	public function hasCountry() { return $this->getVar('user_countryid') !== '0'; }
 	public function hasGuestName() { return !!$this->getVar('user_guest_name'); }

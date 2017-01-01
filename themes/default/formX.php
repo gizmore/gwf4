@@ -31,6 +31,7 @@ foreach ($tVars['data'] as $key => $data)
 			printf('<input type="hidden" name="%s" value="%s" />'.PHP_EOL, $key, $data[1]);
 			break;
 		case GWF_Form::INT:
+		case GWF_Form::FLOAT:
 		case GWF_Form::STRING:
 		case GWF_Form::STRING_NO_CHECK:
 			printf('<input type="text" name="%s" value="%s" />'.PHP_EOL, $key, $data[1]);
