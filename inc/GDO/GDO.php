@@ -153,7 +153,7 @@ abstract class GDO
 	public function getFloat($var) { return (double)$this->gdo_data[$var]; }
 	public function setVar($var, $val) { $this->gdo_data[$var] = $val; }
 	public function unsetVar($var) { unset($this->gdo_data[$var]); }
-	public function setVars(array $data) { $this->gdo_data = array_merge($this->gdo_data, $data); }
+	public function setVars(array $data) { $this->gdo_data = array_merge($this->gdo_data, $data); return true; }
 	public function getEscaped($var) { return $this->escape($this->gdo_data[$var]); }
 	public function display($var) { return htmlspecialchars($this->gdo_data[$var]); }
 	public function urlencode($s) { return urlencode($this->getVar($s)); }
@@ -1002,12 +1002,20 @@ abstract class GDO
 	
 	public function increaseVars(array $vars)
 	{
+		$set = array();
 		$updated = array();
 		foreach ($vars as $key => $inc)
 		{
 			$updated[$key] = $this->getVar($key) + $inc;
+			$col = $this->escapeIdentifier($key);
+			$set[] = sprintf('`%1$s` = `%1$s` + \'%2$s\'', $col, $this->escape($inc));
 		}
-		return $this->saveVars($updated);
+		$query = sprintf("UPDATE %s SET %s WHERE %s", $this->getTableName(), implode(',', $set), $this->getPKWhere());
+		if (self::$CURRENT_DB->queryWrite($query))
+		{
+			return $this->setVars($updated);
+		}
+		return false;
 	}
 	
 	#################

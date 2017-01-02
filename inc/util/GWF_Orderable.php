@@ -29,5 +29,5 @@ interface GWF_Orderable
 	public function getOrderSuccessURL(GWF_User $user);
 
 	public function displayOrder(GWF_Module $module); # return 'html';
-	public function executeOrder(GWF_Module $module, GWF_User $user); # return false;
+	public function executeOrder(GWF_Module $module, GWF_User $user, &$message); # return bool;
 }
