@@ -1,0 +1,80 @@
+/* Box */
+gwf-box {
+	display: block;
+}
+gwf-box * {
+    font-family: serif;
+	line-height: 1.25em;
+    font-size: 1.5em;
+}
+gwf-box title {
+	font-weight: bold;
+}
+
+/* Sidebar */
+gwf-sidebar-item {
+    display: block;
+    padding: 0.5em;
+    background-color: #ffe;
+    border-bottom: 2px solid #ddd;
+    margin-bottom: 2px;
+    border-top: 1px solid #ddd;
+    
+}
+gwf-sidebar-item * {
+	font-family: serif;
+    line-height: 34px;
+    font-size: 28px;
+}
+gwf-sidebar-item > h2 {
+	
+}
+
+/** Status values **/
+gwf-status {
+	display: block;
+}
+gwf-status label:after {
+	content: ': ';
+}
+gwf-status value {
+	
+}
+
+/** Forms **/
+gwf-form {
+	display: block;
+	margin: 0.75em 0.25em;
+	padding: 0.25em;
+}
+
+gwf-form h2 {
+	text-align: center;
+	font-size: 18px;
+	font-weight: bold;
+	font-family: serif;
+	line-height: 22px;
+	padding-bottom: 4px;
+	border-bottom: 1px solid #777;
+	margin-bottom: 4px;
+}
+
+/** Tables **/
+gwf-label {
+}
+gwf-num {
+	font-family: monospace;
+}
+
+/** Buttons **/
+gwf-buttons {
+	display: block;
+}
+
+gwf-payment-button {
+	display: block;
+}
+gwf-payment-button input {
+	display: block;
+	margin: 1em 0.5em;
+}

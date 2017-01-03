@@ -10,9 +10,13 @@ ui-view.gwf-angular-main-view {
 ui-view.gwf-angular-main-view .gwf-main-content {
 	min-height: 100%;
 	width: 100%;
-	padding-top: 4em;
+	padding: 4em 0.5em 0.5em;
+}
+#gwf-page-content {
+	padding: 0.5em;
 }
 
+/** Checkbox **/
 
 .gwf-checkbox {
 	width: 100%;

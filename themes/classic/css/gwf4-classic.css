@@ -24,35 +24,3 @@ gwf-top-sidebar {
 gwf-bottom-sidebar {
 	
 }
-
-/** GWF status values **/
-gwf-status {
-	display: block;
-}
-gwf-status label:after {
-	content: ': ';
-}
-gwf-status value {
-	
-}
-
-/** Tables **/
-gwf-label {
-	
-}
-gwf-num {
-	font-family: monospace;
-}
-
-/** Buttons **/
-gwf-buttons {
-	display: block;
-}
-
-gwf-payment-button {
-	display: block;
-}
-gwf-payment-button input {
-	display: block;
-	margin: 1em 0.5em;
-}

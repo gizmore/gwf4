@@ -5,8 +5,7 @@
  */
 interface GWF_Sortable extends GWF_Displayable
 {
-	public function getSortableDefaultBy(GWF_User $user); # return string
-	public function getSortableDefaultDir(GWF_User $user); # return string
-	public function getSortableFields(GWF_User $user); # return array(colnames)
+	public function getSortableDefaultBy(); # return string
+	public function getSortableDefaultDir(); # return string
+	public function getSortableFields($action); # return array(colnames)
 }
-

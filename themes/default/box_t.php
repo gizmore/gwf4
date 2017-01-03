@@ -1,4 +1,4 @@
-<div class="box">
-	<div class="box_t"><?php echo $title; ?></div>
-	<div class="box_c"><?php echo $content; ?></div>
-</div>
+<gwf-box>
+	<title><?php echo $title; ?></title>
+	<p><?php echo $content; ?></p>
+</gwf-box>

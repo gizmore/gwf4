@@ -1,6 +1,5 @@
 <?php $required = " required"; $input = null; ?>
-
-<section layout="column" flex>
+<gwf-form class="md-whiteframe-8dp">
 	<form class="gwf4-form" action="<?php echo $action; ?>" method="<?php echo $method; ?>" enctype="<?php echo $enctype; ?>">
 	<h2><?php echo $title; ?></h2>
 	<?php foreach ($tVars['data'] as $key => $data) {
@@ -52,7 +51,7 @@
 				
 			case GWF_Form::CHECKBOX:
 				$checked = $data[1] ? ' class="md-checked"' : '';
-				$input = sprintf('<md-checkbox type="checkbox" aria-label="%s" name="%s"%s />', $label, $key, $checked);
+				$input = sprintf('<md-checkbox type="checkbox" aria-label="%s" name="%s"%s />', htmlspecialchars($label), $key, $checked);
 				echo "<md-input-container class=\"gwf-checkbox\">$label $tt $input</md-input-container>";
 				$input = null;
 				break;
@@ -91,18 +90,18 @@
 				break;
 				
 			case GWF_Form::SUBMIT:
-				echo '<section class="gwf-button-bar" layout="row" layout-sm="column" layout-align="center center" layout-wrap>';
-				printf('<input name="%s" value="%s" type="submit" />', $key, $value);
-				echo '</section>';
+				echo '<gwf-buttons>';
+				printf('<input name="%s" class="md-button md-raised" value="%s" type="submit"></input>', $key, $value);
+				echo '</gwf-buttons>';
 				break;
 				
 			case GWF_Form::SUBMITS:
-				echo '<section class="gwf-button-bar" layout="row" layout-sm="column" layout-align="center center" layout-wrap>';
+				echo '<gwf-buttons>';
 				foreach ($data[1] as $key => $value)
 				{
-					printf('<input name="%s" value="%s" type="submit" />', $key, $value);
+					printf('<input name="%s" class="md-button md-raised" value="%s" type="submit"></input>', $key, $value);
 				}
-				echo '</section>';
+				echo '</gwf-buttons>';
 				break;
 				
 			case GWF_Form::MESSAGE:
@@ -162,4 +161,4 @@
 	} ?>
 	</form>
 	<?php if (isset($have_required)) { echo GWF_HTML::lang('form_required', array('*')); } ?>
-</section>
+</gwf-form>

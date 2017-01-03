@@ -1,5 +1,7 @@
 /.well-known/
 
+.project
+
 .htaccess
 /index.php
 /gwf_cronjob.php

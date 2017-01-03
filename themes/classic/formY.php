@@ -1,6 +1,5 @@
 <?php $required = " required"; $input = null; ?>
-
-<section layout="column" flex>
+<gwf-form>
 	<form class="gwf4-form" action="<?php echo $action; ?>" method="<?php echo $method; ?>" enctype="<?php echo $enctype; ?>">
 	<h2><?php echo $title; ?></h2>
 	<?php foreach ($tVars['data'] as $key => $data) {
@@ -164,4 +163,5 @@
 	} ?>
 	</form>
 	<?php if (isset($have_required)) { echo GWF_HTML::lang('form_required', array('*')); } ?>
-</section>
+</gwf-form>
+

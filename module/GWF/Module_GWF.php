@@ -80,6 +80,7 @@ final class Module_GWF extends GWF_Module
 			
 			# CSS
 			$this->addCSS("gwf4.css"); # Own core is great
+			$this->addCSS("gwf4-base.css");
 			if ($md) GWF_Website::addBowerCSS("angular-material/angular-material$min.css?v=$v"); # Angular material
 			if ($md) GWF_Website::addCSS("https://fonts.googleapis.com/icon?family=Material+Icons"); # Icons
 			if ($md) $this->addCSS("gwf-material.css"); # GWF4 css patches
