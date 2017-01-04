@@ -47,40 +47,41 @@ final class GWF_Button
 		return sprintf('<span class="gwf_button"><span class="gwf_btn_%s"></span></span>', $class);
 	}
 
-	public static function imgbtn($class, $href, $text='', $command='', $onclick='')
+	public static function imgbtn($class, $href, $text)
 	{
-		$onclick = $onclick === '' ? '' : " onclick=\"$onclick\"";
-		return sprintf('<a class="gwf_button" href="%s"%s title="%s"><span class="gwf_btn_%s"><b>%s</b></span></a>', GWF_HTML::display($href), $onclick, GWF_HTML::display($text), $class, $text);
+		$href = GWF_HTML::display($href);
+		$text = GWF_HTML::display($text);
+		return sprintf('<gwf-button class="image-button"><a href="%s"><i class="material-icons">%s</i>%s</a></gwf-button>', $href, $class, $text);
 	}
 
-	public static function add($text, $href='#', $command='', $onclick='') { return self::imgbtn('add', $href, $text, $command, $onclick); }
-	public static function sub($text, $href='#', $command='', $onclick='') { return self::imgbtn('sub', $href, $text, $command, $onclick); }
-	public static function favorite($href, $text=true, $command='', $onclick='') { return self::imgbtn('favorite', $href, $text, $command, $onclick); }
-	public static function mail($href, $text=true, $command='', $onclick='') { return self::imgbtn('mail', $href, $text, $command, $onclick); }
-	public static function user($href, $text=true, $command='', $onclick='') { return self::imgbtn('user', $href, $text, $command, $onclick); }
-	public static function edit($href, $text=true, $command='', $onclick='') { return self::imgbtn('edit', $href, $text, $command, $onclick); }
-	public static function delete($href, $text=true, $command='', $onclick='') { return self::imgbtn('delete', $href, $text, $command, $onclick); }
-	public static function ignore($href, $text=true, $command='', $onclick='') { return self::imgbtn('ignore', $href, $text, $command, $onclick); }
-	public static function restore($href, $text=true, $command='', $onclick='') { return self::imgbtn('restore', $href, $text, $command, $onclick); }
-	public static function options($href, $text=true, $command='', $onclick='') { return self::imgbtn('options', $href, $text, $command, $onclick); }
-	public static function reply($href, $text=true, $command='', $onclick='') { return self::imgbtn('reply', $href, $text, $command, $onclick); }
-	public static function quote($href, $text=true, $command='', $onclick='') { return self::imgbtn('quote', $href, $text, $command, $onclick); }
-	public static function forward($href, $text=true, $command='', $onclick='') { return self::imgbtn('forward', $href, $text, $command, $onclick); }
-	public static function search($href, $text=true, $command='', $onclick='') { return self::imgbtn('search', $href, $text, $command, $onclick); }
-	public static function trashcan($href, $text=true, $command='', $onclick='') { return self::imgbtn('trashcan', $href, $text, $command, $onclick); }
-	public static function bell($href='#', $text=true, $command='', $onclick='') { return self::imgbtn('bell', $href, $text, $command, $onclick); }
-	public static function translate($href='#', $text=true, $command='', $onclick='') { return self::imgbtn('translate', $href, $text, $command, $onclick); }
-	public static function thumbsUp($href='#', $text=true, $command='', $onclick='') { return self::imgbtn('thumbsup', $href, $text, $command, $onclick); }
-	public static function thumbsDown($href='#', $text=true, $command='', $onclick='') { return self::imgbtn('thumbsdown', $href, $text, $command, $onclick); }
-	public static function thankYou($href='#', $text=true, $command='', $onclick='') { return self::imgbtn('thanks', $href, $text, $command, $onclick); }
-	public static function link($href='#', $text=true, $command='', $onclick='') { return self::imgbtn('link', $href, $text, $command, $onclick); }
+	public static function add($href, $text='') { return self::imgbtn('add', $href, $text); }
+	public static function sub($href, $text='') { return self::imgbtn('sub', $href, $text); }
+	public static function favorite($href, $text='') { return self::imgbtn('favorite', $href, $text); }
+	public static function mail($href, $text='') { return self::imgbtn('mail', $href, $text); }
+	public static function user($href, $text='') { return self::imgbtn('user', $href, $text); }
+	public static function edit($href, $text='') { return self::imgbtn('create', $href, $text); }
+	public static function delete($href, $text='') { return self::imgbtn('delete', $href, $text); }
+	public static function ignore($href, $text='') { return self::imgbtn('ignore', $href, $text); }
+	public static function restore($href, $text='') { return self::imgbtn('restore', $href, $text); }
+	public static function options($href, $text='') { return self::imgbtn('options', $href, $text); }
+	public static function reply($href, $text='') { return self::imgbtn('reply', $href, $text); }
+	public static function quote($href, $text='') { return self::imgbtn('quote', $href, $text); }
+	public static function forward($href, $text='') { return self::imgbtn('forward', $href, $text); }
+	public static function search($href, $text='') { return self::imgbtn('search', $href, $text); }
+	public static function trashcan($href, $text='') { return self::imgbtn('trashcan', $href, $text); }
+	public static function bell($href, $text='') { return self::imgbtn('bell', $href, $text); }
+	public static function translate($href, $text='') { return self::imgbtn('translate', $href, $text); }
+	public static function thumbsUp($href, $text='') { return self::imgbtn('thumbsup', $href, $text); }
+	public static function thumbsDown($href, $text='') { return self::imgbtn('thumbsdown', $href, $text); }
+	public static function thankYou($href, $text='') { return self::imgbtn('thanks', $href, $text); }
+	public static function link($href, $text='') { return self::imgbtn('link', $href, $text); }
 	public static function checkmark($enabled=true, $text='', $href='#', $command='')
 	{
 		return $enabled ? self::generic($text, $href, 'on', $command) : self::generic($text, $href, 'off', $command);
 	}
 
-	public static function next($href='#', $text=true, $command='', $onclick='') { return self::imgbtn('next', $href, $text, $command, $onclick); }
-	public static function prev($href='#', $text=true, $command='', $onclick='') { return self::imgbtn('prev', $href, $text, $command, $onclick); }
+	public static function next($href, $text='') { return self::imgbtn('next', $href, $text); }
+	public static function prev($href, $text='') { return self::imgbtn('prev', $href, $text); }
 
 
 	public static function tooltip($text)

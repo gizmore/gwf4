@@ -70,7 +70,6 @@ gwf-num {
 gwf-buttons {
 	display: block;
 }
-
 gwf-payment-button {
 	display: block;
 }
@@ -78,3 +77,18 @@ gwf-payment-button input {
 	display: block;
 	margin: 1em 0.5em;
 }
+gwf-button {
+}
+gwf-button a, gwf-button i {
+	font-family: serif;
+}
+gwf-button a {
+	
+}
+gwf-button i {
+	
+}
+gwf-button.image-button {
+	
+}
+
