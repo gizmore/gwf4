@@ -5,17 +5,17 @@
  */
 final class GWF_TableGDO
 {
-	public static function display(GWF_Module $module, GDO $gdo, $user, $sortURL, $conditions='', $ipp=25, $pageURL=false, $joins=NULL)
+	public static function display($action, GWF_Module $module, GDO $gdo, $user, $sortURL, $conditions='', $ipp=25, $pageURL=false, $joins=NULL)
 	{
-		$fields = $gdo->getSortableFields($user);
+		$fields = $gdo->getSortableFields($action);
 
-		$headers = self::getGDOHeaders2($module, $gdo, $user, $sortURL);
+		$headers = self::getGDOHeaders2($action, $module, $gdo, $user, $sortURL);
 
 		$nItems = $gdo->countRows($conditions);
 		$nPages = GWF_PageMenu::getPagecount($ipp, $nItems);
 		$page = Common::clamp(intval(Common::getGet('page', 1)), 1, $nPages);
 
-		$orderby = self::getMultiOrderBy($gdo, $user);
+		$orderby = self::getMultiOrderBy($gdo, $action);
 
 		$from = GWF_PageMenu::getFrom($page, $ipp);
 
@@ -30,10 +30,11 @@ final class GWF_TableGDO
 		while (false !== ($row = $gdo->fetch($result, GDO::ARRAY_O)))
 		{
 			$row instanceof GWF_Sortable;
+			
 			$data[$i] = array();
 			foreach ($fields as $field)
 			{
-				$data[$i][] = $row->displayColumn($module, $user, $field);
+				$data[$i][] = $row->displayColumn($field);
 			}
 			$i++;
 		}
@@ -68,10 +69,10 @@ final class GWF_TableGDO
 		return GWF_Template::templatePHPMain('table2.php', $tVars);
 	}
 
-	public static function getGDOHeaders2(GWF_Module $module, GWF_Sortable $gdo, $user, $sortURL)
+	public static function getGDOHeaders2($action, GWF_Module $module, GWF_Sortable $gdo, $user, $sortURL)
 	{
 		# Possible fields...
-		$fields = $gdo->getSortableFields($user);
+		$fields = $gdo->getSortableFields($action);
 
 		# Gather the current selected sorting
 		$curBy = explode(',', Common::getGet('by', ''));
@@ -123,9 +124,9 @@ final class GWF_TableGDO
 		return str_replace(array('%BY%', '%DIR%'), array( urlencode(implode(',', array_keys($current))), urlencode(implode(',', array_values($current)))), $sortURL );
 	}
 
-	private static function getMultiOrderBy(GDO $gdo, $user)
+	private static function getMultiOrderBy($gdo, $action)
 	{
-		$fields = $gdo->getSortableFields($user);
+		$fields = $gdo->getSortableFields($action);
 
 		# Gather the current selected sorting
 		$curBy = explode(',', Common::getGetString('by', ''));

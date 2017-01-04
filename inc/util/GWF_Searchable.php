@@ -5,7 +5,7 @@
  */
 interface GWF_Searchable
 {
-	public function getSearchableActions(GWF_User $user);
-	public function getSearchableFields(GWF_User $user);
+	public function getSearchableActions();
+	public function getSearchableFields($action);
 	public function getSearchableFormData(GWF_User $user);
 }
