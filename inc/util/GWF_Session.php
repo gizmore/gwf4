@@ -59,9 +59,9 @@ final class GWF_Session extends GDO
 	############
 	### Init ###
 	############
-	public static function start($blocking=true)
+	public static function start($blocking=true, $cookie=false)
 	{
-		if ( (false === ($cookie = Common::getCookieString(GWF_SESS_NAME)))
+		if ( (false === ($cookie = Common::getCookieString(GWF_SESS_NAME, $cookie)))
 		  || (false === self::reload($cookie, $blocking)) )
 		{
 			return self::create();
@@ -84,7 +84,7 @@ final class GWF_Session extends GDO
 		));
 	}
 	
-	private static function reload($cookie, $blocking)
+	public static function reload($cookie, $blocking, $checkIP=true)
 	{
 		$split = explode('-', $cookie);
 		if (count($split) !== 3)
@@ -113,12 +113,16 @@ final class GWF_Session extends GDO
 			return false;
 		}
 		
-		if (NULL !== ($ip = $session->getVar('sess_ip')))
+		if ($checkIP !== false)
 		{
-			if (GWF_IP6::getIP(GWF_IP_EXACT) !== $ip)
+			if (NULL !== ($ip = $session->getVar('sess_ip')))
 			{
-				return false;
+				if (GWF_IP6::getIP(GWF_IP_EXACT, $checkIP) !== $ip)
+				{
+					return false;
+				}
 			}
+			
 		}
 		
 		# Lock the session if blocking.

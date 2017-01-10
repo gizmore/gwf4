@@ -67,6 +67,7 @@ final class GWF_IP6
 	public static function getIP($type=self::INT_32, $ip=false)
 	{
 		$ip = is_bool($ip) ? self::remoteAddress() : $ip;
+		$ip = self::isLocal($ip) ? '::1' : $ip;
 		$is6 = self::isV6($ip);
 		$is4 = self::isV4($ip);
 		if ($is6 && $is4) {
@@ -95,9 +96,10 @@ final class GWF_IP6
 		}
 	}
 
-	public static function isLocal()
+	public static function isLocal($ip=true)
 	{
-		if (self::serverAddress() === ($ip = self::remoteAddress())) {
+		$ip = $ip === true ? self::remoteAddress() : $ip;
+		if (self::serverAddress() === $ip) {
 			return true;
 		}
 		if (self::isV6($ip)) {
