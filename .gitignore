@@ -1,8 +1,8 @@
 /.well-known/
 
-.project
+/.project
 
-.htaccess
+/.htaccess
 /index.php
 /gwf_cronjob.php
 
@@ -29,6 +29,7 @@
 /module/Tamagochi/
 /module/News/
 /module/Forum/
+/module/Shadowlamb/
 
 /themes/linkuup-app
 /themes/linkuup-web

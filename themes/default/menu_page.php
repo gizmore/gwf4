@@ -1,13 +1,15 @@
-<div class="gwf_pagemenu">
-<span>
-<?php echo foreach $pagelinks as $id => $link; ?>
-<?php echo if $link === false; ?>
-	...
-<?php echo elseif $link === ''; ?>
-	<a class="gwf_pagemenu_sel" <?php echo $link; ?>>[<?php echo $id; ?>]</a>
-<?php echo else; ?>
-	<a <?php echo $link; ?>>[<?php echo $id; ?>]</a>
-<?php echo /if; ?>
-<?php echo /foreach; ?>
-</span>
-</div>
+<gwf-pagemenu>
+<?php foreach ($pagelinks as $id => $link)
+{
+	if ($link === false) {
+		echo "&nbsp;…&nbsp;";
+	}
+	elseif ($link === '') {
+		printf('<a class="selected" %s>[%s]</a>', $link, $id);
+	}
+	else {
+		printf('<a %s>[%s]</a>', $link, $id);
+	}
+}
+?>
+</gwf-pagemenu>

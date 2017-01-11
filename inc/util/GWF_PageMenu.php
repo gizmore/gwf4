@@ -96,7 +96,7 @@ final class GWF_PageMenu
 			"pagelinks" => $pages,
 		);
 		
-		return GWF_Template::templateMain('menu_page.tpl', $tVars);
+		return GWF_Template::templateMain('menu_page.php', $tVars);
 	}
 	
 	private static function replaceHref($href, $page)

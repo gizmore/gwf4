@@ -66,6 +66,24 @@ gwf-num {
 	font-family: monospace;
 }
 
+/** Pagemenu **/
+gwf-pagemenu {
+	display: block;
+}
+
+gwf-pagemenu a {
+	font-size: 24px;
+	line-height: 24px;
+	font-family: monospace;
+	text-decoration: none;
+	font-weight: bold;
+	color: #000;
+}
+
+gwf-pagemenu a.selected {
+	color: #666;
+}
+
 /** Buttons **/
 gwf-buttons {
 	display: block;
@@ -92,3 +110,9 @@ gwf-button.image-button {
 	
 }
 
+/** Countries **/
+img.flag {
+	width: 46px;
+	height: 26px;
+	border: 1px solid #666;
+}
