@@ -1,5 +1,5 @@
 'use strict';
-angular.module('gwf4', ['ngMaterial', 'ngSanitize', 'ui.router', 'flow']).
+angular.module('gwf4', ['ngMaterial', 'ngSanitize', 'ui.router', 'flow', 'monospaced.mousewheel']).
 config(function($urlRouterProvider, $stateProvider) {
 	$stateProvider.state({
 		name: 'loading',
@@ -44,7 +44,7 @@ controller('GWFCtrl', function($scope, $q, $state, $mdSidenav, ErrorSrvc, AuthSr
 		});
 
 		$scope.initGWF = function() {
-//			console.log('GWFCtrl.initGWF()');
+			console.log('GWFCtrl.initGWF()');
 			AuthSrvc.withCookies().then($scope.initGWFSidebar);
 		};
 		
@@ -142,6 +142,8 @@ controller('GWFCtrl', function($scope, $q, $state, $mdSidenav, ErrorSrvc, AuthSr
 		$scope.toggleRightMenu = function() {
 			$mdSidenav('right').toggle();
 		};
+		
+//		$scope.initGWF();
 
 	}
 });

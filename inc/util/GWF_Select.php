@@ -10,7 +10,8 @@ final class GWF_Select
 			'onchange' => $onchange,
 			'selectedValue' => $selected,
 			'label' => $label,
-			'angularOptions' => GWF_Javascript::htmlAttributeEscapedJSON($data),
+			'angularKeys' => GWF_Javascript::htmlAttributeEscapedJSON(array_keys($data)),
+			'angularValues' => GWF_Javascript::htmlAttributeEscapedJSON(array_values($data)),
 		);
 		return GWF_Template::templatePHPMain('form_select.php', $tVars);
 	}

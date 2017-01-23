@@ -3,8 +3,10 @@ ui-view.gwf-angular-main-view {
 	position: absolute;
 	width: 100%;
 	overflow: hidden;
-	top: 4em;
-/* 	min-height: 100%; */
+	padding-top: 4em;
+	min-height: 100%;
+	top: 0px;
+	left: 0px;
 }
 
 ui-view.gwf-angular-main-view .gwf-main-content {

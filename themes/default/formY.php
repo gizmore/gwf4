@@ -123,7 +123,7 @@
 			case GWF_Form::FILE_IMAGES:
 				$single = $type !== GWF_Form::FILE_IMAGES;
 				$imagePreview = ($type === GWF_Form::FILE_IMAGE) || ($type === GWF_Form::FILE_IMAGES); ?>
-				<div ng-app="gwf4">
+<!-- 				<div ng-app="gwf4"> -->
 					<div ng-controller="UploadCtrl" class="gwf4-form-images" ng-init="initGWFFormConfig(<?php echo GWF_Javascript::htmlAttributeEscapedJSON($data[4]); ?>);">
 						<input type="hidden" name="<?php echo $key; ?>" value="{{$flow.files.length ? '1' : '' }}" />
 						<div flow-init="{target: '<?php echo $action?>', singleFile: <?php echo $single ? 'true' : 'false'; ?>, fileParameterName: '<?php echo $key; ?>', testChunks: false}"
@@ -145,7 +145,7 @@
 								<md-progress-linear md-mode="determinate" ng-value="progressIndicatorValue();" ng-disabled="progressIndicatorDisabled();"></md-progress-linear>
 							</gwf4-progress-indicator>
 						</div>
-					</div>
+<!-- 					</div> -->
 				</div> <?php				
 				break;
 			default:
