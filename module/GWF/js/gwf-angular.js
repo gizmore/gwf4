@@ -5,14 +5,14 @@ config(function($urlRouterProvider, $stateProvider) {
 		name: 'loading',
 		url: '/loading',
 		controller: 'GWFCtrl',
-		templateUrl: GWF_CONFIG.WEB_ROOT+'module/GWF/js/tpl/loading.html',
+		templateUrl: GWF_WEB_ROOT+'module/GWF/js/tpl/loading.html',
 		pageTitle: 'Loading'
 	});
 	$stateProvider.state({
 		name: 'page',
 		url: '/page/:url',
 		controller: 'GWFCtrl',
-		templateUrl: GWF_CONFIG.WEB_ROOT+'module/GWF/js/tpl/page.html',
+		templateUrl: GWF_WEB_ROOT+'module/GWF/js/tpl/page.html',
 		pageTitle: 'GWF4'
 	});
 	$urlRouterProvider.otherwise('/loading');

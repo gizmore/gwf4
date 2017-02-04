@@ -154,7 +154,7 @@ final class Module_GWF extends GWF_Module
 		$user = GWF_User::getStaticOrGuest();
 		$json = json_encode(array(
 			'user_id' => $user->getVar('user_id'),
-			'user_guest_id' => $user->getVar('user_guest_name'),
+			'user_guest_id' => $user->getVar('user_guest_id'),
 			'user_guest_name' => $user->getVar('user_guest_name'),
 			'user_options' => (int)$user->getVar('user_options'),
 			'user_name' => $user->getVar('user_name'),

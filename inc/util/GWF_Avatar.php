@@ -205,6 +205,10 @@ final class GWF_Avatar extends GDO
 		return $avatar->getFile();
 	}
 	
+	/**
+	 * @param GWF_User $user
+	 * @return GWF_Avatar
+	 */
 	public static function avatarForUser(GWF_User $user)
 	{
 		$where = sprintf('avatar_user_id = %s', $user->getID());

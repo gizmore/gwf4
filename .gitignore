@@ -30,9 +30,12 @@
 /module/News/
 /module/Forum/
 /module/Shadowlamb/
+/module/Cafe/
+/module/Dropleet/
 
 /themes/linkuup-app
 /themes/linkuup-web
+/themes/dropleet
 
 /nbproject/private/
 /nbproject/
