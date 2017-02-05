@@ -2,7 +2,7 @@ var GWF_User = function(json) {
 	
 	this.JSON = json;
 	
-	this.authenticated = function() { return this.JSON.user_guest_id > 0; };
+	this.authenticated = function() { return this.JSON.user_guest_id <= 0; };
 	this.guest = function() { return !this.authenticated(); };
 	
 	this.id = function(id) { if(id) this.JSON.user_id = id; return this.JSON.user_id; };

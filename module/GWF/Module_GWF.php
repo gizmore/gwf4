@@ -23,6 +23,7 @@ final class Module_GWF extends GWF_Module
 	##############
 	### Config ###
 	##############
+	public function cfgAngularApp() { return $this->getModuleVarBool('AngularApp', '1'); }
 	public function cfgMaterialApp() { return $this->getModuleVarBool('MaterialApp', '1'); }
 	
 	# Fancy Config
@@ -77,14 +78,15 @@ final class Module_GWF extends GWF_Module
 			$min = GWF_DEBUG_JS ? '' : '.min';
 			$v = $this->getVersionDB();
 			$md = $this->cfgMaterialApp();
-			
+			$ng = $this->cfgAngularApp();
+				
 			# CSS
 			$this->addCSS("gwf4.css"); # Own core is great
 			$this->addCSS("gwf4-base.css");
 			if ($md) GWF_Website::addBowerCSS("angular-material/angular-material$min.css?v=$v"); # Angular material
 			if ($md) GWF_Website::addCSS("https://fonts.googleapis.com/icon?family=Material+Icons"); # Icons
 			if ($md) $this->addCSS("gwf-material.css"); # GWF4 css patches
-			$this->addCSS("gwf-flow.css"); # GWF4 css patches
+			if ($ng) $this->addCSS("gwf-flow.css"); # GWF4 css patches
 					
 			# GWF Util
 			$this->addJavascript('bind-polyfill.js');
@@ -98,28 +100,29 @@ final class Module_GWF extends GWF_Module
 			# Bower JS
 			GWF_Website::addBowerJavascript("jquery/dist/jquery$min.js?v=$v");
 			$this->addJavascript('jq-serialize-object.js');
-			GWF_Website::addBowerJavascript("angular/angular$min.js?v=$v");
+			if ($ng) GWF_Website::addBowerJavascript("angular/angular$min.js?v=$v");
 			if ($md) GWF_Website::addBowerJavascript("angular-animate/angular-animate$min.js?v=$v");
 			if ($md) GWF_Website::addBowerJavascript("angular-aria/angular-aria$min.js?v=$v");
 			if ($md) GWF_Website::addBowerJavascript("angular-material/angular-material$min.js?v=$v");
 			if ($md) GWF_Website::addBowerJavascript("angular-messages/angular-messages$min.js?v=$v");
-			GWF_Website::addBowerJavascript("angular-sanitize/angular-sanitize$min.js?v=$v");
-			GWF_Website::addBowerJavascript("angular-ui-router/release/angular-ui-router$min.js?v=$v");
-			GWF_Website::addBowerJavascript("ng-flow/dist/ng-flow-standalone$min.js?v=$v");
-			GWF_Website::addBowerJavascript("hamsterjs/hamster.js?v=$v");
-			GWF_Website::addBowerJavascript("angular-mousewheel/mousewheel.js?v=$v");
+			if ($ng) GWF_Website::addBowerJavascript("angular-sanitize/angular-sanitize$min.js?v=$v");
+			if ($ng) GWF_Website::addBowerJavascript("angular-ui-router/release/angular-ui-router$min.js?v=$v");
+			if ($ng) GWF_Website::addBowerJavascript("ng-flow/dist/ng-flow-standalone$min.js?v=$v");
+			if ($ng) GWF_Website::addBowerJavascript("hamsterjs/hamster.js?v=$v");
+			if ($ng) GWF_Website::addBowerJavascript("angular-mousewheel/mousewheel.js?v=$v");
 				
 			# GWF below here
 			$this->addJavascript('gwf-ajax-sync.js');
 			$this->addJavascript('gwf-bb-editor.js');
 			if ($md) $this->addJavascript('gwf-angular.js');
-			else $this->addJavascript('gwf-angular-minimal.js');
-			$this->addJavascript('ng-enter.js');
-			$this->addJavascript('ng-crsrup.js');
-			$this->addJavascript('ng-html.js');
-			$this->addJavascript('gwf-select-controller.js');
-			$this->addJavascript('gwf-upload-controller.js');
-			$this->addJavascript('gwf-transfer-speed-filter.js');
+			else if ($ng) $this->addJavascript('gwf-angular-minimal.js');
+			if ($ng) $this->addJavascript('ng-enter.js');
+			if ($ng) $this->addJavascript('ng-crsrup.js');
+			if ($ng) $this->addJavascript('ng-html.js');
+			if ($ng) $this->addJavascript('gwf-select-controller.js');
+			if ($ng) $this->addJavascript('gwf-upload-controller.js');
+			if ($ng) $this->addJavascript('gwf-transfer-speed-filter.js');
+			
 			if ($md) $this->addJavascript('gwf-error-service.js');
 			if ($md) $this->addJavascript('gwf-exception-service.js');
 			if ($md) $this->addJavascript('gwf-auth-service.js');

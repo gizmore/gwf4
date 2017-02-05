@@ -145,7 +145,7 @@ final class Module_Admin extends GWF_Module
 		$tVars = array(
 			'buttons' => $this->getNavButtons(),
 		);
-		return $this->template('_nav.tpl', $tVars);
+		return $this->template('_nav.php', $tVars);
 	}
 	
 	/**

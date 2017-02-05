@@ -86,7 +86,7 @@ final class GWF_Button
 
 	public static function tooltip($text)
 	{
-		return sprintf('<md-tooltip md-direction="bottom">%s</md-tooltip>', $text);
+		return sprintf('<a href="#" data-toggle="tooltip" title="%s">???</a>', $text);
 	}
 
 	public static function up($href)

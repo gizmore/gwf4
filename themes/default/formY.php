@@ -6,7 +6,7 @@
 		$tt = '';
 		if (!empty($data[3]))
 		{
-			$tt = GWF_Button::tooltip($data[3]);
+			$tt = sprintf('<md-tooltip md-direction="bottom">%s</md-tooltip>', $data[3]);
 		}
 		$label = ''; $value = isset($data[1]) ? $data[1] : null;
 		if (!empty($data[2]))
@@ -59,13 +59,13 @@
 			case GWF_Form::CAPTCHA:
 				$foo = empty($data[1]) ? '' : '/'.$data[1];
 				$label = '<label>'.GWF_HTML::lang('th_captcha1').'</label>'; 
-				$tt = GWF_Button::tooltip(GWF_HTML::lang('tt_captcha1'));
+				$tt = sprintf('<md-tooltip md-direction="bottom">%s</md-tooltip>', GWF_HTML::lang('tt_captcha1'));
 				$img = sprintf('<img src="%sCaptcha%s" onclick="this.src=\'%1$sCaptcha/?\'+(new Date()).getTime();" alt="Captcha" />', $root, $foo);
 				echo "<md-input-container>$label$tt</md-input-container>";
 				echo "<md-input-container>$img</md-input-container>";
 				
 				
-				$tt = GWF_Button::tooltip(GWF_HTML::lang('tt_captcha2'));
+				$tt = sprintf('<md-tooltip md-direction="bottom">%s</md-tooltip>', GWF_HTML::lang('tt_captcha2'));
 				$label = GWF_HTML::lang('th_captcha2');
 				$input = sprintf('<input type="text" name="%s" value="%s" />', $key, $value);
 				echo "<md-input-container>$label $tt $input</md-input-container>";

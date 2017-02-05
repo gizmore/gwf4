@@ -5,6 +5,7 @@ final class GWF_InstallGWF
 	{
 		return GWF_ModuleLoader::installVars($module, array(
 //			'Design' => array(GWF_Template::getDesign(), 'text'),
+			'AngularApp' => array('1', 'bool'),
 			'MaterialApp' => array('1', 'bool'),
 			# Fancy Config
 			'FancyIndex' => array('0', 'bool'),
