@@ -1,6 +1,7 @@
 /.well-known/
 
 /.project
+/.settings/
 
 /.htaccess
 /index.php

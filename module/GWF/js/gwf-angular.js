@@ -46,6 +46,13 @@ controller('GWFCtrl', function($scope, $q, $state, $mdSidenav, ErrorSrvc, AuthSr
 		$scope.initGWF = function() {
 			console.log('GWFCtrl.initGWF()');
 			AuthSrvc.withCookies().then($scope.initGWFSidebar);
+			$scope.copyGWFPage();
+		};
+		
+		$scope.copyGWFPage = function() {
+			setTimeout(function(){
+				$('#gwf-page-content').appendTo($('ui-view.gwf-angular-main-view'));
+			}, 0);
 		};
 		
 		$scope.initGWFSidebar = function() {

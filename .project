@@ -30,5 +30,6 @@
 		<nature>com.aptana.editor.php.phpNature</nature>
 		<nature>com.aptana.projects.webnature</nature>
 		<nature>org.eclipse.php.core.PHPNature</nature>
+		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
 </projectDescription>
