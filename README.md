@@ -65,6 +65,15 @@ Core modules included in this repo are: GWF, Login, Register, Language, Password
 - TBA
 
 
+### Facebook Login
+
+You need to clone the facebook-graph-sdk into the login module.
+
+    cd module/Login
+    git clone https://github.com/facebook/php-graph-sdk
+
+
+
 ### Infrastructure Tutorials
 
 

@@ -3,6 +3,7 @@
 	<form class="gwf4-form" action="<?php echo $action; ?>" method="<?php echo $method; ?>" enctype="<?php echo $enctype; ?>">
 	<h2><?php echo $title; ?></h2>
 	<?php foreach ($tVars['data'] as $key => $data) {
+		echo '<div class="form-group form-inline group-'.$key.'">';
 		$tt = '';
 		if (!empty($data[3]))
 		{
@@ -11,7 +12,7 @@
 		$label = ''; $value = isset($data[1]) ? $data[1] : null;
 		if (!empty($data[2]))
 		{
-			$label = '<label>'.$data[2].'</label>';
+			$label = sprintf('<label for="%s">%s</label>', $key, $data[2]);
 		}
 		
 		#$data[4] === LEN??
@@ -34,25 +35,25 @@
 			case GWF_Form::SSTRING:
 			case GWF_Form::STRING_NO_CHECK:
 				$disabled = $type === GWF_Form::SSTRING ? ' disabled="disabled"' : '';
-				$input = sprintf('<input name="%s" value="%s"%s />', $key, $value, $disabled);
+				$input = sprintf('<input name="%s" class="form-control" value="%s"%s />', $key, $value, $disabled);
 				break;
 				
 			case GWF_Form::INT:
-				$input = sprintf('<input type="number" name="%s" size="8" value="%s" />', $key, $value);
+				$input = sprintf('<input type="number" class="form-control" name="%s" size="8" value="%s" />', $key, $value);
 				break;
 				
 			case GWF_Form::FLOAT:
-				$input = sprintf('<input type="number" name="%s" size="8" value="%s" step="0.02" />', $key, $value);
+				$input = sprintf('<input type="number" class="form-control" name="%s" size="8" value="%s" step="0.02" />', $key, $value);
 				break;
 				
 			case GWF_Form::PASSWORD:
-				$input = sprintf('<input type="password" name="%s" value="" />', $key);
+				$input = sprintf('<input type="password" class="form-control" name="%s" value="" />', $key);
 				break;
 				
 			case GWF_Form::CHECKBOX:
 				$checked = $data[1] ? ' checked="checked"' : '';
-				$input = sprintf('<input type="checkbox" aria-label="%s" name="%s"%s />', $label, $key, $checked);
-				echo "<md-input-container class=\"gwf-checkbox\">$label $tt $input</md-input-container>";
+				$input = sprintf('<input type="checkbox" name="%s"%s />', $key, $checked);
+				printf('<div class="checkbox">%s%s%s</div>', $label, $tt, $input);
 				$input = null;
 				break;
 				
@@ -82,16 +83,20 @@
 				break;
 				
 			case GWF_Form::DIVIDER:
-				printf('<div class="gwf-hr"></div>');
+				printf('<hr/>');
+				$input = null;
 				break;
 				
 			case GWF_Form::HEADLINE:
+				printf('<hr/>');
 				printf('<h3%s%s>%s</h3>', $req, $tt, $label);
+				printf('<hr/>');
+				$input = null;
 				break;
 				
 			case GWF_Form::SUBMIT:
 				echo '<section class="gwf-button-bar" layout="row" layout-sm="column" layout-align="center center" layout-wrap>';
-				printf('<input name="%s" value="%s" type="submit" />', $key, $value);
+				printf('<input name="%s" value="%s" type="submit" class="btn btn-default" />', $key, $value);
 				echo '</section>';
 				break;
 				
@@ -99,7 +104,7 @@
 				echo '<section class="gwf-button-bar" layout="row" layout-sm="column" layout-align="center center" layout-wrap>';
 				foreach ($data[1] as $key => $value)
 				{
-					printf('<input name="%s" value="%s" type="submit" />', $key, $value);
+					printf('<input name="%s" value="%s" type="submit" class="btn btn-default" />', $key, $value);
 				}
 				echo '</section>';
 				break;
@@ -107,7 +112,7 @@
 			case GWF_Form::MESSAGE:
 			case GWF_Form::MESSAGE_NOBB:
 				$codebar = $type === GWF_Form::MESSAGE ? GWF_Message::getCodeBar($key) : '';
-				$input = sprintf('<gwf-label>%s%s</gwf-label>%s<textarea id="%4$s" name="%4$s" cols="80" rows="8">%5$s</textarea>', $label, $tt, $codebar, $key, $value);
+				$input = sprintf('<gwf-label>%s%s</gwf-label>%s<textarea id="%4$s" name="%4$s" class="form-control">%5$s</textarea>', $label, $tt, $codebar, $key, $value);
 				$label = $tt = '';
 				break;
 				
@@ -156,10 +161,11 @@
 		}
 		
 		if ($input) {
-			echo "<md-input-container class=\"$class\" layout=\"row\" flex>$label $tt $input</md-input-container>";
+			echo "$label $tt $input";
 			$input = null;
 		}
 		
+		echo '</div>';
 	} ?>
 	</form>
 	<?php if (isset($have_required)) { echo GWF_HTML::lang('form_required', array('*')); } ?>
