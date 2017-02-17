@@ -1,19 +1,7 @@
 #!/bin/bash
+cd "$(dirname "$0")"
 
-echo "Updating Core"
+CORE="$(dirname "$0")"
 
-#git pull
-
-echo "Updating Modules"
-
-MODULES=modules/*
-
-for module in "$MODULES"
-do
-	echo $module
-
-	if [ -d $module/.git ]
-	then
-		echo $module
-	fi
-done
+echo "git pull all repos"
+find . -iname ".git" -type d -exec sh -c "cd $CORE/{}/.. && echo `pwd`... && git pull" \;
