@@ -32,6 +32,12 @@ final class GWF_FacebookToken extends GDO
 		return self::table(__CLASS__)->getBy('fb_id', $id);
 	}
 	
+	/**
+	 * Refresh login tokens and user association.
+	 * @param string $token
+	 * @param array $fbVars
+	 * @return GWF_FacebookToken
+	 */
 	public static function refresh($token, array $fbVars)
 	{
 		$id = $fbVars['id'];
@@ -39,12 +45,14 @@ final class GWF_FacebookToken extends GDO
 		$email = $fbVars['email'];
 		$displayName = $fbVars['name'];
 		
+		# Update existing row
 		if ($row = self::getByID($id))
 		{
 			$row->saveVar('fb_token', $token);
 			return $row;
 		}
 		
+		# New row with re-assigned user
 		else if ($user = GWF_User::getByName($name))
 		{
 			$row = new self(array(
@@ -56,6 +64,7 @@ final class GWF_FacebookToken extends GDO
 			return $row;
 		}
 		
+		# New row with new converted guest
 		else if (($user = GWF_User::getStaticOrGuest()) && $user->persistentGuest())
 		{
 			$row = new self(array(
