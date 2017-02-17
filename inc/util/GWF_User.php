@@ -81,7 +81,7 @@ class GWF_User extends GDO
 	public function hasCountry() { return $this->getVar('user_countryid') !== '0'; }
 	public function hasGuestName() { return !!$this->getVar('user_guest_name'); }
 	public function getGuestName() { return $this->getVar('user_guest_name'); }
-	public function displayName() { return $this->hasGuestName() ? $this->getGuestName() : $this->getName(); }
+	public function displayName() { return $this->hasGuestName() ? htmlspecialchars($this->getGuestName()) : $this->getName(); }
 	
 	/**
 	 * Get a user by ID.

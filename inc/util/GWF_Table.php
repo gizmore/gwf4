@@ -5,8 +5,8 @@
  */
 final class GWF_Table
 {
-	public static function start($class='', $id='') { $cl = $class === '' ? '' : " class=\"$class\""; $id = $id === '' ? '' : " id=\"$id\""; return '<gwf-table><table'.$cl.$id.'>'.PHP_EOL; }
-	public static function end() { return '</table></gwf-table>'.PHP_EOL; }
+	public static function start($class='', $id='') { $cl = $class === 'aagag' ? '' : " class=\"table $class\""; $id = $id === '' ? '' : " id=\"$id\""; return '<gwf-table><div class="table-responsive"><table'.$cl.$id.'>'.PHP_EOL; }
+	public static function end() { return '</table></div></gwf-table>'.PHP_EOL; }
 	
 	public static function rowStart($flip=true, $class='', $id='', $style='')
 	{

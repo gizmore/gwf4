@@ -39,11 +39,23 @@ final class Login_Form extends GWF_Method
 			'form' => $form->templateY($this->module->lang('title_login'), $this->getAction()),
 			'have_cookies' => GWF_Session::haveCookies(),
 // 			'token' => $form->getFormCSRFToken(),
+			'facebookUrl' => $this->getFacebookURL($this->module),
 			'tooltip' => $form->getTooltipText('bind_ip'),
 			'register' => GWF_Module::loadModuleDB('Register', false, false, true) !== false,
 			'recovery' => GWF_Module::loadModuleDB('PasswordForgot', false, false, true) !== false,
 		);
 		return $this->module->template($this->_tpl, $tVars);
+	}
+	
+	private function getFacebookURL(Module_Login $module)
+	{
+		if ($module->cfgFBLogin())
+		{
+			$permissions = ['email']; // Optional permissions
+			$fb = $module->getFacebook();
+			$helper = $fb->getRedirectLoginHelper();
+			return $helper->getLoginUrl('http://localhost/index.php?mo=Login&me=Facebook', $permissions);
+		}
 	}
 
 	/**
@@ -132,7 +144,7 @@ final class Login_Form extends GWF_Method
 		return true;
 	}
 	
-	private function onLoggedIn(GWF_User $user, $isAjax)
+	public function onLoggedIn(GWF_User $user, $isAjax=false)
 	{
 		$last_url = GWF_Session::getLastURL();
 		

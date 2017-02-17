@@ -71,6 +71,11 @@ $lang = array(
 	# monnino fixes
 	'cfg_send_alerts' => 'Send alerts',
 	'err_already_logged_in' => 'You are already logged in.',
+		
+	# v4 Facebook login
+	'cfg_fb_login' => 'Facebook Login',
+	'cfg_fb_app_id' => 'Facebook AppID',
+	'cfg_fb_secret' => 'Facebook Secret',
+	'err_fb_login' => 'Facebook login failed: %s',
+	'btn_fb_login' => 'Login with Facebook',
 );
-
-?>

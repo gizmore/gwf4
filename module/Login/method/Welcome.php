@@ -40,7 +40,7 @@ final class Login_Welcome extends GWF_Method
 		}
 		
 		$href_hist = $this->module->getMethodURL('History');
-		$username = $user->display('user_name');
+		$username = $user->displayName();
 		
 		if (false !== ($ll = GWF_LoginHistory::getLastLogin($user->getID()))) {
 			$last_login = $this->module->lang('msg_last_login', array($ll->displayDate(), $ll->displayIP(), $ll->displayHostname(), $href_hist));

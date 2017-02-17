@@ -56,8 +56,8 @@ final class Register_Activate extends GWF_Method
 			'user_langid2' => 0,
 			'user_level' => 0,
 			'user_title' => '',
-			'user_settings' => '',
-			'user_data' => '',
+// 			'user_settings' => '',
+// 			'user_data' => '',
 			'user_credits' => '0.00',
 		));
 		

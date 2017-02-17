@@ -1,7 +1,7 @@
 <?php
 final class GWF_Select
 {
-	public static function display($name, $data, $selected='0', $onchange='', $label='')
+	public static function display($name, $data, $selected='0', $onchange='', $label='', $class='form-control')
 	{
 		$tVars = array(
 			'name' => $name,
@@ -10,6 +10,7 @@ final class GWF_Select
 			'onchange' => $onchange,
 			'selectedValue' => $selected,
 			'label' => $label,
+			'class' => $class,
 			'angularKeys' => GWF_Javascript::htmlAttributeEscapedJSON(array_keys($data)),
 			'angularValues' => GWF_Javascript::htmlAttributeEscapedJSON(array_values($data)),
 		);

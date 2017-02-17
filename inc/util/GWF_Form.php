@@ -55,7 +55,6 @@ class GWF_Form
 // 	const ENUM_ASSOC = 29;
 	const FILE_IMAGE = 30;
 	const FILE_IMAGES = 31;
-	
 
 	# CSRF protection levels.
 	const CSRF_OFF = 0;
