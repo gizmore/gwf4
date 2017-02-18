@@ -8,7 +8,7 @@ final class GWF_InstallGWF
 {
 	public static function onInstall(Module_GWF $module, $dropTables)
 	{
-		$result = GWF_ModuleLoader::installVars($module, array(
+		return GWF_ModuleLoader::installVars($module, array(
 			# Javascript
 			'AngularApp' => array('1', 'bool'),
 			'MaterialApp' => array('1', 'bool'),
@@ -39,37 +39,36 @@ final class GWF_InstallGWF
 			# Security
 			'allow_all_requests' => array(false, 'bool'),
 			'blacklist' => array('me=ShowError;favicon.ico[^$]', 'text'),
-		));
+		)).
 		self::toggleJavascriptProtection($module->cfgMinifyLevel());
-		return $result;
 	}
 
 	##################
 	### Protection ###
 	##################
-	public static function saveModuleVar(Module_GWF $module, $key, $value)
+	public static function saveModuleVar($key, $value)
 	{
-		if ($result = $module->saveModuleVar($key, $value))
+		if ($key === 'MinifyJavascript')
 		{
-			if ($key === 'MinifyJavascript')
-			{
-				self::toggleJavascriptProtection($value);
-			}
+			return self::toggleJavascriptProtection($value);
 		}
-		return $result;
+		return '';
 	}
 	
 	private static function toggleJavascriptProtection($value)
 	{
+		$module = Module_GWF::instance();
 		$filename = GWF_PATH . 'module/.htaccess';
 		if ($value >= 2)
 		{
-			$protection = '<filesmatch "\.js)$">'.PHP_EOL.GWF_HTAccess::protectRule().'</filesmatch>'.PHP_EOL;
+			$protection = '<filesmatch "\.js)$">'.PHP_EOL.GWF_HTAccess::protectRule().PHP_EOL.'</filesmatch>'.PHP_EOL;
 			file_put_contents($filename, $protection);
+			return $module->message('msg_enabled_js_minify');
 		}
 		else
 		{
 			@unlink($filename);
+			return $module->message('msg_disabled_js_minify');
 		}
 	}
 

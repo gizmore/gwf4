@@ -17,7 +17,7 @@ final class Module_GWF extends GWF_Module
 	public function getDefaultPriority() { return 1; }
 	public function getDefaultAutoLoad() { return true; }
 	public function onInstall($dropTable) { require_once GWF_PATH.'module/GWF/GWF_InstallGWF.php'; return GWF_InstallGWF::onInstall($this, $dropTable); }
-	public function saveModuleVar($key, $value) { require_once GWF_PATH.'module/GWF/GWF_InstallGWF.php'; return GWF_InstallGWF::saveModuleVar($this, $key, $value); }
+	public function onSavedVar($key, $value) { require_once GWF_PATH.'module/GWF/GWF_InstallGWF.php'; return GWF_InstallGWF::saveModuleVar($key, $value); }
 	public function onLoadLanguage() { return $this->loadLanguage('lang/gwf'); }
 	public function isCoreModule() { return true; }
 	
@@ -79,8 +79,9 @@ final class Module_GWF extends GWF_Module
 		self::$INSTANCE = $this;
 		if ( (!Common::isCLI()) && (GWF_Session::hasSession()) )
 		{
-			$min = $this->cfgMinifyLevel() < 1 ? '' : '.min';
-			define('GWF_MINIFY_JS', $this->cfgMinifyLevel() > 1);
+			define('GWF_MINIFY_JS', $this->cfgMinifyLevel());
+
+			$min = GWF_MINIFY_JS >= 1 ? '.min' : '';
 			
 			$v = $this->getVersionDB();
 			$md = $this->cfgMaterialApp();

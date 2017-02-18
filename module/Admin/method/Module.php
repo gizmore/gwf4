@@ -300,6 +300,9 @@ final class Admin_Module extends GWF_Method
 		), true)) {
 			return GWF_HTML::lang('ERR_DATABASE', array(__FILE__, __LINE__));
 		}
+		
+		$this->mod->onSavedVar($key, $val);
+		
 		return false;
 	}
 	

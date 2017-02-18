@@ -74,6 +74,8 @@ class GWF_Module extends GDO
 	public function onMerge(GDO_Database $db_from, GDO_Database $db_to, array &$db_offsets, $prefix, $prevar) { return true; }
 	public function onAddHooks() {}
 	public function onInstall($dropTable) { return ''; }
+	public function onSavedVar($key, $value) { return ''; }
+	
 	/**
 	 * Output to stdout for debuglogs. Errors are redirected to stderr.
 	 * @todo rethink the output handling...
