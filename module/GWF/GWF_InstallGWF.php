@@ -57,19 +57,23 @@ final class GWF_InstallGWF
 	
 	private static function toggleJavascriptProtection($value)
 	{
-		$module = Module_GWF::instance();
 		$filename = GWF_PATH . 'module/.htaccess';
 		if ($value >= 2)
 		{
-			$protection = '<filesmatch "\.js)$">'.PHP_EOL.GWF_HTAccess::protectRule().PHP_EOL.'</filesmatch>'.PHP_EOL;
-			file_put_contents($filename, $protection);
-			return $module->message('msg_enabled_js_minify');
+			$protection = '<filesmatch "\.js$">'.PHP_EOL.GWF_HTAccess::protectRule().PHP_EOL.'</filesmatch>'.PHP_EOL;
+			if (!@file_put_contents($filename, $protection))
+			{
+				return GWF_HTML::err('ERR_GENERAL', array(__FILE__, __LINE__));
+			}
 		}
 		else
 		{
-			@unlink($filename);
-			return $module->message('msg_disabled_js_minify');
+			if (!@unlink($filename))
+			{
+				return GWF_HTML::err('ERR_GENERAL', array(__FILE__, __LINE__));
+			}
 		}
+		return '';
 	}
 
 }
