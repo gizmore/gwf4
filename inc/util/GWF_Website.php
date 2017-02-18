@@ -1,6 +1,9 @@
 <?php
 /**
- * 
+ * General HTML utility.
+ * @see GWF_Button
+ * @see GWF_Box
+ * @since 1.0 
  * @author spaceone
  * @author gizmore
  */
@@ -257,7 +260,8 @@ final class GWF_Website
 	public static function displayJavascripts()
 	{
 		$back = '';
-		foreach (self::$_javascripts as $js)
+		$javascripts = GWF_MINIFY_JS ? GWF_Minify::minified(self::$_javascripts) : self::$_javascripts;
+		foreach ($javascripts as $js)
 		{
 			$back .= sprintf('<script type="text/javascript" src="%s"></script>', htmlspecialchars($js));
 		}

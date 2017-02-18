@@ -2,7 +2,7 @@
 /**
  * Error pages, and Fancy indexing.
  * @author spaceone
- * @version 4.07
+ * @version 4.1
  * @license MIT
  */
 final class Module_GWF extends GWF_Module
@@ -13,18 +13,22 @@ final class Module_GWF extends GWF_Module
 	##############
 	### Module ###
 	##############
-	public function getVersion() { return 4.02; }
+	public function getVersion() { return 4.10; }
 	public function getDefaultPriority() { return 1; }
 	public function getDefaultAutoLoad() { return true; }
 	public function onInstall($dropTable) { require_once GWF_PATH.'module/GWF/GWF_InstallGWF.php'; return GWF_InstallGWF::onInstall($this, $dropTable); }
+	public function saveModuleVar($key, $value) { require_once GWF_PATH.'module/GWF/GWF_InstallGWF.php'; return GWF_InstallGWF::saveModuleVar($this, $key, $value); }
 	public function onLoadLanguage() { return $this->loadLanguage('lang/gwf'); }
 	public function isCoreModule() { return true; }
 	
 	##############
 	### Config ###
 	##############
+	# Javascript Config
 	public function cfgAngularApp() { return $this->getModuleVarBool('AngularApp', '1'); }
 	public function cfgMaterialApp() { return $this->getModuleVarBool('MaterialApp', '1'); }
+	public function cfgBootstrapApp() { return $this->getModuleVarBool('BootstrapApp', '0'); }
+	public function cfgMinifyLevel() { return $this->getModuleVarInt('MinifyJavascript', '0'); }
 	
 	# Fancy Config
 	public function cfgFancyIndex() { return $this->getModuleVarBool('FancyIndex', '0'); }
@@ -75,7 +79,9 @@ final class Module_GWF extends GWF_Module
 		self::$INSTANCE = $this;
 		if ( (!Common::isCLI()) && (GWF_Session::hasSession()) )
 		{
-			$min = GWF_DEBUG_JS ? '' : '.min';
+			$min = $this->cfgMinifyLevel() < 1 ? '' : '.min';
+			define('GWF_MINIFY_JS', $this->cfgMinifyLevel() > 1);
+			
 			$v = $this->getVersionDB();
 			$md = $this->cfgMaterialApp();
 			$ng = $this->cfgAngularApp();

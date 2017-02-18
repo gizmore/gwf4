@@ -1,12 +1,19 @@
 <?php
+/**
+ * Install vars.
+ * Toggle module javascript protection on save var.
+ * @author gizmore
+ */
 final class GWF_InstallGWF
 {
 	public static function onInstall(Module_GWF $module, $dropTables)
 	{
-		return GWF_ModuleLoader::installVars($module, array(
-//			'Design' => array(GWF_Template::getDesign(), 'text'),
+		$result = GWF_ModuleLoader::installVars($module, array(
+			# Javascript
 			'AngularApp' => array('1', 'bool'),
 			'MaterialApp' => array('1', 'bool'),
+			'BootstrapApp' => array('0', 'bool'),
+			'MinifyJavascript' => array('0', 'int', '0', '2'),
 			# Fancy Config
 			'FancyIndex' => array('0', 'bool'),
 			'NameWidth' => array('25', 'int'),
@@ -33,5 +40,37 @@ final class GWF_InstallGWF
 			'allow_all_requests' => array(false, 'bool'),
 			'blacklist' => array('me=ShowError;favicon.ico[^$]', 'text'),
 		));
+		self::toggleJavascriptProtection($module->cfgMinifyLevel());
+		return $result;
 	}
+
+	##################
+	### Protection ###
+	##################
+	public static function saveModuleVar(Module_GWF $module, $key, $value)
+	{
+		if ($result = $module->saveModuleVar($key, $value))
+		{
+			if ($key === 'MinifyJavascript')
+			{
+				self::toggleJavascriptProtection($value);
+			}
+		}
+		return $result;
+	}
+	
+	private static function toggleJavascriptProtection($value)
+	{
+		$filename = GWF_PATH . 'module/.htaccess';
+		if ($value >= 2)
+		{
+			$protection = '<filesmatch "\.js)$">'.PHP_EOL.GWF_HTAccess::protectRule().'</filesmatch>'.PHP_EOL;
+			file_put_contents($filename, $protection);
+		}
+		else
+		{
+			@unlink($filename);
+		}
+	}
+
 }
