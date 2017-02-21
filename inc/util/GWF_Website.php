@@ -260,7 +260,7 @@ final class GWF_Website
 	public static function displayJavascripts()
 	{
 		$back = '';
-		$javascripts = GWF_MINIFY_JS ? GWF_Minify::minified(self::$_javascripts) : self::$_javascripts;
+		$javascripts = defined('GWF_MINIFY_JS') && GWF_MINIFY_JS ? GWF_Minify::minified(self::$_javascripts) : self::$_javascripts;
 		foreach ($javascripts as $js)
 		{
 			$back .= sprintf('<script type="text/javascript" src="%s"></script>', htmlspecialchars($js));

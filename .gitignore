@@ -1,6 +1,7 @@
 /.well-known/
 
-/.project
+/.project/
+/.idea/
 /.settings/
 
 /.htaccess
