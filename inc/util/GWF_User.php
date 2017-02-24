@@ -68,7 +68,7 @@ class GWF_User extends GDO
 			'user_langid2' => array(GDO::UINT, 0),
 			'user_level' => array(GDO::UINT|GDO::INDEX, 0),
 			'user_title' => array(GDO::VARCHAR|GDO::UTF8|GDO::CASE_I, GDO::NULL, 63),
-			'user_credits' => array(GDO::UINT, '0'),
+			'user_credits' => array(GDO::INT, '0'),
 			'user_saved_at' => array(GDO::DATE, GDO::NULL, GWF_Date::LEN_SECOND), 
 		);
 	}

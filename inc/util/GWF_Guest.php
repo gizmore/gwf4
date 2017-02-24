@@ -28,7 +28,7 @@ final class GWF_Guest extends GWF_User
 				'user_langid2' => '0',
 				'user_level' => '0',
 				'user_title' => null,
-				'user_credits' => '0.00',
+				'user_credits' => '0',
 				'user_saved_at' => null,
 		), $gdoData));
 	}

@@ -390,12 +390,14 @@ abstract class GDO
 		return in_array($by, $whitelist, true) ? $by : $default;
 	}
 	
-	public function getWhitelistedBy($by, $default=false, $nested=true, array &$whitelist=NULL)
+	public function getWhitelistedBy($by, $default=false, $nested=true, array &$whitelist=NULL, $visited=array())
 	{
 		if ( ($whitelist !== NULL) && (self::getWhitelistedByS($by, $whitelist, 0) !== 0) )
 		{
 			return $by;
 		}
+
+		$visited[] = $this->getClassName();
 		
 		$byp = $this->getWhitelistedByPrefix($by);
 		
@@ -407,10 +409,13 @@ abstract class GDO
 			}
 			elseif ( ($nested === true) && ( (($d[0] & self::OBJECT) === self::OBJECT) || (($d[0] & self::JOIN) === self::JOIN) ) )
 			{
-				if (false !== self::table($d[2][0])->getWhitelistedBy($byp))
-				{
-					return $by;
-				}
+			    if (!(in_array($d[2][0], $visited, true)))
+                {
+                    if (false !== self::table($d[2][0])->getWhitelistedBy($byp, $default, $nested, $whitelist, $visited))
+                    {
+                        return $by;
+                    }
+                }
 			}
 		}
 				
