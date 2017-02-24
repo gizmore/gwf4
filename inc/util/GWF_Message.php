@@ -70,7 +70,7 @@ class GWF_Message {
 	{
 		if(!isset(self::$bbSmileyPath))
 		{
-			$path = sprintf('%1$s/img/%1$s/smile/', GWF_DEFAULT_DESIGN);
+			$path = sprintf('%1$s/img/%1$s/smile/', GWF4::getDesign());
 			if(is_dir(GWF_WWW_PATH.$path))
 			{
 				self::$bbSmileyPath = $path;

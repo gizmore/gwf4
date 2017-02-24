@@ -233,7 +233,7 @@ final class GWF_ClientInfo
 	*/
 	public static function image($name, $path='client/', $check=true)
 	{
-		$path = sprintf('themes/%s/img/%1$s/%s.png', GWF_DEFAULT_DESIGN, $path . self::validateImgPath($name));
+		$path = sprintf('themes/%s/img/%1$s/%s.png', GWF4::getDesign(), $path . self::validateImgPath($name));
 		return ( !$check || is_file(GWF_WWW_PATH.$path) ) ? sprintf('<img src="%s" title="%s" alt="%s" class="gwf_icon">', GWF_WEB_ROOT.$path, self::lang($name), self::lang($name)) : '';
 	}
 	public static function imgBrowser($path='client/') { return self::image( self::getBrowser(), $path ); }

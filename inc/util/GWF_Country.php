@@ -93,7 +93,7 @@ final class GWF_Country extends GDO
 
 	public static function displayFlagS2($countryid, $countryname, $pattern='<img src="%s" class="flag" title="%s" alt="%s" />')
 	{
-		$path = sprintf('%sthemes/%s/img/%2$s/country/%d', GWF_WEB_ROOT, GWF_DEFAULT_DESIGN, $countryid);
+		$path = sprintf('%sthemes/%s/img/%2$s/country/%d', GWF_WEB_ROOT, 'default', $countryid);
 		$t = htmlspecialchars($countryname);
 		return sprintf($pattern, $path, $t, $t);
 	}

@@ -1,6 +1,6 @@
 <?php
 define('GWF_DEBUG_TIME_START', microtime(true));
-define('GWF_CORE_VERSION', '4.01-2016.Nov.17');
+define('GWF_CORE_VERSION', '4.01-2017.Feb.21');
 
 /**
  * Welcome to GWF4
@@ -53,12 +53,6 @@ class GWF4
 		{
 			GWF_Bootstrap::init();
 		}
-		
-		# Windows patch
-//		if (GWF_ServerInfo::isWindows())
-//		{
-// 			$basepath = str_replace('\\', '/', $basepath);
-//		}
 		
 		# Important definements...
 		$basepath = $basepath === NULL ? GWF_PATH.'' : $basepath;
