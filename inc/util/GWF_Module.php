@@ -168,13 +168,6 @@ class GWF_Module extends GDO
 		return GWF_Template::moduleTemplatePHP($name, $file, $tVars);
 	}
 	
-// 	public function coreTemplatePHP($file, $tVars=array()) {
-// 		$tVars['lang'] = $this->lang;
-// 		$tVars['module'] = $this;
-// 		return GWF_Template::templatePHPRaw($file, $tVars);
-// 	}
-	
-
 	##############
 	### Loader ###
 	##############
@@ -195,15 +188,15 @@ class GWF_Module extends GDO
 	 */
 	public static function loadModuleDB($modulename, $include=false, $load_lang=false, $check_enabled=false)
 	{
-		if (false === isset(self::$MODULES[$modulename]))
+		if (!isset(self::$MODULES[$modulename]))
 		{
 			$enabled = $check_enabled ? ' AND module_options&'.self::ENABLED : '';
-			if (false === ($data = self::table(__CLASS__)->selectFirst('*', 'module_name=\''.self::escape($modulename).'\''.$enabled)))
+			if (!($data = self::table(__CLASS__)->selectFirst('*', 'module_name=\''.self::escape($modulename).'\''.$enabled)))
 			{
 				return false;
 			}
 
-			if (false === ($module = self::initModuleB($modulename, $data)))
+			if (!($module = self::initModuleB($modulename, $data)))
 			{
 				return false;
 			}
@@ -213,23 +206,44 @@ class GWF_Module extends GDO
 			$module = self::$MODULES[$modulename];
 		}
 
-//		if (false === $module->isEnabled())
-//		{
-//			return false;
-//		}
+		if ($check_enabled && (!$module->isEnabled()))
+		{
+			return false;
+		}
 
-
-		if (true === $include)
+		if ($include)
 		{
 			$module->onInclude();
 		}
 
-		if (true === $load_lang)
+		if ($load_lang)
 		{
 			$module->onLoadLanguage();
 		}
 
 		return $module;
+	}
+	
+	/**
+	 * Load all modules at once.
+	 * @param bool $only_enabled
+	 * @return array(m_name => GWF_Module)
+	 */
+	public static function loadModulesDB($only_enabled=true, $only_autoloaders=false)
+	{
+		$table = self::table(__CLASS__);
+		$options = $only_enabled ? self::ENABLED : 0;
+		$options |= $only_autoloaders ? self::AUTOLOAD : 0;
+		$result = $table->select('*', sprintf('module_options&%1$d=%1$d', $options), 'module_priority ASC');
+		while ($data = $table->fetch($result, self::ARRAY_A))
+		{
+			$modulename = $data['module_name'];
+			if (!isset(self::$MODULES[$modulename]))
+			{
+				self::initModuleB($modulename, $data);
+			}
+		}
+		return self::$MODULES;
 	}
 
 	/**
@@ -239,27 +253,8 @@ class GWF_Module extends GDO
 	 */
 	public static function autoloadModules()
 	{
-		if (false === ($modules = self::table(__CLASS__)->selectAll('*', 'module_options&3=3', 'module_priority ASC')))
-		{
-			return false; # Database Problem
-		}
-		$msg = array();
-		foreach ($modules as $data)
-		{
-			$modulename = $data['module_name'];
-			if (true === isset(self::$MODULES[$modulename]))
-			{
-				continue;
-			}
-			if (false === ($module = self::initModuleB($modulename, $data)))
-			{
-				# TODO...
-				$msg[] = 'Could not autoload module '.$modulename;
-				GWF_Log::logError('Could not autoload module '.$modulename);
-			}
-		}
+		self::loadModulesDB(true, true);
 		return true;
-		//return count($msg) ? true : new GWF_Exception($msg, GWF_Exception::MODULES);
 	}
 
 	/**
@@ -288,6 +283,7 @@ class GWF_Module extends GDO
 		}
 		require_once $pre.$path;
 		self::$MODULES[$modulename] = $m = new $classname($data);
+		$m instanceof GWF_Module;
 		if (false === $m->loadVars())
 		{
 			return false;
@@ -300,20 +296,38 @@ class GWF_Module extends GDO
 		return $m;
 	}
 
+	############
+	### Vars ###
+	############
+	/**
+	 * Static modulevar cache.
+	 * @var array(int m_id,string key,string value)
+	 */
+	private static $VARS;
+	/**
+	 * Load static modulevar cache.
+	 * @return array(int m_id,string key,string value)
+	 */
+	public static function initVars()
+	{
+		if (!isset(self::$VARS))
+		{
+			self::$VARS = self::table('GWF_ModuleVar')->selectAll('mv_mid,mv_key,mv_val', '', '', NULL, -1, -1, self::ARRAY_N);
+		}
+		return self::$VARS;
+	}
+	
 	public function loadVars()
 	{
-		$db = gdo_db();
-		$id = $this->getID();
-		if (false === ($result = self::table('GWF_ModuleVar')->select('mv_key,mv_val', "mv_mid=$id")))
-		{
-			return false;
-		}
+		$mid = $this->getID();
 		$this->module_vars = array();
-		while (false !== ($row = $db->fetchRow($result)))
+		foreach (self::initVars() as $data)
 		{
-			$this->module_vars[$row[0]] = $row[1];
+			if ($data[0] === $mid)
+			{
+				$this->module_vars[$data[1]] = $data[2];
+			}
 		}
-		$db->free($result);
 		return true;
 	}
 
@@ -462,6 +476,5 @@ class GWF_Module extends GDO
 		$v = $this->getVersionFS();
 		return GWF_Website::addJavascript(GWF_WEB_ROOT."module/$name/js/$file?v=$v");
 	}
-	
 	
 }
