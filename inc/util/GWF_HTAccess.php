@@ -30,7 +30,7 @@ final class GWF_HTAccess
 // 			'</LimitExcept>'.PHP_EOL.
 			PHP_EOL.
 			'# No dot files'.PHP_EOL.
-			'RedirectMatch 404 /\..*$'.PHP_EOL.
+			'RewriteRule (^\.|/\.) - [F]'.PHP_EOL.
 			PHP_EOL.
 			'# Custom error pages'.PHP_EOL.
 			'ErrorDocument 400 '.GWF_WEB_ROOT_NO_LANG.'index.php?mo=GWF&me=ShowError&code=400'.PHP_EOL.
@@ -45,6 +45,18 @@ final class GWF_HTAccess
 			PHP_EOL.
 			self::getLangRewrites().PHP_EOL.
 			PHP_EOL;
+	}
+	
+	public static function createWellKnownFolder()
+	{
+		if (!($success = GWF_File::isFile(GWF_PATH.'.well-known/.htaccess')))
+		{
+			if (GWF_File::createDir(GWF_PATH.'.well-known'))
+			{
+				$success = @file_put_contents(GWF_PATH.'.well-known/.htaccess', "Options +Indexes\nRewriteEngine On\n");
+			}
+		}
+		return $success;
 	}
 
 	public static function getPostHTAccess()

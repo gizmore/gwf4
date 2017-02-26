@@ -396,6 +396,9 @@ final class GWF_ModuleLoader
 		if (false === self::installHTAccess2($modules)) {
 			return false;
 		}
+		if (false === GWF_HTAccess::createWellKnownFolder()) {
+			return false;
+		}
 		return true;
 	}
 
