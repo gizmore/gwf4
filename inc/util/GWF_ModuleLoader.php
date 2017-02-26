@@ -60,17 +60,8 @@ final class GWF_ModuleLoader
 		{
 			require_once $module->getModuleFilePath($classname.'.php');
 		}
-// 		GWF_File::filewalker($module->getDir(), array(__CLASS__, 'includeFile'), false, false);
 	}
 	
-// 	public static function includeFile($entry, $fullpath, $args=NULL)
-// 	{
-// 		if (Common::endsWith($entry, '.php'))
-// 		{
-// 			require_once($fullpath);
-// 		}
-// 	}
-
 	###############
 	### Load FS ###
 	###############
@@ -106,18 +97,21 @@ final class GWF_ModuleLoader
 
 	public static function loadModuleFS($name)
 	{
-		if (isset(GWF_Module::$MODULES[$name])) {
+		if (isset(GWF_Module::$MODULES[$name]))
+		{
 			return GWF_Module::$MODULES[$name];
 		}
 
 		$modulename = "Module_$name";
 		$filename = GWF_CORE_PATH."module/$name/$modulename.php";
-		if (false === Common::isFile($filename)) {
+		if (!Common::isFile($filename))
+		{
 			return false;
 		}
 		require_once $filename;
 
-		if (false === class_exists($modulename)) {
+		if (!class_exists($modulename))
+		{
 			return false;
 		}
 		$module = new $modulename();
@@ -127,7 +121,7 @@ final class GWF_ModuleLoader
 		$options |= $module->getDefaultAutoLoad() ? GWF_Module::AUTOLOAD : 0;
 		$options |= $module->getDefaultEnabled() ? GWF_Module::ENABLED : 0;
 			
-		if (false === ($module_db = GWF_Module::loadModuleDB($name)))
+		if (!($module_db = GWF_Module::loadModuleDB($name)))
 		{
 			$data = array(
 				'module_id' => 0,
@@ -366,23 +360,7 @@ final class GWF_ModuleLoader
 
 	private static function getBoolValue($value)
 	{
-// 		if (is_numeric($value))
-// 		{
-			return $value ? '1' : '0';
-// 		}
-// 		return false;
-// 		$true = array('on', 'yes', 'true', '1', 'y', 'ja', 'si', 'oui');
-// 		$false = array('off', 'no', 'false', '0', 'n', 'nein', 'no', 'non');
-// 		$value = strtolower($value);
-// 		if (in_array($value, $true, true)) {
-// 			return '1';
-// 		}
-// 		elseif (in_array($value, $false, true)) {
-// 			return '0';
-// 		}
-// 		else {
-// 			return false;
-// 		}
+		return $value ? '1' : '0';
 	}
 
 	#############################
@@ -579,4 +557,3 @@ final class GWF_ModuleLoader
 		return gdo_db()->changeColumn($gdo->getTableName(), $old_columnname, $new_columnname, $define);
 	}
 }
-

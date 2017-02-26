@@ -1,6 +1,6 @@
 <?php
 define('GWF_DEBUG_TIME_START', microtime(true));
-define('GWF_CORE_VERSION', '4.01-2017.Feb.21');
+define('GWF_CORE_VERSION', '4.01-2017.Feb.27');
 
 /**
  * Welcome to GWF4
@@ -105,7 +105,6 @@ class GWF4
 		{
 			$this->init();
 		}
-// 		return $this;
 	}
 
 	/**

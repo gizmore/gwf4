@@ -1,5 +1,5 @@
 <?php $required = " required"; $input = null; ?>
-<gwf-form>
+<gwf-form class="container">
 	<form class="gwf4-form" action="<?php echo $action; ?>" method="<?php echo $method; ?>" enctype="<?php echo $enctype; ?>">
 	<h2><?php echo $title; ?></h2>
 	<?php foreach ($tVars['data'] as $key => $data) {
@@ -28,7 +28,7 @@
 		switch ($type)
 		{
 			case GWF_Form::HIDDEN:
-				printf('<div><input type="hidden" name="%s" value="%s" /></div>', $key, $data[1]);
+				printf('<input type="hidden" name="%s" value="%s" />', $key, $data[1]);
 				break;
 				
 			case GWF_Form::STRING:
@@ -53,8 +53,8 @@
 			case GWF_Form::CHECKBOX:
 				$checked = $data[1] ? ' checked="checked"' : '';
 				$input = sprintf('<input type="checkbox" name="%s"%s />', $key, $checked);
-				printf('<div class="checkbox">%s%s%s</div>', $label, $tt, $input);
-				$input = null;
+// 				printf('<div class="checkbox">%s%s%s</div>', $label, $tt, $input);
+// 				$input = null;
 				break;
 				
 			case GWF_Form::CAPTCHA:
@@ -62,14 +62,13 @@
 				$label = '<label>'.GWF_HTML::lang('th_captcha1').'</label>'; 
 				$tt = GWF_Button::tooltip(GWF_HTML::lang('tt_captcha1'));
 				$img = sprintf('<img src="%sCaptcha%s" onclick="this.src=\'%1$sCaptcha/?\'+(new Date()).getTime();" alt="Captcha" />', $root, $foo);
-				echo "<md-input-container>$label$tt</md-input-container>";
-				echo "<md-input-container>$img</md-input-container>";
-				
+				echo "<div>$label$tt</div>";
+				echo "<div>$img</div>";
 				
 				$tt = GWF_Button::tooltip(GWF_HTML::lang('tt_captcha2'));
 				$label = GWF_HTML::lang('th_captcha2');
 				$input = sprintf('<input type="text" name="%s" value="%s" />', $key, $value);
-				echo "<md-input-container>$label $tt $input</md-input-container>";
+				echo "<div>$label $tt $input</div>";
 				$input = null;
 				break;
 				
@@ -95,18 +94,18 @@
 				break;
 				
 			case GWF_Form::SUBMIT:
-				echo '<section class="gwf-button-bar" layout="row" layout-sm="column" layout-align="center center" layout-wrap>';
+				echo '<gwf-button-bar>';
 				printf('<input name="%s" value="%s" type="submit" class="btn btn-default" />', $key, $value);
-				echo '</section>';
+				echo '</gwf-button-bar>';
 				break;
 				
 			case GWF_Form::SUBMITS:
-				echo '<section class="gwf-button-bar" layout="row" layout-sm="column" layout-align="center center" layout-wrap>';
+				echo '<gwf-button-bar>';
 				foreach ($data[1] as $key => $value)
 				{
 					printf('<input name="%s" value="%s" type="submit" class="btn btn-default" />', $key, $value);
 				}
-				echo '</section>';
+				echo '</gwf-button-bar>';
 				break;
 
 			case GWF_Form::MESSAGE:
@@ -161,7 +160,7 @@
 		}
 		
 		if ($input) {
-			echo "$label $tt $input";
+			echo "<div class=\"row\"><div class=\"col-md-4\">$label $tt</div><div class=\"col-md-8\">$input</div></div>";
 			$input = null;
 		}
 		
@@ -170,4 +169,3 @@
 	</form>
 	<?php if (isset($have_required)) { echo GWF_HTML::lang('form_required', array('*')); } ?>
 </gwf-form>
-

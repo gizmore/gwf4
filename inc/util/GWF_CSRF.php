@@ -45,8 +45,6 @@ final class GWF_CSRF
 		
 		$token = GWF_Random::randomKey(self::TOKEN_ENTROPY);
 		
-// 		$token = md5($userdata);
-		
 		$a[$token] = array(time(), $userdata);
 		
 		self::cleanupOldTokens();

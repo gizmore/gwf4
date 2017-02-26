@@ -4,8 +4,8 @@ final class GWF_AngularSidebar extends GWF_Method
 	public function sidebarContents($bars)
 	{
 		$result = array();
-		$modules = GWF_ModuleLoader::loadModulesFS();
-		$modules = GWF_ModuleLoader::sortModules($modules, 'module_priority', 'DESC');
+		$modules = GWF_Module::loadModulesDB();
+		$modules = GWF_ModuleLoader::sortModules($modules, 'module_priority', 'ASC');
 		foreach (explode(',', $bars) as $bar)
 		{
 			$content = '';

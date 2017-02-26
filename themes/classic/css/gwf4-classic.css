@@ -8,10 +8,11 @@ md-input-container, section {
 	overflow: auto;
 }
 
-/** Sidebars **//
+/** Sidebars **/
 gwf-left-sidebar, gwf-right-sidebar {
+	display: block;
 	position: relative;
-	width: 20%;
+	width: 16.43%;
 }
 gwf-left-sidebar {
 	float: left;
@@ -19,8 +20,21 @@ gwf-left-sidebar {
 gwf-right-sidebar {
 	float: right;
 }
-gwf-top-sidebar {
+gwf-footer, gwf-header {
+	display: block;
 }
-gwf-bottom-sidebar {
+gwf-header {
 	
 }
+
+gwf-footer {
+	height: 8%;
+}
+
+gwf-page {
+	display: block;
+	overflow: hidden;
+	min-height: 92%;
+	width: 67.14%;
+}
+

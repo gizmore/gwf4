@@ -60,9 +60,11 @@ gwf-form h2 {
 }
 
 /** Tables **/
-gwf-label {
+gwf-label, gwf-name {
+	opacity: 0.8;
 }
 gwf-num {
+	opacity: 0.9;
 	font-family: monospace;
 }
 

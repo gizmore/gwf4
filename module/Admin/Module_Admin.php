@@ -199,12 +199,28 @@ final class Module_Admin extends GWF_Module
 				return $this->sidebarNanny();
 			}
 		}
+		elseif ($bar === 'left') {
+			if ($_GET['mo'] === 'Admin') {
+				return $this->sidebarModules();
+			}
+		}
 	}
 	
 	private function sidebarNanny()
 	{
 		$this->onLoadLanguage();
-		return sprintf('<a href="%snanny">%s</a>', GWF_WEB_ROOT, $this->lang('btn_admin_section'));
+		$tVars = array(
+			'hrefNanny'	=> GWF_WEB_ROOT.'nanny',
+		);
+		return $this->template('sidebar.php', $tVars);
+	}
+	
+	private function sidebarModules()
+	{
+		$tVars = array(
+			'modules' => GWF_ModuleLoader::loadModulesFS(),
+		);
+		return $this->template('sidebar_modules.php', $tVars);
 	}
 	
 }

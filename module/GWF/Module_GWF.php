@@ -77,7 +77,7 @@ final class Module_GWF extends GWF_Module
 	public function onStartup()
 	{
 		self::$INSTANCE = $this;
-		if ( (!Common::isCLI()) && (GWF_Session::hasSession()) )
+		if ( (!Common::isCLI()) && (GWF_Session::hasSession()) && (!GWF_Website::isAjax()) )
 		{
 			define('GWF_MINIFY_JS', $this->cfgMinifyLevel());
 
@@ -163,22 +163,22 @@ final class Module_GWF extends GWF_Module
 	{
 		$user = GWF_User::getStaticOrGuest();
 		$json = json_encode(array(
-			'user_id' => $user->getVar('user_id'),
-			'user_guest_id' => $user->getVar('user_guest_id'),
+			'user_id' => (int)$user->getVar('user_id'),
+			'user_guest_id' => (int)$user->getVar('user_guest_id'),
 			'user_guest_name' => $user->getVar('user_guest_name'),
 			'user_options' => (int)$user->getVar('user_options'),
 			'user_name' => $user->getVar('user_name'),
-			'user_password' => $user->getVar('user_password'),
+// 			'user_password' => $user->getVar('user_password'),
 			'user_regdate' => $user->getVar('user_regdate'),
 			'user_email' => $user->getVar('user_email'),
 			'user_gender' => $user->getVar('user_gender'),
 			'user_birthdate' => $user->getVar('user_birthdate'),
-			'user_countryid' => $user->getVar('user_countryid'),
-			'user_langid' => $user->getVar('user_langid'),
-			'user_langid2' => $user->getVar('user_langid2'),
+			'user_countryid' => (int)$user->getVar('user_countryid'),
+			'user_langid' => (int)$user->getVar('user_langid'),
+			'user_langid2' => (int)$user->getVar('user_langid2'),
 			'user_level' => $user->getVar('user_level'),
 			'user_title' => $user->getVar('user_title'),
-			'user_credits' => round($user->getVar('user_credits'), 2),
+			'user_credits' => (int)$user->getVar('user_credits'),
 		));
 		return "var GWF_USER = new GWF_User($json);";
 	}
@@ -193,7 +193,23 @@ final class Module_GWF extends GWF_Module
 	
 	public function sidebarContent($bar)
 	{
-		return '';
+		return $this->template('sidebar.php');
 	}
 	
+	public function timingStats()
+	{
+		$db = gdo_db();
+
+		$t_total = microtime(true)-GWF_DEBUG_TIME_START;
+		$t_mysql = $db->getQueryTime();
+		return array(
+			'modules' => GWF_Module::getModulesLoaded(),
+			'queries' => $db->getQueryCount(),
+			'query_w' => $db->getQueryWriteCount(),
+			't_total' => $t_total,
+			't_mysql' => $t_mysql,
+			't_php' => $t_total - $t_mysql,
+			'memory' => GWF_Upload::humanFilesize(memory_get_peak_usage(true)),
+		);
+	}
 }
