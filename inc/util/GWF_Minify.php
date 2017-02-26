@@ -31,20 +31,24 @@ final class GWF_Minify
 	public static function minifiedJavascript($path)
 	{
 		$src = GWF_PATH . Common::substrUntil($path, '?', $path);
-		$md5 = md5(file_get_contents($src));
-		$dest = self::tempDir() . $md5 . '.js'; 
-		if (!Common::isFile($dest))
+		
+		if (GWF_File::isFile($src))
 		{
-			if (strpos($src, '.min.js'))
+			$md5 = md5(file_get_contents($src));
+			$dest = self::tempDir() . $md5 . '.js'; 
+			if (!Common::isFile($dest))
 			{
-				copy($src, $dest); # Skip minified ones
+				if (strpos($src, '.min.js'))
+				{
+					copy($src, $dest); # Skip minified ones
+				}
+				else
+				{
+					`uglifyjs --compress --mangle --screw-ie8 -o $dest  -- $src`;
+				}
 			}
-			else
-			{
-				`uglifyjs --compress --mangle --screw-ie8 -o $dest  -- $src`;
-			}
+			return GWF_WEB_ROOT."temp/minify/$md5.js";
 		}
-		return GWF_WEB_ROOT."temp/minify/$md5.js";
+		return $path;
 	}
-	
 }
