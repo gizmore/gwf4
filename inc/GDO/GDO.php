@@ -397,7 +397,7 @@ abstract class GDO
 			return $by;
 		}
 
-		$visited[] = $this->getTableName();
+		$visited[] = $this->getClassName();
 		
 		$byp = $this->getWhitelistedByPrefix($by);
 		
