@@ -17,6 +17,7 @@ $lang = array(
 	'ERR_GENERAL' => 'Undefined error in %s Line %s.',
 	'ERR_WRITE_FILE' => 'Can not write file: %s.',
 	'ERR_CLASS_NOT_FOUND' => 'Unknown Class: %s.',
+	'ERR_INVALID_VAR' => 'Your form is invalid.',
 	'ERR_MISSING_VAR' => 'Missing HTTP POST var: %s.',
 	'ERR_MISSING_UPLOAD' => 'You have to upload a file.',
 	'ERR_MAIL_SENT' => 'There occured an error while sending you an email.',

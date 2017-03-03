@@ -16,7 +16,7 @@ final class GWF_HTML
 	### SPECIAL CHARS ###
 	#####################
 	public static function decode($s) { return htmlspecialchars_decode($s, ENT_QUOTES); }
-	public static function display($s) { return htmlspecialchars($s, ENT_QUOTES); }
+	public static function display($s) { return htmlspecialchars($s, ENT_QUOTES|ENT_IGNORE); }
 	public static function displayJS($s) { return str_replace(array('\'', "\n"), array('\\\'', '\\n'), $s); }
 
 	#################

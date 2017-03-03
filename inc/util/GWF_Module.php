@@ -253,7 +253,7 @@ class GWF_Module extends GDO
 	 */
 	public static function autoloadModules()
 	{
-		self::loadModulesDB(true, true);
+		self::loadModulesDB(true);
 		return true;
 	}
 

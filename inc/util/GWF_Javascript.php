@@ -137,7 +137,7 @@ final class GWF_Javascript
 		static $called = false;
 		if (!$called)
 		{
-			GWF_Website::addJavascriptOnload("var e = document.getElementById('$id'); (e !== null) { e.focus(); };");
+			GWF_Website::addJavascriptInline("var e = document.getElementById('$id'); (e !== null) { e.focus(); };");
 			$called = true;
 		}
 	}
@@ -154,7 +154,7 @@ final class GWF_Javascript
 		if (!$called)
 		{
 			$focus_script = "var e = document.getElementsByName('$name'); if (e.length === 1) { e[0].focus(); };";
-			GWF_Website::addJavascriptOnload($focus_script);
+			GWF_Website::addJavascriptInline($focus_script);
 			$called = true;
 		}
 	}

@@ -1,8 +1,9 @@
 <?php
 /**
- * Very convinient form generation. [0]=TYPE,[1]=value,[2]=title,[3]=Tooltip,[4]=LEN?,[5]=required
+ * Convinient form generation.
+ * $data[$key] = array(0]=TYPE,[1]=value,[2]=title,[3]=Tooltip,[4]=LEN?,[5]=required)
  * @author gizmore
- * @version 3.0
+ * @version 4.0
  * @since 2.0
  */
 class GWF_Form
@@ -22,7 +23,9 @@ class GWF_Form
 	const TOOLTIP = 3;
 	const LENGTH = 4;
 	const REQUIRED = 5;
-
+	const ERROR = 6;
+	const ICON = 7;
+	
 	# Data Types
 	const INT = 1;
 	const DATE = 2;
@@ -55,12 +58,15 @@ class GWF_Form
 // 	const ENUM_ASSOC = 29;
 	const FILE_IMAGE = 30;
 	const FILE_IMAGES = 31;
+	const EMAIL = 32;
 
 	# CSRF protection levels.
 	const CSRF_OFF = 0;
 	const CSRF_WEAK = 1;
 	const CSRF_STRONG = 2;
 
+	private $icon;
+	private $errors;
 	private $method;
 	private $validator;
 	private $form_data;
@@ -79,6 +85,8 @@ class GWF_Form
 		$this->form_data = $data;
 		$this->method = $method;
 		$this->csrf_bit = $csrf_bit;
+		$this->title = null;
+		$this->encoding = self::ENC_DEFAULT; 
 	}
 
 	public function getMethod() { return $this->method; }
@@ -187,6 +195,21 @@ class GWF_Form
 		$this->onNewCaptcha();
 		return false;
 	}
+	
+	public function setGlobalError($message)
+	{
+		$this->setGlobalErrors(array($message));
+	}
+	
+	public function setGlobalErrors(array $messages)
+	{
+		$this->errors = $messages;
+	}
+	
+	public function setErrorField($key, $message)
+	{
+		$this->form_data[$key][self::ERROR] = $message;
+	}
 
 	public static function validateCSRF_WeakS()
 	{
@@ -199,32 +222,56 @@ class GWF_Form
 
 	public function templateX($title='', $action=true)
 	{
-		return $this->template('formX.php', $title, $action, $this->computeColspanX());
+		return $this->setupTemplate('formX.php', $title, $action, $this->computeColspanX());
 	}
 
 	public function templateY($title='', $action=true)
 	{
-		return $this->template('formY.php', $title, $action, 3);
+		return $this->setupTemplate('formY.php', $title, $action, 3);
+	}
+	
+	public function setupTemplate($file, $title, $action=true, $colspan)
+	{
+		$this->title = GWF_HTML::display($title);
+		$this->action = $action;
+		$this->colspan = $colspan;
+		$this->template = $file;
+		return $this;
 	}
 
-	private function template($file, $title, $action=true, $colspan)
+	public function displayAction()
 	{
-		if (is_bool($action))
-		{
-			$action = $_SERVER['REQUEST_URI'];
-		}
-
+		return GWF_HTML::display(is_bool($this->action)?$_SERVER['REQUEST_URI']:$this->action);
+	}
+	
+	public function icon($col, $icon) { return $this->set($col, self::ICON, $icon); }
+	public function title($icon) { $this->title = $title; return $this; }
+	
+	public function set($col, $key, $val)
+	{
+		$this->form_data[$col][$key] = $val;
+		return $this;
+	}
+	
+	private function template()
+	{
 		$tVars = array(
+			'icon' => $this->icon,
 			'data' => $this->getTemplateData(),
-			'title' => $title,
-			'action' => htmlspecialchars($action),
+			'title' => $this->title,
+			'action' => $this->displayAction(),
 			'method' => $this->method,
 			'enctype' => $this->getEncType(),
 			'has_files' => $this->hasFiles(),
-			'colspan' => $colspan,
+			'colspan' => $this->colspan,
+			'errors' => $this->errors,
 		);
-
-		return GWF_Template::templatePHPMain($file, $tVars);
+		return GWF_Template::templatePHPMain($this->template, $tVars);
+	}
+	
+	public function __toString()
+	{
+		return $this->template();
 	}
 
 	private function computeColspanX()
@@ -325,7 +372,7 @@ class GWF_Form
 					//	array_walk_recursive($this->form_data[$key][$1], array('GWF_Form', 'arrayescape'));
 					//	array_map(array('GWF_Form', 'arrayescape'), $this->form_data[$key][1]);
 					}
-					else
+					else #if ($data[0] !== self::SSTRING)
 					{
 						$this->form_data[$key][1] = htmlspecialchars($this->form_data[$key][1]);
 					}

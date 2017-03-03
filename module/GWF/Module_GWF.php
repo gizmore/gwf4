@@ -193,7 +193,10 @@ final class Module_GWF extends GWF_Module
 	
 	public function sidebarContent($bar)
 	{
-		return $this->template('sidebar.php');
+		if ($bar === 'left')
+		{
+			return $this->template('sidebar.php');
+		}
 	}
 	
 	public function timingStats()

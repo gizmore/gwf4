@@ -58,21 +58,26 @@ final class Login_Form extends GWF_Method
 		}
 	}
 
+	private $form;
 	/**
 	 * @return GWF_Form
 	 */
 	public function getForm()
 	{
-		$data = array(
-			'username' => array(GWF_Form::STRING, '', $this->module->lang('th_username')),
-			'password' => array(GWF_Form::PASSWORD, '', $this->module->lang('th_password')),
-			'bind_ip' => array(GWF_Form::CHECKBOX, true, $this->module->lang('th_bind_ip'), $this->module->lang('tt_bind_ip')),
-		);
-		if ($this->module->cfgCaptcha()) {
-			$data['captcha'] = array(GWF_Form::CAPTCHA);
+		if (!$this->form)
+		{
+			$data = array(
+				'username' => array(GWF_Form::STRING, '', $this->module->lang('th_username')),
+				'password' => array(GWF_Form::PASSWORD, '', $this->module->lang('th_password')),
+				'bind_ip' => array(GWF_Form::CHECKBOX, true, $this->module->lang('th_bind_ip'), $this->module->lang('tt_bind_ip')),
+			);
+			if ($this->module->cfgCaptcha()) {
+				$data['captcha'] = array(GWF_Form::CAPTCHA);
+			}
+			$data['login'] = array(GWF_Form::SUBMIT, $this->module->lang('btn_login'));
+			$this->form = new GWF_Form($this, $data, GWF_Form::METHOD_POST, GWF_Form::CSRF_OFF);
 		}
-		$data['login'] = array(GWF_Form::SUBMIT, $this->module->lang('btn_login'));
-		return new GWF_Form($this, $data, GWF_Form::METHOD_POST, GWF_Form::CSRF_OFF);
+		return $this->form;
 	}
 	
 	public function onLogin($doValidate=true)

@@ -46,7 +46,7 @@ final class Login_History extends GWF_Method
 			'history' => $history->selectObjects('*', $conditions, $orderby, $ipp, $from),
 //			'sort_url' => $this->module->getMethodURL('History', '&by=%BY%&dir=%DIR%&page=1'),
 			'pagemenu' => GWF_PageMenu::display($page, $nPages, $this->module->getMethodURL('History', '&by='.urlencode($by).'&dir='.urlencode($dir).'&page=%PAGE%')),
-			'form' => $form->templateX($this->module->lang('ft_clear')),
+			'form' => $form->templateY($this->module->lang('ft_clear')),
 			'cleared' => $cleared,
 		);
 		return $this->module->template('history.tpl', $tVars);

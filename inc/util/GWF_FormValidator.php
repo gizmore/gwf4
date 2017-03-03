@@ -29,16 +29,19 @@ final class GWF_FormValidator
 		$name = method_exists($context, 'getName') ? $context->getName() : 'unknown Name';
 		if (false !== ($error = self::validateCSRF($context, $form, $validator)))
 		{
+			$form->setGlobalError($error);
 			return GWF_HTML::error($name, $error, false);
 		}
 
 		if (false !== ($errors = self::validateMissingVars($context, $form, $validator)))
 		{
+			$form->setGlobalErrors($errors);
 			return GWF_HTML::error($name, $errors, false);
 		}
 
 		if (false !== ($errors = self::validateVars($context, $form, $validator)))
 		{
+			$form->setGlobalError(GWF_HTML::lang('ERR_INVALID_VAR'));
 			return GWF_HTML::error($name, $errors, false);
 		}
 
@@ -223,6 +226,7 @@ final class GWF_FormValidator
 			}
 			elseif (false !== ($error = call_user_func($function, $context, $form->getVar($key))))
 			{
+				$form->setErrorField($key, $error);
 				$errors[] = $error;
 			}
 		}

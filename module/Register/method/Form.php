@@ -44,11 +44,11 @@ final class Register_Form extends GWF_Method
 		
 		if ($this->module->isTOSForced()) {
 			if ('' !== ($href_tos = $this->module->cfgHrefTos())) {
-				$data['toslink'] = array(GWF_Form::SSTRING, $this->module->lang('th_tos2', array(htmlspecialchars($href_tos))));
+				$label = $this->module->lang('th_tos2', array(htmlspecialchars($href_tos)));
 			} else {
-				$data['toslink'] = array(GWF_Form::SSTRING, $this->module->lang('th_tos1'));
+				$label = $this->module->lang('th_tos1');
 			}
-			$data['tos'] = array(GWF_Form::CHECKBOX, false, $this->module->lang('th_tos3'));
+			$data['tos'] = array(GWF_Form::CHECKBOX, false, $label);
 			$data['eula'] = array(GWF_Form::VALIDATOR);
 		}
 
@@ -66,9 +66,10 @@ final class Register_Form extends GWF_Method
 		$form = $this->getForm();
 		$tVars = array(
 			'form' => $form->templateY($this->module->lang('title_register'), GWF_WEB_ROOT.'register'),
-			'cookie_info' => GWF_Session::haveCookies() ? '' : GWF_HTML::err('ERR_COOKIES_REQUIRED', NULL, false),
+			'login' => GWF_Module::getModule('Login'),
+			'recovery' => GWF_Module::getModule('PasswordForgot'),
 		);
-		return $this->module->template('register.tpl', $tVars);
+		return $this->module->template('register.php', $tVars);
 	}
 	
 	private function onRegister()

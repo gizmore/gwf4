@@ -244,7 +244,7 @@ class GWF_User extends GDO
 	private $groups = true;
 	public static function isLoggedIn() { return GWF_Session::getUserID() !== '0'; }
 	public static function getByIDOrGuest($id) { return (false === ($u = self::getByID($id))) ? GWF_Guest::getGuest() : $u; }
-	public static function getStaticOrGuest() { return (false === ($user = GWF_Session::getUser())) ? GWF_Guest::getGuest() : $user; }
+	public static function getStaticOrGuest() { return (!($user = GWF_Session::getUser())) ? GWF_Guest::getGuest() : $user; }
 	public static function isGuestS() { return self::getStaticOrGuest()->isGuest(); }
 	public static function isAdminS() { return self::getStaticOrGuest()->isAdmin(); }
 	public function isAdmin() { return $this->isInGroupName(GWF_Group::ADMIN); }

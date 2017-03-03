@@ -35,5 +35,5 @@ echo GWF_Table::end();
 
 echo $tVars['pagemenu'];
 
-$buttons= GWF_Button::add($lang->lang('btn_add'), $tVars['href_add']);
+$buttons = GWF_Button::add($tVars['href_add'], $lang->lang('btn_add'));
 echo GWF_Button::wrap($buttons);

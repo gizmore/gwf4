@@ -45,22 +45,23 @@ final class GWF_Table
 	{
 		$sel = Common::getGetString($by, $default);
 
-		$back = '<thead>'.PHP_EOL;
+		$back = "<thead>\n";
 		$back .= $raw;
 
-		$back .= '<tr>'.PHP_EOL;
+		$back .= "<tr>\n";
 		foreach ($headers as $h)
 		{
-			$back .= '<th>'.PHP_EOL;
+			$class = isset($h[3]) ? sprintf(' class="%s"', $h[3]) : '';
+			$back .= "<th$class\n>";
 			if (!is_array($h) || !isset($h[0]) || $h[0]==='') {
-				$back .= '</th>'.PHP_EOL;
+				$back .= "</th>\n";
 				continue;
 			}
 
 			$sort = isset($h[1]) ? $h[1] : '';
 			if ($sort === '') {
 				$back .= $h[0];
-				$back .= '</th>'.PHP_EOL;
+				$back .= "</th>\n";
 				continue; # can not sort field;
 			}
 

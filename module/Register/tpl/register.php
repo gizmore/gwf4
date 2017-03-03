@@ -1,16 +1,21 @@
-<?php if (!$tVars['have_cookies']) { ?>
-	<div><?php echo GWF_HTML::error('Register', $lang->lang('info_no_cookie'), false); ?></div>
-<?php } ?>
+<?php
+if (!GWF_Session::haveCookies())
+{
+echo GWF_HTML::err('ERR_COOKIES_REQUIRED', NULL, false);
+}
+?>
+
+<?php
+echo $form;
+?>
 
 
-<div  class="fl">
-	<div><?php echo $tVars['form'] ?></div>
-	<div class="gwf_buttons ce"><div>
-		<div class="ib">
-			<div class="ib"><?php echo GWF_Button::generic($lang->lang('btn_login'), GWF_WEB_ROOT.'login'); ?></div>
-			<div class="ib"><?php echo GWF_Button::generic($lang->lang('btn_recovery'), GWF_WEB_ROOT.'recovery'); ?></div>
-		</div>
-		<div class="cb"></div>
-	</div></div>
-</div>
-
+<section class="gwf-button-bar" layout="row" layout-sm="column" layout-align="center center" layout-wrap>
+<?php
+$buttons = '';
+if ($login) $buttons .= GWF_Button::generic($lang->lang('btn_login'), "{$root}login");
+if ($recovery) $buttons .= GWF_Button::generic($lang->lang('btn_recovery'), "{$root}recovery");
+#if ($facebookUrl) $buttons .= GWF_Button::generic($lang->lang('btn_fb_login'), $facebookUrl);
+echo $buttons;
+?>
+</section>

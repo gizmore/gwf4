@@ -109,64 +109,57 @@ class GWF4
 
 	/**
 	 * Initialize by ConfigOptions
-	 * @return GWF3 
+	 * @return GWF4 
 	 */
 	public function init()
 	{
 		$config = &self::$CONFIG;
 		
-		if (true === $config['start_debug'])
+		if ($config['start_debug'])
 		{
 			GWF_Debug::enableErrorHandler();
 			GWF_Debug::setMailOnError((GWF_DEBUG_EMAIL & 2) > 0);
 		}
 		
-		if (true === $config['kick_banned_ip'])
+		if ($config['kick_banned_ip'])
 		{
 			$this->onKickBannedIP();
 		}
 		
-		if (true === defined('GWF_WEBSITE_DOWN'))
+		if (defined('GWF_WEBSITE_DOWN'))
 		{
 			$this->setConfig('load_module', false);
 			$this->setConfig('autoload_modules', false);
 			$this->setConfig('no_session', true);
 		}
 
-// 		$db = gdo_db();
-		
-		if (true === $config['do_logging'])
+		if ($config['do_logging'])
 		{
 			$this->onStartLogging($config['no_session']);
 		}
 		
-		if (false === $config['no_session'])
+		if (!$config['no_session'])
 		{
 			$this->onStartSession($config['blocking']);
 		}
 		
-		if (true === $config['website_init']) 
+		if ($config['website_init']) 
 		{ 
 			$db = gdo_db();
 			GWF_Website::init();
 		}
 		
-		if (true === $config['autoload_modules']) 
+		if ($config['autoload_modules']) 
 		{ 
 			$this->onAutoloadModules(); 
 		}
 		
-// 		if (true === $config['get_user'])
-// 		{		
-// 			GWF_Template::addMainTvars(array('user' => (self::$user = GWF_User::getStaticOrGuest())));
-// 		}
-		
-		if (true === $config['load_module']) 
+		if ($config['load_module']) 
 		{ 
 			$this->onLoadModule(); 
 		}
 
-		if (true === defined('GWF_WEBSITE_DOWN'))
+		if (defined('GWF_WEBSITE_DOWN'))
 		{
 			die( $this->onDisplayPage(GWF_WEBSITE_DOWN) );
 		}
@@ -408,9 +401,9 @@ class GWF4
 	{
 		# Load the module
 		$db = gdo_db();
-		if (false === (self::$MODULE = GWF_Module::loadModuleDB($_GET['mo']))) 
+		if (!(self::$MODULE = GWF_Module::loadModuleDB($_GET['mo']))) 
 		{
-			if (false === (self::$MODULE = GWF_Module::loadModuleDB(GWF_DEFAULT_MODULE))) 
+			if (!(self::$MODULE = GWF_Module::loadModuleDB(GWF_DEFAULT_MODULE))) 
 			{
 				self::logDie('No module found.');
 			}
@@ -418,7 +411,7 @@ class GWF4
 		}
 
 		# Module is enabled?
-		if (true === self::$MODULE->isEnabled())
+		if (self::$MODULE->isEnabled())
 		{
 			# Execute the method
 			self::$MODULE->onInclude();
@@ -426,7 +419,7 @@ class GWF4
 			$db = gdo_db();
 			$db->transactionStart();
 			self::$page = self::$MODULE->execute($_GET['me']);
-			if (true === isset($_GET['ajax']))
+			if (isset($_GET['ajax']))
 			{
 				self::$page = GWF_Website::getDefaultOutput().self::$page;
 			}

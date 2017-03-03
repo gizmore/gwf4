@@ -78,5 +78,8 @@ $lang = array(
 	'cfg_fb_secret' => 'Facebook Secret',
 	'err_fb_login' => 'Facebook login failed: %s',
 	'btn_fb_login' => 'Login with Facebook',
+		
+	# v4.1 Sidebar
+	'btn_logout' => 'Logout',
 );
 

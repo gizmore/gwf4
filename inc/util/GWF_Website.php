@@ -25,7 +25,6 @@ final class GWF_Website
 
 	private static $_javascripts = array();
 	private static $_javascript_inline = '';
-	private static $_javascript_onload = '';
 
 	const NONE=0, SCREEN=1, TTY=2, TV=3, PROJECTION=4, HANDHELP=5, _PRINT=6, BRAILLE=7, AURAL=8, ALL=9; 
 	private static $_media = array('', 'screen','tty','tv','projection','handheld','print','braille','aural','all');
@@ -95,7 +94,6 @@ final class GWF_Website
 
 	public static function addDefaultOutput($html) { self::$_output .= $html; }
 	public static function addJavascriptInline($script_html) { self::$_javascript_inline .= $script_html;} # Raw JavaScript
-	public static function addJavascriptOnload($script_html) { self::$_javascript_onload .= $script_html; }
 	public static function addInlineCSS($css) { self::$_inline_css .= $css; }
 	public static function addMetaDescr($s) { self::$_meta['description'][1] .= $s; }
 	public static function addMetaTags($s) { self::$_meta['keywords'][1] .= $s; }
@@ -271,12 +269,12 @@ final class GWF_Website
 	public static function displayJavascriptInline()
 	{
 		$inline_defines = sprintf('var GWF_WEB_ROOT = \'%s\'; var GWF_DOMAIN = \'%s\';'.PHP_EOL, GWF_WEB_ROOT, GWF_DOMAIN);
-		return sprintf('<script type="text/javascript">%s</script>', $inline_defines.self::$_javascript_inline.self::displayJavascriptOnload());
+		return sprintf('<script type="text/javascript">%s</script>', $inline_defines.self::displayJavascriptOnload());
 	}
 
 	private static function displayJavascriptOnload()
 	{
-		return self::$_javascript_onload ? sprintf('; $(document).ready(function(){ %s; });', self::$_javascript_onload) : '';
+		return self::$_javascript_inline ? sprintf('; $(document).ready(function(){ %s; });', self::$_javascript_inline) : '';
 	}
 
 	####################

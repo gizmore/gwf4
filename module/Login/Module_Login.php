@@ -44,26 +44,25 @@ final class Module_Login extends GWF_Module
 	
 	public function sidebarContent($bar)
 	{
-		if ($bar === 'left') {
-			if ($user = GWF_Session::getUser()) {
-				return $this->sidebarLogout($user);
-			}
-		}
-		if ($bar === 'left') {
-			if (!($user = GWF_Session::getUser())) {
-				return $this->sidebarLogin();
-			}
+		if ($bar === 'left')
+		{
+			return $this->templateSidebar();
 		}
 	}
 	
-	public function sidebarLogout(GWF_User $user)
+	public function templateSidebar()
 	{
-		return sprintf('<md-button href="%slogout"><i class="material-icons">lock_outline</i></md-button><span class="gwf-top-username">%s</span>', GWF_WEB_ROOT, $user->getName());
+		$this->onLoadLanguage();
+		$tVars = array(
+			'hrefLogin' => GWF_WEB_ROOT . 'login',
+			'hrefLogout' => GWF_WEB_ROOT . 'logout',
+			'form' => GWF_User::isLoggedIn() ? $this->sidebarLogin() : '',
+		);
+		return $this->template('sidebar.php', $tVars);
 	}
 	
 	public function sidebarLogin()
 	{
-		$this->onLoadLanguage();
 		return $this->getMethod('Form')->form();
 	}
 }

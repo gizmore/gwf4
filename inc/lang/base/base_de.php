@@ -18,6 +18,7 @@ $lang = array(
 	'ERR_GENERAL' => 'Undefinierter Fehler in %s Zeile %s.',
 	'ERR_WRITE_FILE' => 'Kann die Datei %s nicht schreiben.',
 	'ERR_CLASS_NOT_FOUND' => 'Unbekannte Klasse: %s.',
+	'ERR_INVALID_VAR' => 'Ihr Formular ist fehlerhaft.',
 	'ERR_MISSING_VAR' => 'Fehlende Formular Daten für Feld %s.',
 	'ERR_MISSING_UPLOAD' => 'Sie müssen eine Datei hochladen.',
 	'ERR_MAIL_SENT' => 'Es trat ein Fehler beim Senden der EMail auf.',
