@@ -67,7 +67,12 @@ final class GWF_Avatar extends GDO
 	
 	private static function avatarMarkup($href, $alt, $gender)
 	{
-		return sprintf('<gwf-avatar><%s><img src="%s" alt="%s" /></%1$s></gwf-avatar>', $gender, $href, $alt);
+		$tVars = array(
+			'href' => $href,
+			'alt' => $alt,
+			'gender' => $gender,
+		);
+		return GWF_Template::templateMain('avatar.php', $tVars);
 	}
 	
 	##################

@@ -156,7 +156,7 @@ final class Module_GWF extends GWF_Module
 			'HAS_COOKIES' => GWF_Session::haveCookies(),
 			'HAS_SESSION' => GWF_Session::hasSession(),
 		));
-		return "var GWF_CONFIG = $json;";
+		return "window.GWF_CONFIG = $json;";
 	}
 
 	private function getUserJS()
@@ -180,7 +180,7 @@ final class Module_GWF extends GWF_Module
 			'user_title' => $user->getVar('user_title'),
 			'user_credits' => (int)$user->getVar('user_credits'),
 		));
-		return "var GWF_USER = new GWF_User($json);";
+		return "window.GWF_USER = new GWF_User($json);";
 	}
 
 	###############
