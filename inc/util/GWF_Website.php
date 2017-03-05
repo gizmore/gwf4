@@ -66,7 +66,7 @@ final class GWF_Website
 		{
 			header('Location: ' . $url);
 			echo "You should be redirected to: ".htmlspecialchars($url);
-			die();
+#			die();
 		}
 		else
 		{
