@@ -103,9 +103,10 @@ final class Module_GWF extends GWF_Module
 			# GWF inline JS
 			GWF_Website::addJavascriptInline($this->getConfigJS());
 			GWF_Website::addJavascriptInline($this->getUserJS());
-	
+				
 			# Bower JS
 			GWF_Website::addBowerJavascript("jquery/dist/jquery$min.js?v=$v");
+			GWF_Website::addBowerJavascript("ckeditor/ckeditor.js?v=$v");
 			$this->addJavascript('jq-serialize-object.js');
 			if ($ng) GWF_Website::addBowerJavascript("angular/angular$min.js?v=$v");
 			if ($md) GWF_Website::addBowerJavascript("angular-animate/angular-animate$min.js?v=$v");
@@ -117,7 +118,8 @@ final class Module_GWF extends GWF_Module
 			if ($ng) GWF_Website::addBowerJavascript("ng-flow/dist/ng-flow-standalone$min.js?v=$v");
 			if ($ng) GWF_Website::addBowerJavascript("hamsterjs/hamster.js?v=$v");
 			if ($ng) GWF_Website::addBowerJavascript("angular-mousewheel/mousewheel.js?v=$v");
-				
+			$this->addJavascript('gwf-ckeditor.js');
+
 			# GWF below here
 			$this->addJavascript('gwf-ajax-sync.js');
 			$this->addJavascript('gwf-bb-editor.js');
@@ -182,7 +184,7 @@ final class Module_GWF extends GWF_Module
 		));
 		return "window.GWF_USER = new GWF_User($json);";
 	}
-
+	
 	###############
 	### Sidebar ###
 	###############

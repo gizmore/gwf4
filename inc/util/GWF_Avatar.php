@@ -275,7 +275,7 @@ final class GWF_Avatar extends GDO
 		}
 		else
 		{
-			return sprintf('%sthemes/%s/img/default/default_avatars/%s', GWF_PATH, GWF4::getDesign(), $dir, $file);
+			return sprintf('%sthemes/%s/img/default_avatars/%s', GWF_PATH, GWF4::getDesign(), $dir, $file);
 		}
 	}
 	
@@ -316,7 +316,7 @@ final class GWF_Avatar extends GDO
 		$default = $avatar->getDefaultAvatarFilename();
 		$args = array($user, $avatar, $default);
 		# Default avatars directory
-		$path = sprintf('%1$sthemes/%2$s/img/%2$s/default_avatars', GWF_PATH, GWF4::getDesign());
+		$path = sprintf('%1$sthemes/%2$s/img/default_avatars', GWF_PATH, GWF4::getDesign());
 		# Add them via filewalking
 		GWF_File::filewalker($path, array(__CLASS__, 'addDefaultAvatar'), $args);
 		# Return and empty static helper var

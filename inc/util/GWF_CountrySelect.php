@@ -1,7 +1,7 @@
 <?php
 final class GWF_CountrySelect
 {
-	public static function single($name='country', $selected='0')
+	public static function single($name='country', $selected='0', $enabled=true)
 	{
 		$db = gdo_db();
 		$table = GDO::table('GWF_Country');
@@ -15,7 +15,7 @@ final class GWF_CountrySelect
 			$data[$row[0]] = $row[1];
 		}
 		$db->free($result);
-		return GWF_Select::display($name, $data, $selected);
+		return GWF_Select::display($name, $data, $selected, '', '', GWF_Select::DEFAULT_CLASS, $enabled);
 	}
 
 	#################
