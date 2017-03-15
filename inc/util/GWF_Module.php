@@ -31,6 +31,9 @@ class GWF_Module extends GDO
 	public function getID() { return $this->getVar('module_id'); }
 	public function getDir() { return GWF_CORE_PATH.'module/'.$this->getName(); }
 	public function getName() { return $this->getVar('module_name'); }
+	/**
+	 * @return GWF_LangTrans
+	 */
 	public function getLang() { return $this->lang; }
 	public function getVersion() { return 1.00; }
 	public function getVersionFS() { return sprintf('%.02f', $this->getVersion()); }

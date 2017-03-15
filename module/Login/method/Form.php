@@ -39,7 +39,7 @@ final class Login_Form extends GWF_Method
 			'form' => $form->templateY($this->module->lang('title_login'), $this->getAction()),
 			'have_cookies' => GWF_Session::haveCookies(),
 // 			'token' => $form->getFormCSRFToken(),
-			'facebookUrl' => $this->getFacebookURL($this->module),
+			'facebookUrl' => $this->getFacebookURL($this->module, Common::getAbsoluteURL('index.php?mo=Login&me=Facebook')),
 			'tooltip' => $form->getTooltipText('bind_ip'),
 			'register' => GWF_Module::loadModuleDB('Register', false, false, true) !== false,
 			'recovery' => GWF_Module::loadModuleDB('PasswordForgot', false, false, true) !== false,
@@ -47,14 +47,14 @@ final class Login_Form extends GWF_Method
 		return $this->module->template($this->_tpl, $tVars);
 	}
 	
-	private function getFacebookURL(Module_Login $module)
+	public function getFacebookURL(Module_Login $module, $redirectURL)
 	{
 		if ($module->cfgFBLogin())
 		{
 			$permissions = ['email']; // Optional permissions
 			$fb = $module->getFacebook();
 			$helper = $fb->getRedirectLoginHelper();
-			return $helper->getLoginUrl('http://localhost/index.php?mo=Login&me=Facebook', $permissions);
+			return $helper->getLoginUrl($redirectURL, $permissions);
 		}
 	}
 

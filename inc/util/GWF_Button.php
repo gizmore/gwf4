@@ -21,27 +21,29 @@ final class GWF_Button
 	}
 
 	/**
-	 * Get a GWF HTML button. Type is 'generic'. Command is ''. 
+	 * Get a GWF HTML button. Type is 'generic'. Command is ''.
 	 * @param string $text
 	 * @param string $href
 	 * @param string $type
 	 * @param string $command
 	 * @param boolean $selected
 	 * @param string $onclick
+	 * @param boolean $disabled
 	 * @return string
 	 */
-	public static function generic($text, $href='#', $type='generic', $command='', $selected=false, $onclick='')
+	public static function generic($text, $href='#', $type='default', $command='', $selected=false, $onclick='', $disabled=false)
 	{
-		$class = $selected ? ' gwf_btn_sel' : '';
+		if ($type === 'generic') $type = 'default';
+		$class = $selected ? ' active' : '';
 		$onclick = $onclick === '' ? '' : " onclick=\"$onclick\"";
+		$disabled = $disabled ? ' disabled="disabled"' : '';
 		return str_replace(
-			array('%TEXT%', '%HREF%', '%TYPE%', '%CMD%', '%CLASS%', '%ONCLICK%'),
-			array(GWF_HTML::display($text), GWF_HTML::display($href), $type, $command, $class, $onclick),
+			array('%TEXT%', '%HREF%', '%TYPE%', '%CMD%', '%CLASS%', '%ONCLICK%'. '%DISABLED%'),
+			array(GWF_HTML::display($text), GWF_HTML::display($href), $type, $command, $class, $onclick, $disabled),
 			self::$templateButtons
 		);
 	}
-
-
+	
 	public static function icon($class)
 	{
 		return sprintf('<span class="gwf_button"><span class="gwf_btn_%s"></span></span>', $class);

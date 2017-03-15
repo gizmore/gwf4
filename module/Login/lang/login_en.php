@@ -81,4 +81,10 @@ $lang = array(
 
 	# v4.1 Sidebar
 	'btn_logout' => 'Logout',
+		
+	# v4.2 Facebook link
+	'bt_connect_to_facebook' => 'Connect with your facebook account',
+	'btn_connect_to_facebook' => 'Connect',
+	'err_already_connected_to_fb' => 'You are already connected to facebook.',
+	
 );

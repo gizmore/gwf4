@@ -1,3 +1,3 @@
-<h1><?php echo $lang->lang('pt_change'); ?></h1>
-<p><?php echo $lang->lang('info_change', array( $tVars['username'])); ?></p>
-<?php echo $tVars['form']; ?>
+<?php
+echo GWF_Box::box($lang->lang('info_change', array( $tVars['username'])), $lang->lang('pt_change'));
+echo $form;

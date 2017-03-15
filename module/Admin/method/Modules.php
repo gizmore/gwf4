@@ -11,8 +11,8 @@ final class Admin_Modules extends GWF_Method
 	public function getHTAccess()
 	{
 		return
-			sprintf('RewriteRule ^%s$ index.php?mo=Admin&me=Modules&by=module_name&dir=ASC [QSA]'.PHP_EOL, Module_Admin::ADMIN_URL_NAME).
-			sprintf('RewriteRule ^%s/modules/by/([a-z_]+)/(DESC|ASC)$ index.php?mo=Admin&me=Modules&by=$1&dir=$2 [QSA]'.PHP_EOL, Module_Admin::ADMIN_URL_NAME);
+			sprintf('RewriteRule ^%s/?$ index.php?mo=Admin&me=Modules&by=module_name&dir=ASC [QSA]'.PHP_EOL, Module_Admin::ADMIN_URL_NAME).
+			sprintf('RewriteRule ^%s/modules/by/([a-z_]+)/(DESC|ASC)/?$ index.php?mo=Admin&me=Modules&by=$1&dir=$2 [QSA]'.PHP_EOL, Module_Admin::ADMIN_URL_NAME);
 	}
 	
 	public function execute()

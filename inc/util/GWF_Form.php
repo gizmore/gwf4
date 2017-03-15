@@ -249,7 +249,10 @@ class GWF_Form
 	
 	public function set($col, $key, $val)
 	{
-		$this->form_data[$col][$key] = $val;
+		if (isset($this->form_data[$col]))
+		{
+			$this->form_data[$col][$key] = $val;
+		}
 		return $this;
 	}
 	

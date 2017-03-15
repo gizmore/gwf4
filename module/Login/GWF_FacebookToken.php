@@ -32,6 +32,15 @@ final class GWF_FacebookToken extends GDO
 		return self::table(__CLASS__)->getBy('fb_id', $id);
 	}
 	
+		/**
+	 * @param int $id
+	 * @return GWF_FacebookToken
+	 */
+	public static function getByUserID($userid)
+	{
+		return self::table(__CLASS__)->getBy('fb_uid', $userid);
+	}
+	
 	/**
 	 * Refresh login tokens and user association.
 	 * @param string $token
@@ -46,35 +55,44 @@ final class GWF_FacebookToken extends GDO
 		$displayName = $fbVars['name'];
 		
 		# Update existing row
-		if ($row = self::getByID($id))
-		{
-			$row->saveVar('fb_token', $token);
-			return $row;
-		}
+// 		if ($row = self::getByID($id))
+// 		{
+// 			$row->saveVars(array(
+// 				'fb_token' => $token,
+// // 				'fb_uid' => GWF_User::getStaticOrGuest()->getID(),
+// 			));
+// 			return $row;
+// 		}
 		
 		# New row with re-assigned user
-		else if ($user = GWF_User::getByName($name))
-		{
-			$row = new self(array(
-				'fb_id' => $id,
-				'fb_uid' => $user->getID(),
-				'fb_token' => $token,
-			));
-			$row->insert();
-			return $row;
-		}
+// 		else if ($user = GWF_User::getByName($name))
+// 		{
+// 			$row = new self(array(
+// 				'fb_id' => $id,
+// 				'fb_uid' => $user->getID(),
+// 				'fb_token' => $token,
+// 			));
+// 			$row->insert();
+// 			return $row;
+// 		}
 		
-		# New row with new converted guest
-		else if (($user = GWF_User::getStaticOrGuest()) && $user->persistentGuest())
-		{
-			$row = new self(array(
+// 		# New row with new converted guest
+// 		else
+			
+		$user = GWF_User::getStaticOrGuest();
+		$user->persistentGuest();
+		
+		$row = new self(array(
 				'fb_id' => $id,
 				'fb_uid' => $user->getID(),
 				'fb_token' => $token,
-			));
-			$row->insert();
-				$user->saveVars(array(
-				'user_name' => $name,
+		));
+		$row->replace();
+		
+		if ($user->isGuest())
+		{
+			$user->saveVars(array(
+// 				'user_name' => $name,
 				'user_guest_id' => null,
 				'user_guest_name' => $displayName,
 				'user_email' => $email,
@@ -82,8 +100,8 @@ final class GWF_FacebookToken extends GDO
 				'user_password' => "FB",
 				'user_regdate' => GWF_Time::getDate(),
 			));
-			return $row;
 		}
+		return $row;
 	}
 	
 }

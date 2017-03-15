@@ -1,7 +1,7 @@
-<?php echo $tVars['form']; ?>
-<div class="gwf_buttons_outer">
-<div class="gwf_buttons">
-	<a href="<?php echo $tVars['href_login_as']; ?>"><?php echo $lang->lang('btn_login_as2', array( $tVars['user']->displayUsername())); ?></a>
-	<a href="<?php echo $tVars['href_user_groups']; ?>"><?php echo $lang->lang('btn_user_groups', array( $tVars['user']->displayUsername())); ?></a>
-</div>
-</div>
+<?php
+echo $form;
+
+echo GWF_Button::wrapStart();
+echo GWF_Button::generic($lang->lang('btn_login_as2', array( $user->displayUsername())), $href_login_as);
+echo GWF_Button::generic($lang->lang('btn_user_groups', array( $user->displayUsername())), $href_user_groups);
+echo GWF_Button::wrapEnd();
