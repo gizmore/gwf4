@@ -274,7 +274,8 @@ final class GWF_Website
 
 	private static function displayJavascriptOnload()
 	{
-		return self::$_javascript_inline ? sprintf('; $(document).ready(function(){ %s; });', self::$_javascript_inline) : '';
+// 		return self::$_javascript_inline ? sprintf('; $(function(){ %s; });', self::$_javascript_inline) : '';
+		return self::$_javascript_inline ? sprintf('; %s;', self::$_javascript_inline) : '';
 	}
 
 	####################
