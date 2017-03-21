@@ -37,6 +37,7 @@ final class GWF_IP2Country extends GDO
 		{
 			$ip = GWF_IP6::getIP(GWF_IP6::UINT_32);
 			self::$detectedCountry = self::table(__CLASS__)->selectVar('ip2c_cid', "ip2c_start<='$ip' AND ip2c_end>='$ip'");
+			self::$detectedCountry = self::$detectedCountry ? self::$detectedCountry : '0';
 		}
 		return self::$detectedCountry;
 	}
