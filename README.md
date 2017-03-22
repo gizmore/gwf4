@@ -75,10 +75,11 @@ You need to clone the facebook-graph-sdk into the login module.
 
 ### Google Login
 
-You need to clone the php api client into the login module.
+You need to install the google api via composer.
 
     cd module/Login
-    git clone https://github.com/google/google-api-php-client.git
+    curl -s https://getcomposer.org/installer | php
+    php composer.phar install
 
 
 ### Infrastructure Tutorials

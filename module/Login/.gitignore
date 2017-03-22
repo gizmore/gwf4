@@ -1,2 +1,4 @@
 php-graph-sdk/
-google-api-php-client/
+vendor/
+composer.lock
+composer.phar

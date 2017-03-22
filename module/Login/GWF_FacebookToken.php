@@ -1,10 +1,12 @@
 <?php
 /**
- * Turn a gwf4 guest into a real user with facebook credentials.
+ * Turn a gwf4 guest into a real user with oauth credentials.
  * @author gizmore
  */
 final class GWF_FacebookToken extends GDO
 {
+    public static $PROVIDERS = array('FB', 'GP');
+
 	###########
 	### GDO ###
 	###########
@@ -13,9 +15,10 @@ final class GWF_FacebookToken extends GDO
 	public function getColumnDefines()
 	{
 		return array(
-			'fb_id' => array(GDO::UBIGINT|GDO::PRIMARY_KEY, GDO::NOT_NULL),
+			'fb_id' => array(GDO::VARCHAR|GDO::CASE_S|GDO::ASCII|GDO::PRIMARY_KEY, GDO::NOT_NULL, 32),
+            'fb_provider' => array(GDO::ENUM|GDO::PRIMARY_KEY, GDO::NOT_NULL, self::$PROVIDERS),
 			'fb_uid' => array(GDO::UINT, GDO::NULL),
-			'fb_token' => array(GDO::VARCHAR|GDO::ASCII|GDO::CASE_S, GDO::NULL, 1011),
+			'fb_token' => array(GDO::TEXT|GDO::UTF8|GDO::CASE_S, GDO::NOT_NULL),
 		);
 	}
 	
@@ -47,57 +50,36 @@ final class GWF_FacebookToken extends GDO
 	 * @param array $fbVars
 	 * @return GWF_FacebookToken
 	 */
-	public static function refresh($token, array $fbVars)
+	public static function refresh($token, array $fbVars, $provider='FB')
 	{
 		$id = $fbVars['id'];
-		$name = "FB-$id";
+		$name = "$provider-$id";
 		$email = $fbVars['email'];
 		$displayName = $fbVars['name'];
-		
-		# Update existing row
-// 		if ($row = self::getByID($id))
-// 		{
-// 			$row->saveVars(array(
-// 				'fb_token' => $token,
-// // 				'fb_uid' => GWF_User::getStaticOrGuest()->getID(),
-// 			));
-// 			return $row;
-// 		}
-		
-		# New row with re-assigned user
-// 		else if ($user = GWF_User::getByName($name))
-// 		{
-// 			$row = new self(array(
-// 				'fb_id' => $id,
-// 				'fb_uid' => $user->getID(),
-// 				'fb_token' => $token,
-// 			));
-// 			$row->insert();
-// 			return $row;
-// 		}
-		
-// 		# New row with new converted guest
-// 		else
-			
-		$user = GWF_User::getStaticOrGuest();
-		$user->persistentGuest();
-		
+
+        if (!($user = GWF_User::getByName($name)))
+        {
+            $user = GWF_User::getStaticOrGuest();
+            $user->persistentGuest();
+        }
+
 		$row = new self(array(
-				'fb_id' => $id,
-				'fb_uid' => $user->getID(),
-				'fb_token' => $token,
+            'fb_id' => $id,
+            'fb_provider' => $provider,
+            'fb_uid' => $user->getID(),
+            'fb_token' => $token,
 		));
 		$row->replace();
 		
 		if ($user->isGuest())
 		{
 			$user->saveVars(array(
-// 				'user_name' => $name,
+ 				'user_name' => $name,
 				'user_guest_id' => null,
 				'user_guest_name' => $displayName,
 				'user_email' => $email,
 				'user_options' => $user->getOptions() | GWF_User::MAIL_APPROVED,
-				'user_password' => "FB",
+				'user_password' => $provider,
 				'user_regdate' => GWF_Time::getDate(),
 			));
 		}
