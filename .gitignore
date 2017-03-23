@@ -5,6 +5,8 @@
 /.settings/
 
 /.htaccess
+/.htaccess_prepend
+/.htaccess_append
 /index.php
 /gwf_cronjob.php
 
