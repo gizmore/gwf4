@@ -8,6 +8,9 @@
 final class Module_GWF extends GWF_Module
 {
 	private static $INSTANCE;
+    /**
+     * @return Module_GWF
+     */
 	public static function instance() { return self::$INSTANCE; }
 	
 	##############
