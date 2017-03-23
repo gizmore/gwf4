@@ -47,6 +47,7 @@ final class Admin_UserEdit extends GWF_Method
 			'lang2' => array(GWF_Form::SELECT, GWF_LangSelect::single(0, 'lang2', $u->getVar('user_langid2')), $this->module->lang('th_lang_2')),
 			# Options
 			'level' => array(GWF_Form::STRING, $u->getVar('user_level'), $this->module->lang('th_level')),
+			'credits' => array(GWF_Form::INT, $u->getCredits(), $this->module->lang('th_credits')),
 			'approved' => array(GWF_Form::CHECKBOX, $u->hasValidMail(), $this->module->lang('th_is_approved')),
 			'bot' => array(GWF_Form::CHECKBOX, $u->isBot(), $this->module->lang('th_is_bot')),
 			'online' => array(GWF_Form::CHECKBOX, $u->isOptionEnabled(GWF_User::HIDE_ONLINE), $this->module->lang('th_hide_online')),
@@ -96,12 +97,17 @@ final class Admin_UserEdit extends GWF_Method
 		
 		return false;
 	}
-	
-	public function validate_level($m, $arg)
-	{
-		return GWF_Validator::validateInt($m, 'level', $arg, '-2000000000', '2000000000', true);
-	}
-	
+
+    public function validate_level($m, $arg)
+    {
+        return GWF_Validator::validateInt($m, 'level', $arg, '-2000000000', '2000000000', true);
+    }
+
+    public function validate_credits($m, $arg)
+    {
+        return GWF_Validator::validateInt($m, 'credits', $arg, '-2000000000', '2000000000', true);
+    }
+
 	public function validate_email(Module_Admin $module, $arg)
 	{
 		$arg = trim($arg);
@@ -138,7 +144,8 @@ final class Admin_UserEdit extends GWF_Method
 			'user_langid2' => $form->getVar('lang2'),
 			'user_gender' => $form->getVar('gender'),
 			'user_email' => $form->getVar('email'),
-			'user_level' => $form->getVar('level'),
+            'user_level' => $form->getVar('level'),
+            'user_credits' => $form->getVar('credits'),
 		))) {
 			return GWF_HTML::err('ERR_DATABASE', array( __FILE__, __LINE__));
 		}
@@ -236,6 +243,4 @@ final class Admin_UserEdit extends GWF_Method
 		return array($this->module->lang('msg_userpass_changed', array( $user->displayUsername(), GWF_HTML::display($newpass))));
 	}
 	
-} 
-
-?>
+}
