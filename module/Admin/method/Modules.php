@@ -23,7 +23,7 @@ final class Admin_Modules extends GWF_Method
 	private function templateModules()
 	{
 		$gdo = GDO::table('GWF_Module');
-		$by = $gdo->getWhitelistedBy(Common::getGetString('by'), 'module_name');
+		$by = $gdo->getWhitelistedBy(Common::getGetString('by', 'module_name'));
 		$dir = GDO::getWhitelistedDirS(Common::getGetString('dir', 'ASC'));
 		
 		$modules = $this->module->getAllModules($by, $dir);
