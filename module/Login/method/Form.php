@@ -40,6 +40,7 @@ final class Login_Form extends GWF_Method
 			'have_cookies' => GWF_Session::haveCookies(),
 // 			'token' => $form->getFormCSRFToken(),
 			'facebookUrl' => $this->getFacebookURL($this->module, Common::getAbsoluteURL('index.php?mo=Login&me=Facebook')),
+            'googleUrl' => $this->getGoogleURL($this->module, Common::getAbsoluteURL('index.php?mo=Login&me=Google')),
 			'tooltip' => $form->getTooltipText('bind_ip'),
 			'register' => GWF_Module::loadModuleDB('Register', false, false, true) !== false,
 			'recovery' => GWF_Module::loadModuleDB('PasswordForgot', false, false, true) !== false,
@@ -57,6 +58,17 @@ final class Login_Form extends GWF_Method
 			return $helper->getLoginUrl($redirectURL, $permissions);
 		}
 	}
+
+    public function getGoogleURL(Module_Login $module, $redirectURL)
+    {
+        if ($module->cfgGPLogin())
+        {
+            $client = $module->getGoogleClient();
+            $client->setRedirectUri($redirectURL);
+            return $client->createAuthUrl();
+        }
+    }
+
 
 	private $form;
 	/**

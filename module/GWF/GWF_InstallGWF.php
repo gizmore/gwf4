@@ -68,7 +68,7 @@ final class GWF_InstallGWF
 		}
 		else
 		{
-			if (!@unlink($filename))
+			if ((GWF_File::isFile($filename)) && (!@unlink($filename)))
 			{
 				return GWF_HTML::err('ERR_GENERAL', array(__FILE__, __LINE__));
 			}

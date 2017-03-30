@@ -419,10 +419,30 @@ final class GWF_ModuleLoader
 			$hta .= PHP_EOL;
 		}
 		$hta .= GWF_HTAccess::getPostHTAccess();
+		$hta = self::wrappedHTAccess($hta);
 		return file_put_contents(GWF_WWW_PATH.'.htaccess', $hta);
 	}
 
-	public static function getAllMethods(GWF_Module $module)
+	private static function wrappedHTAccess($hta)
+    {
+        $prepend = self::prependHTAccess();
+        $append = self::appendHTAccess();
+        return $prepend . $hta . $append;
+    }
+
+    private static function prependHTAccess()
+    {
+        $path = GWF_PATH . '.htaccess_prepend';
+        return GWF_File::isFile($path) ? file_get_contents($path) : '';
+    }
+
+    private static function appendHTAccess()
+    {
+        $path = GWF_PATH . '.htaccess_append';
+        return GWF_File::isFile($path) ? file_get_contents($path) : '';
+    }
+
+    public static function getAllMethods(GWF_Module $module)
 	{
 		$back = array();
 		$name = $module->getName();

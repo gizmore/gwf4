@@ -1,1 +1,4 @@
 php-graph-sdk/
+vendor/
+composer.lock
+composer.phar
