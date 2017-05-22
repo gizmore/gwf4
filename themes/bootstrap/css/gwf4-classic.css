@@ -1,0 +1,40 @@
+/** Main MD **/
+md-input-container, section {
+	display: block;
+}
+
+/** Main Content **/
+.gwf-main-section {
+	overflow: auto;
+}
+
+/** Sidebars **/
+gwf-left-sidebar, gwf-right-sidebar {
+	display: block;
+	position: relative;
+	width: 16.43%;
+}
+gwf-left-sidebar {
+	float: left;
+}
+gwf-right-sidebar {
+	float: right;
+}
+gwf-footer, gwf-header {
+	display: block;
+}
+gwf-header {
+	
+}
+
+gwf-footer {
+	height: 8%;
+}
+
+gwf-page {
+	display: block;
+	overflow: hidden;
+	min-height: 92%;
+	width: 67.14%;
+}
+

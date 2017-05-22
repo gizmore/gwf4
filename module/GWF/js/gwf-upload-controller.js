@@ -1,6 +1,6 @@
 'use strict';
 angular.module('gwf4').
-controller('UploadCtrl', function($scope) {
+controller('UploadCtrl', function($scope, $http) {
 	
 	$scope.data = {
 		transfer: {
@@ -50,6 +50,14 @@ controller('UploadCtrl', function($scope) {
 		console.log('UploadCtrl.denyFile()', $file, error);
 		alert(error);
 //		ErrorSrvc.showError(error, 'Upload');
+	};
+	
+	$scope.onRemoveFile = function($file, $flow) {
+		console.log('UploadCtrl.onRemoveFile()', $file);
+		alert('Removing files during upload is not yet supported.');
+		// TODO: Send http request to indicate to delete a temp upload?
+		//       Alternatively, set hidden fields for deleted files?
+		// THEN: $flow.removeFile($file);
 	};
 
 	

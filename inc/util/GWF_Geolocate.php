@@ -1,7 +1,15 @@
 <?php
+/**
+ * Geocoordinate utility.
+ * @author gizmore
+ * @since 4.1
+ */
 final class GWF_Geolocate
 {
-	/**
+	public static function isValidLat($lat) { return is_numeric($lat) && $lat >= -90 && $lat <= 90; }
+	public static function isValidLng($lng) { return is_numeric($lng) && $lng >= -180 && $lng <= 180; }
+	
+/**
 	 * http://assemblysys.com/geographical-distance-calculation-in-php/
 	 *
 	 * @param unknown $point1_lat
@@ -28,6 +36,25 @@ final class GWF_Geolocate
 				$distance =  $degrees * 59.97662; // 1 degree = 59.97662 nautic miles, based on the average diameter of the Earth (6,876.3 nautical miles)
 		}
 		return round($distance, $decimals);
+	}
+	
+
+	/**
+	 * Build an sql select query for calculating distance.
+	 * 
+	 * http://stackoverflow.com/questions/1006654/fastest-way-to-find-distance-between-two-lat-long-points
+	 * 
+	 * @param float $lat latitude to compare to.
+	 * @param float $lng longitude to comapre to.
+	 * @param string $latColumn column name for latitude.
+	 * @param string $lngColumn column name for longitude.
+	 * @return string partial query string
+	 */
+	public static function getDistanceQuery($lat, $lng, $latColumn='lat', $lngColumn='lng')
+	{
+		return
+		"(6371 * acos(cos(radians({$lat})) * cos(radians({$latColumn})) * cos(radians({$lngColumn}) ".
+		"- radians({$lng})) + sin(radians({$lat})) * sin(radians({$latColumn})))) AS distance";
 	}
 	
 }

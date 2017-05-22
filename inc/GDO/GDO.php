@@ -278,6 +278,19 @@ abstract class GDO
 // 		return $this->primary_keys;
 	}
 	
+	public function getAllJoins()
+	{
+		$back = array();
+		foreach ($this->getColumnDefcache() as $c => $d)
+		{
+			if (($d[0]&self::JOIN) === self::JOIN)
+			{
+				$back[] = $c;
+			}
+		}
+		return $back;
+	}
+	
 	#######################
 	### Column Creation ###
 	#######################
@@ -470,7 +483,6 @@ abstract class GDO
 		$orderby = $this->getOrderBy($orderby);
 		$limit = self::getLimit($limit, $from);
 		$query = "SELECT {$columns} FROM `{$table}` t ".$join.$where.$groupby.$orderby.$limit;
-// 		echo "$query<br/>\n";
 // 		GWF_Website::addDefaultOutput("$query<br/>\n");
 		return self::$CURRENT_DB->queryRead($query);
 	}
@@ -535,9 +547,19 @@ abstract class GDO
 		{
 			case self::ARRAY_A: return $db->fetchAssoc($result);
 			case self::ARRAY_N: return $db->fetchRow($result);
-			case self::ARRAY_O: return (false === ($row = $db->fetchAssoc($result))) ? false : $this->createObject($row);
+			case self::ARRAY_O: return $this->fetchObject($result);
 			default: return (false === ($row = $db->fetchAssoc($result))) ? false : $this->createObject($row, $r_type);
 		}
+	}
+	
+	/**
+	 * Fetch an object from a result set.
+	 * @param resource $result
+	 * @return GDO
+	 */
+	public function fetchObject($result)
+	{
+		return ($row = self::$CURRENT_DB->fetchAssoc($result)) ? $this->createObject($row) : false;
 	}
 	
 	/**
@@ -743,6 +765,37 @@ abstract class GDO
 		return implode(' AND ', $con);
 	}
 	
+	###########
+	### New ###
+	###########
+	/**
+	 * Reset to default values, except auto increment.
+	 * @return GDO self
+	 */
+	public function reset()
+	{
+		foreach ($this->getColumnDefcache() as $c => $d)
+		{
+			$t = $d[0]; // type
+			if ($t & self::JOIN)
+			{
+				continue;
+			}
+			else if (($t & self::AUTO_INCREMENT) === self::AUTO_INCREMENT)
+			{
+				if (!isset($this->gdo_data[$c]))
+				{
+					$this->gdo_data[$c] = '0';
+				}
+			}
+			else
+			{
+				$this->gdo_data[$c] = is_bool($d[1]) ? null : (string)$d[1];
+			}
+		}
+		return $this;
+	}
+	
 	##############
 	### Insert ###
 	##############
@@ -784,10 +837,14 @@ abstract class GDO
 		$db = self::$CURRENT_DB;
 		$tablename = $this->getTableName();
 		$keys = $vals = '';
+		$cols = $this->getColumnDefcache();
 		foreach ($data as $k => $v)
 		{
-			$keys .= ',`'.$k.'`';
-			$vals .= $v === NULL ? ',NULL' : ',\''.$db->escape($v).'\'';
+			if (isset($cols[$k]))
+			{
+				$keys .= ',`'.$k.'`';
+				$vals .= $v === NULL ? ',NULL' : ',\''.$db->escape($v).'\'';
+			}
 		}
 		$type = $replace ? 'REPLACE' : 'INSERT';
 		$query = sprintf("%s INTO `{$tablename}` (%s) VALUES (%s)", $type, substr($keys,1), substr($vals,1));

@@ -12,16 +12,16 @@ final class GWF_ACL
 	#############
 	### Const ###
 	#############
-	const PUBLIC = 'public';
+	const PUBLICY = 'public';
 	const MEMBERS = 'members';
 	const FRIENDS = 'friends';
-	const PRIVATE = 'private';
-	public static $ACL_ENUM = array(self::PUBLIC, self::MEMBERS, self::FRIENDS, self::PRIVATE);
+	const PRIVATELY = 'private';
+	public static $ACL_ENUM = array(self::PUBLICY, self::MEMBERS, self::FRIENDS, self::PRIVATELY);
 	
 	###############
 	### Defines ###
 	###############
-	public static function gdoDefine($default=self::PRIVATE)
+	public static function gdoDefine($default=self::PRIVATELY)
 	{
 		return array(GDO::ENUM, $default, self::$ACL_ENUM);
 	}
@@ -38,10 +38,10 @@ final class GWF_ACL
 	{
 		$data = array(
 			'0' => GWF_HTML::lang('acl_choose'),
-			self::PUBLIC => GWF_HTML::lang('acl_public'),
+			self::PUBLICY => GWF_HTML::lang('acl_public'),
 			self::MEMBERS => GWF_HTML::lang('acl_members'),
 			self::FRIENDS => GWF_HTML::lang('acl_friends'),
-			self::PRIVATE => GWF_HTML::lang('acl_private'),
+			self::PRIVATELY => GWF_HTML::lang('acl_private'),
 		);
 		return GWF_Select::display($key, $data, $selected, '', GWF_HTML::lang('th_acl'));
 	}
@@ -62,10 +62,10 @@ final class GWF_ACL
 	{
 		switch($access)
 		{
-			case self::PUBLIC: return true;
+			case self::PUBLICY: return true;
 			case self::MEMBERS: return $asker->isMember();
 			case self::FRIENDS: return GWF_Friendship::areFriendsByID($asker->getID(), $objectOwnerID);
-			case self::PRIVATE: return $asker->getID() == $objectOwnerID;
+			case self::PRIVATELY: return $asker->getID() == $objectOwnerID;
 			default: echo GWF_HTML::err('ERR_GENERAL', array(__FILE__, __LINE__)); return false;
 		}
 	}

@@ -26,6 +26,10 @@
     "ng-flow": "~2",
     "angular-sanitize": "^1.6.1",
     "angular-mousewheel": "^1.0.5",
-    "ckeditor": "^4.6.2"
+    "ckeditor": "^4.6.2",
+    "bootstrap": "^3.3.7",
+    "bootstrap-combobox": "^1.1.8",
+    "bootstrap-datepicker": "^1.6.4",
+    "bootstrap-sidebar": "^0.2.2"
   }
 }

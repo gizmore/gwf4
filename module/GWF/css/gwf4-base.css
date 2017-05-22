@@ -4,8 +4,8 @@ gwf-box {
 }
 gwf-box * {
     font-family: serif;
-	line-height: 1.25em;
-    font-size: 1.5em;
+	line-height: 28px;
+    font-size: 21px;
 }
 gwf-box title {
 	font-weight: bold;

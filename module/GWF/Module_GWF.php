@@ -89,6 +89,7 @@ final class Module_GWF extends GWF_Module
 			$v = $this->getVersionDB();
 			$md = $this->cfgMaterialApp();
 			$ng = $this->cfgAngularApp();
+			$bs = $this->cfgBootstrapApp();
 				
 			# CSS
 			$this->addCSS("gwf4.css"); # Own core is great
@@ -97,7 +98,12 @@ final class Module_GWF extends GWF_Module
 			if ($md) GWF_Website::addCSS("https://fonts.googleapis.com/icon?family=Material+Icons"); # Icons
 			if ($md) $this->addCSS("gwf-material.css"); # GWF4 css patches
 			if ($ng) $this->addCSS("gwf-flow.css"); # GWF4 css patches
-					
+			if ($bs) $this->addCSS("gwf4-bootstrap.css"); # GWF4 css patches
+			if ($bs) GWF_Website::addBowerCSS("bootstrap/dist/css/bootstrap$min.css?v=$v");
+			if ($bs) GWF_Website::addBowerCSS("bootstrap-combobox/css/bootstrap-combobox.css?v=$v");
+			if ($bs) GWF_Website::addBowerCSS("bootstrap-datepicker/dist/css/bootstrap-datepicker$min.css?v=$v");
+			if ($bs) GWF_Website::addBowerCSS("bootstrap-sidebar/dist/css/sidebar.css?v=$v");
+				
 			# GWF Util
 			$this->addJavascript('bind-polyfill.js');
 			$this->addJavascript('gwf-string-util.js');
@@ -111,6 +117,10 @@ final class Module_GWF extends GWF_Module
 			GWF_Website::addBowerJavascript("jquery/dist/jquery$min.js?v=$v");
 			GWF_Website::addBowerJavascript("ckeditor/ckeditor.js?v=$v");
 			$this->addJavascript('jq-serialize-object.js');
+			if ($bs) GWF_Website::addBowerJavascript("bootstrap/dist/js/bootstrap$min.js?v=$v");
+			if ($bs) GWF_Website::addBowerJavascript("bootstrap-datepicker/dist/js/bootstrap-datepicker$min.js?v=$v");
+			if ($bs) GWF_Website::addBowerJavascript("bootstrap-combobox/js/bootstrap-combobox.js?v=$v");
+			if ($bs) GWF_Website::addBowerJavascript("bootstrap-sidebar/dist/js/sidebar.js?v=$v");
 			if ($ng) GWF_Website::addBowerJavascript("angular/angular$min.js?v=$v");
 			if ($md) GWF_Website::addBowerJavascript("angular-animate/angular-animate$min.js?v=$v");
 			if ($md) GWF_Website::addBowerJavascript("angular-aria/angular-aria$min.js?v=$v");
@@ -122,7 +132,8 @@ final class Module_GWF extends GWF_Module
 			if ($ng) GWF_Website::addBowerJavascript("hamsterjs/hamster.js?v=$v");
 			if ($ng) GWF_Website::addBowerJavascript("angular-mousewheel/mousewheel.js?v=$v");
 			$this->addJavascript('gwf-ckeditor.js');
-
+			if ($bs) $this->addJavascript('gwf-bootstrap.js');
+				
 			# GWF below here
 			$this->addJavascript('gwf-ajax-sync.js');
 			$this->addJavascript('gwf-bb-editor.js');
@@ -134,11 +145,10 @@ final class Module_GWF extends GWF_Module
 			if ($ng) $this->addJavascript('gwf-select-controller.js');
 			if ($ng) $this->addJavascript('gwf-upload-controller.js');
 			if ($ng) $this->addJavascript('gwf-transfer-speed-filter.js');
-			
 			if ($md) $this->addJavascript('gwf-error-service.js');
 			if ($md) $this->addJavascript('gwf-exception-service.js');
 			if ($md) $this->addJavascript('gwf-auth-service.js');
-			if ($md) $this->addJavascript('gwf-loading-service.js');
+			if ($ng) $this->addJavascript('gwf-loading-service.js');
 			if ($md) $this->addJavascript('gwf-request-service.js');
 			if ($md) $this->addJavascript('gwf-ping-service.js');
 			if ($md) $this->addJavascript('gwf-vibrator-service.js');
@@ -164,28 +174,33 @@ final class Module_GWF extends GWF_Module
 		return "window.GWF_CONFIG = $json;";
 	}
 
-	private function getUserJS()
+	public function getUserJS()
 	{
 		$user = GWF_User::getStaticOrGuest();
-		$json = json_encode(array(
-			'user_id' => (int)$user->getVar('user_id'),
-			'user_guest_id' => (int)$user->getVar('user_guest_id'),
-			'user_guest_name' => $user->getVar('user_guest_name'),
-			'user_options' => (int)$user->getVar('user_options'),
-			'user_name' => $user->getVar('user_name'),
-// 			'user_password' => $user->getVar('user_password'),
-			'user_regdate' => $user->getVar('user_regdate'),
-			'user_email' => $user->getVar('user_email'),
-			'user_gender' => $user->getVar('user_gender'),
-			'user_birthdate' => $user->getVar('user_birthdate'),
-			'user_countryid' => (int)$user->getVar('user_countryid'),
-			'user_langid' => (int)$user->getVar('user_langid'),
-			'user_langid2' => (int)$user->getVar('user_langid2'),
-			'user_level' => $user->getVar('user_level'),
-			'user_title' => $user->getVar('user_title'),
-			'user_credits' => (int)$user->getVar('user_credits'),
-		));
+		$json = $this->getUserJSON($user);
 		return "window.GWF_USER = new GWF_User($json);";
+	}
+	
+	public function getUserJSON(GWF_User $user)
+	{
+		return json_encode(array(
+				'user_id' => (int)$user->getVar('user_id'),
+				'user_guest_id' => (int)$user->getVar('user_guest_id'),
+				'user_guest_name' => $user->getVar('user_guest_name'),
+				'user_options' => (int)$user->getVar('user_options'),
+				'user_name' => $user->getVar('user_name'),
+	// 			'user_password' => $user->getVar('user_password'),
+				'user_regdate' => $user->getVar('user_regdate'),
+				'user_email' => $user->getVar('user_email'),
+				'user_gender' => $user->getVar('user_gender'),
+				'user_birthdate' => $user->getVar('user_birthdate'),
+				'user_countryid' => (int)$user->getVar('user_countryid'),
+				'user_langid' => (int)$user->getVar('user_langid'),
+				'user_langid2' => (int)$user->getVar('user_langid2'),
+				'user_level' => $user->getVar('user_level'),
+				'user_title' => $user->getVar('user_title'),
+				'user_credits' => (int)$user->getVar('user_credits'),
+		));
 	}
 	
 	###############

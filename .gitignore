@@ -39,10 +39,13 @@
 /module/Dropleet/
 /module/AH/
 /module/Currency/
+/module/Broker/
 
 /themes/linkuup-app
 /themes/linkuup-web
 /themes/dropleet
+/themes/kha
+/themes/lup
 
 /nbproject/private/
 /nbproject/

@@ -4,8 +4,10 @@
 			<h1 class="fl">GWF</h1>
 			<h2><?php echo $il->lang('title_long', array($step)); ?></h2>
 			<h3><?php echo $il->lang('title_step', $step); ?></h3>
+			<div class="cb"></div>
 		</div>
-		<div class="fl">
+		<div class="cb"></div>
+		<div>
 			<div id="gwf_inst_stepmenu">
 				<ol>
 					<li id="step0"><a href="?step=0"><?php echo $il->lang('menu_0'); ?></a></li>

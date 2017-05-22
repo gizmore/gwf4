@@ -1,6 +1,6 @@
 'use strict';
 angular.module('gwf4').
-service('LoadingSrvc', function($q, $mdDialog) {
+service('LoadingSrvc', function($q) {
 	
 	var LoadingSrvc = this;
 	

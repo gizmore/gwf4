@@ -437,7 +437,7 @@
          $this->SetAudioPath($sAudioPath);
          
          // retrieve code if already set by previous instance of visual PhpCaptcha
-         if (Session::exists(CAPTCHA_SESSION_ID)) { 
+         if (GWF_Session::exists(CAPTCHA_SESSION_ID)) { 
             $this->sCode = GWF_Session::get(CAPTCHA_SESSION_ID);
          }
       }

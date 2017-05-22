@@ -106,6 +106,11 @@ class GWF4
 			$this->init();
 		}
 	}
+	
+	public static function isInstall()
+	{
+		return self::getDesign() === 'install';
+	}
 
 	/**
 	 * Initialize by ConfigOptions
@@ -223,7 +228,7 @@ class GWF4
 //		}
 
 		# Default defines
-		define('GWF_PATH', dirname(__FILE__, 2).'/');
+		define('GWF_PATH', Common::substrUntil(dirname(__FILE__), '/', null, true).'/');
 // 		define('GWF_EXTRA_PATH', GWF_PATH.'extra/');
 		define('GWF_CORE_PATH', GWF_PATH);
 	

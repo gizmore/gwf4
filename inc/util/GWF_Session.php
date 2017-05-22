@@ -97,6 +97,7 @@ final class GWF_Session extends GDO
 		# Load session from DB
 		if (false === ($session = GDO::table(__CLASS__)->selectFirstObject('*', 'sess_id='.$id)))
 		{
+// 			die('SID NOT FOUND');
 			return false;
 		}
 		
@@ -104,12 +105,14 @@ final class GWF_Session extends GDO
 		$user = $session->getVar('sess_user');
 		if ( ($user->getID() !== NULL) && ($user->getID() !== $split[1]) )
 		{
+// 			die('USER NOT FOUND');
 			return false;
 		}
 		
 		# Check SESSID
 		if ($session->getVar('sess_sid') !== $split[2])
 		{
+// 			die('SESSID NOT FOUND');
 			return false;
 		}
 		
@@ -119,6 +122,7 @@ final class GWF_Session extends GDO
 			{
 				if (GWF_IP6::getIP(GWF_IP_EXACT, $checkIP) !== $ip)
 				{
+// 					die('IP NOT FOUND');
 					return false;
 				}
 			}
@@ -138,10 +142,7 @@ final class GWF_Session extends GDO
 		
 		self::$SESSDATA = self::reloadSessData($session->getVar('sess_data'));
 		
-		if ($user->getID() > 0)
-		{
-			self::$USER = $user;
-		}
+		self::$USER = $user->getID() > 0 ? $user : false;
 		
 		return true;
 	}

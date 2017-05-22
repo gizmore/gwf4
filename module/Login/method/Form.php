@@ -95,34 +95,36 @@ final class Login_Form extends GWF_Method
 	public function onLogin($doValidate=true)
 	{
 		require_once GWF_CORE_PATH.'module/Login/GWF_LoginFailure.php';
-		$form = $this->getForm();
 		if ($doValidate)
 		{
+			$form = $this->getForm();
 			if (false !== ($errors = $form->validate($this->module, false))) {
 				return $errors.$this->form();
 			}
 		}
 		
+		$ajax = isset($_REQUEST['ajax']);
 		$username = Common::getPostString('username');
 		$password = Common::getPostString('password');
 		$users = GDO::table('GWF_User');
 		
+		
 		if (false === ($user = $users->selectFirstObject('*', sprintf('user_name=\'%s\' AND user_options&%d=0', $users->escape($username), GWF_User::DELETED))))
 		{
-			if (false) {
+			if ($ajax) {
 				return $this->module->error('err_login');
 			} else {
 				return $this->module->error('err_login').$this->form();
 			}
 		}
 		elseif (true !== ($error = $this->checkBruteforce($user, false))) {
-			return $error.$this->form();
+			return $ajax ? $error : $error.$this->form();
 		}
 		elseif (false === GWF_Hook::call(GWF_Hook::LOGIN_PRE, $user, array($password, ''))) {
 			return ''; #GWF_HTML::err('ERR_GENERAL', array( __FILE__, __LINE__));
 		}
 		elseif (false === (GWF_Password::checkPasswordS($password, $user->getVar('user_password')))) {
-			return $this->onLoginFailed($user, false).$this->form();
+			return $ajax ? $this->onLoginFailed($user, false) : $this->onLoginFailed($user, false).$this->form();
 		}
 		
 		GWF_Password::clearMemory('password');
@@ -195,11 +197,10 @@ final class Login_Form extends GWF_Method
 				GWF_Session::set('GWF_LOGIN_FAILS', $fails);
 			}
 			
-			if (GWF_Website::isAjax()) {
-				die('OK');
+			if (!GWF_Website::isAjax()) {
+				GWF_Website::redirect(GWF_WEB_ROOT.'welcome');
 			}
 			
-			GWF_Website::redirect(GWF_WEB_ROOT.'welcome');
 		}
 	}
 	

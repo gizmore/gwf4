@@ -106,6 +106,7 @@ final class GWF_Website
 	public static function setPageTitle($title) { self::$_page_title = $title; }
 	public static function setPageTitlePre($title) { self::$_page_title_pre = $title; }
 	public static function setPageTitleAfter($title) { self::$_page_title_post = $title; }
+	public static function getPageTitle() { return self::$_page_title; }
 
 	/**
 	 * add an html <link>

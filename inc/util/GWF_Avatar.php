@@ -15,7 +15,7 @@ final class GWF_Avatar extends GDO
 	### GDO ###
 	###########
 	const NONE = 'none';
-	const DEFAULT = 'default';
+	const PRESET = 'default';
 	const CUSTOM = 'custom';
 
 	public function getTableName() { return GWF_TABLE_PREFIX.'avatar'; }
@@ -25,7 +25,7 @@ final class GWF_Avatar extends GDO
 		return array(
 			'avatar_id' => array(GDO::AUTO_INCREMENT),
 			'avatar_user_id' => array(GDO::INT|GDO::INDEX, '0'),
-			'avatar_mode' => array(GDO::ENUM, GWF_Avatar::NONE, array(GWF_Avatar::NONE, GWF_Avatar::DEFAULT, GWF_Avatar::CUSTOM)),
+			'avatar_mode' => array(GDO::ENUM, GWF_Avatar::NONE, array(GWF_Avatar::NONE, GWF_Avatar::PRESET, GWF_Avatar::CUSTOM)),
 			'avatar_file' => array(GDO::VARCHAR|GDO::ASCII|GDO::CASE_S, GDO::NULL, 128),
 			'avatar_version' => array(GDO::UINT, '0'),
 			'avatar_saved_at' => array(GDO::DATE, GDO::NULL, GWF_Date::LEN_SECOND),
@@ -45,7 +45,7 @@ final class GWF_Avatar extends GDO
 	public function getVersion() { return $this->getVar('avatar_version'); }
 	public function getVersionInt() { return (int) $this->getVersion(); }
 	public function isCustomAvatar() { return $this->getMode() === self::CUSTOM; }
-	public function isDefaultAvatar() { return $this->getMode() === self::DEFAULT; }
+	public function isDefaultAvatar() { return $this->getMode() === self::PRESET; }
 	public function getDefaultAvatarFilename() { return $this->isDefaultAvatar() ? $this->getFile() : ''; }
 	
 	###############
@@ -182,7 +182,7 @@ final class GWF_Avatar extends GDO
 		{
 			if (self::isValidDefaultAvatar($defaultAvatar))
 			{
-				$data['avatar_mode'] = self::DEFAULT;
+				$data['avatar_mode'] = self::PRESET;
 				$data['avatar_file'] = $defaultAvatar;
 			}
 		}
@@ -265,7 +265,7 @@ final class GWF_Avatar extends GDO
 		$dir = $this->getDir();
 		if ($mode === GWF_Avatar::NONE)
 		{
-			$mode = GWF_Avatar::DEFAULT;
+			$mode = GWF_Avatar::PRESET;
 			$file = 'default.jpeg';
 		}
 		
@@ -275,7 +275,8 @@ final class GWF_Avatar extends GDO
 		}
 		else
 		{
-			return sprintf('%sthemes/%s/img/default_avatars/%s', GWF_PATH, GWF4::getDesign(), $dir, $file);
+// 			return sprintf('%sthemes/%s/img/default_avatars/%s', GWF_PATH, GWF4::getDesign(), $dir, $file);
+			return sprintf('%sthemes/%s/img/default_avatars/%s', GWF_PATH, GWF4::getDesign(), $file);
 		}
 	}
 	
@@ -286,7 +287,7 @@ final class GWF_Avatar extends GDO
 		$dir = $this->getDir();
 		if ($mode === GWF_Avatar::NONE)
 		{
-			$mode = GWF_Avatar::DEFAULT;
+			$mode = GWF_Avatar::PRESET;
 			$file = 'default.jpeg';
 		}
 		
