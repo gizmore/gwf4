@@ -181,26 +181,31 @@ final class Module_GWF extends GWF_Module
 		return "window.GWF_USER = new GWF_User($json);";
 	}
 	
+	public function getUserData(GWF_User $user)
+	{
+		return array(
+			'user_id' => (int)$user->getVar('user_id'),
+			'user_guest_id' => (int)$user->getVar('user_guest_id'),
+			'user_guest_name' => $user->getVar('user_guest_name'),
+			'user_options' => (int)$user->getVar('user_options'),
+			'user_name' => $user->getVar('user_name'),
+			// 			'user_password' => $user->getVar('user_password'),
+			'user_regdate' => $user->getVar('user_regdate'),
+			'user_email' => $user->getVar('user_email'),
+			'user_gender' => $user->getVar('user_gender'),
+			'user_birthdate' => $user->getVar('user_birthdate'),
+			'user_countryid' => (int)$user->getVar('user_countryid'),
+			'user_langid' => (int)$user->getVar('user_langid'),
+			'user_langid2' => (int)$user->getVar('user_langid2'),
+			'user_level' => $user->getVar('user_level'),
+			'user_title' => $user->getVar('user_title'),
+			'user_credits' => (int)$user->getVar('user_credits'),
+		);
+	}
+	
 	public function getUserJSON(GWF_User $user)
 	{
-		return json_encode(array(
-				'user_id' => (int)$user->getVar('user_id'),
-				'user_guest_id' => (int)$user->getVar('user_guest_id'),
-				'user_guest_name' => $user->getVar('user_guest_name'),
-				'user_options' => (int)$user->getVar('user_options'),
-				'user_name' => $user->getVar('user_name'),
-	// 			'user_password' => $user->getVar('user_password'),
-				'user_regdate' => $user->getVar('user_regdate'),
-				'user_email' => $user->getVar('user_email'),
-				'user_gender' => $user->getVar('user_gender'),
-				'user_birthdate' => $user->getVar('user_birthdate'),
-				'user_countryid' => (int)$user->getVar('user_countryid'),
-				'user_langid' => (int)$user->getVar('user_langid'),
-				'user_langid2' => (int)$user->getVar('user_langid2'),
-				'user_level' => $user->getVar('user_level'),
-				'user_title' => $user->getVar('user_title'),
-				'user_credits' => (int)$user->getVar('user_credits'),
-		));
+		return json_encode($this->getUserData($user));
 	}
 	
 	###############

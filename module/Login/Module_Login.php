@@ -43,6 +43,9 @@ final class Module_Login extends GWF_Module
 
 	public function onCronjob() { GWF_LoginFailure::cleanupCron($this->cfgCleanupTime()); }
 	
+	/**
+	 * @return \Facebook\Facebook
+	 */
 	public function getFacebook()
 	{
 		if (!session_id()) { session_start(); } # lib requires normal php sessions.
