@@ -213,34 +213,34 @@ final class GWF_Session extends GDO
 //		header('Etag: '.sprintf('W/%s-%s-%s', $id, $uid, $sessid));
 //	}
 	
-	private static function createSpider($spiderid)
-	{
-		$table = self::table(__CLASS__);
-		if (false === ($session = $table->getBy('sess_sid', $spiderid, GDO::ARRAY_O, array('user'))))
-		{
-			$session = new self(array(
-				'sess_id' => 0,
-				'sess_sid' => $spiderid,
-				'sess_user' => $spiderid,
-				'sess_data' => '',
-				'sess_time' => time(),
-				'sess_ip' => NULL,
-				'sess_lasturl' => '',
-			));
-			if (false === $session->insert()) {
-				return false;
-			}
-		}
+// 	private static function createSpider($spiderid)
+// 	{
+// 		$table = self::table(__CLASS__);
+// 		if (false === ($session = $table->getBy('sess_sid', $spiderid, GDO::ARRAY_O, array('user'))))
+// 		{
+// 			$session = new self(array(
+// 				'sess_id' => 0,
+// 				'sess_sid' => $spiderid,
+// 				'sess_user' => $spiderid,
+// 				'sess_data' => '',
+// 				'sess_time' => time(),
+// 				'sess_ip' => NULL,
+// 				'sess_lasturl' => '',
+// 			));
+// 			if (false === $session->insert()) {
+// 				return false;
+// 			}
+// 		}
 		
-		$spider = GWF_User::getByID($spiderid);
-//		$session->setVar('sess_user', $spider);
-		self::$USER = $spider;
-		self::$SESSION = $session;
-		self::$SESSDATA = array();
-//		self::setCookies($session->getVar('sess_id'), $spiderid, $spiderid);
+// 		$spider = GWF_User::getByID($spiderid);
+// //		$session->setVar('sess_user', $spider);
+// 		self::$USER = $spider;
+// 		self::$SESSION = $session;
+// 		self::$SESSDATA = array();
+// //		self::setCookies($session->getVar('sess_id'), $spiderid, $spiderid);
 		
-		return true;
-	}
+// 		return true;
+// 	}
 	
 	public static function getDomain()
 	{
@@ -261,7 +261,8 @@ final class GWF_Session extends GDO
 			# cookie is valid one year, but it's checked against config later.
 //			$secure = Common::getProtocol() === 'https';
 			$secure = false;
-			setcookie(GWF_SESS_NAME, "$id-$uid-$sessid", time()+31536000, GWF_WEB_ROOT_NO_LANG, self::getDomain(), $secure, true);
+			$httpOnly = defined('GWF_SESS_HTTP_ONLY') && GWF_SESS_HTTP_ONLY;
+			setcookie(GWF_SESS_NAME, "$id-$uid-$sessid", time()+31536000, GWF_WEB_ROOT_NO_LANG, self::getDomain(), $secure, $httpOnly);
 		}
 	}
 	
